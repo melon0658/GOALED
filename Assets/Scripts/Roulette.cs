@@ -14,7 +14,8 @@ public class Roulette : MonoBehaviour
     private float speed;
     private float slowDownSpeed = 0.99f;
 
-    
+    public GameObject sphere;
+
 
 
     // Start is called before the first frame update
@@ -91,6 +92,11 @@ public class Roulette : MonoBehaviour
         ang = 10 - ang / 36;
         Text tt = GameObject.Find("Text(Legacy)").GetComponent<Text>();
         tt.text = ang.ToString();
+        InvokeRepeating("repeat",0.0f, 0.004f);
     }
 
+    void repeat()
+    {
+        sphere.GetComponent<MovementBaseScript>().AutoMove();
+    }
 }
