@@ -7,7 +7,10 @@ public class Roulette : MonoBehaviour
 {
     public GameObject roulette;
     public Slider slider;
-    public Button button;
+    public GameObject button;
+    public GameObject rightButton;
+    public GameObject leftButton;
+    private int ang;
     private bool maxValue;
     private bool isClicked;
     private bool rotate;
@@ -16,11 +19,16 @@ public class Roulette : MonoBehaviour
 
     public GameObject sphere;
 
-
+    public int Rcount()
+    {
+        return ang;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 60; // 30fpsに設定
+
         slider.value = 0;
         maxValue = false;
         isClicked = false;
@@ -47,11 +55,11 @@ public class Roulette : MonoBehaviour
             //フラグによるスライダー値の増減
             if (maxValue)
             {
-                slider.value -= 0.005f;
+                slider.value -= 0.04f;
             }
             else
             {
-                slider.value += 0.005f;
+                slider.value += 0.04f;
             }
             //Debug.Log(slider.value);
         }
@@ -62,7 +70,7 @@ public class Roulette : MonoBehaviour
             speed *= slowDownSpeed;
             slowDownSpeed -= 0.001f * Time.deltaTime;
 
-            if (speed < 0.005f)
+            if (speed < 0.01f)
             {
                 rotate = false;
                 count();
@@ -80,7 +88,6 @@ public class Roulette : MonoBehaviour
 
     public void count()
     {
-        int ang;
         if(roulette.transform.localEulerAngles.y > 0)
         {
             ang = (int)roulette.transform.localEulerAngles.y;
@@ -92,11 +99,11 @@ public class Roulette : MonoBehaviour
         ang = 10 - ang / 36;
         Text tt = GameObject.Find("Text(Legacy)").GetComponent<Text>();
         tt.text = ang.ToString();
-        InvokeRepeating("repeat",0.0f, 0.004f);
+        button.SetActive(false);
+        rightButton.SetActive(true);
+        leftButton.SetActive(true);
+
     }
 
-    void repeat()
-    {
-        sphere.GetComponent<MovementBaseScript>().AutoMove();
-    }
+    
 }
