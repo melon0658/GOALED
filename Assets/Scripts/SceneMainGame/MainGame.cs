@@ -46,7 +46,7 @@ public class MainGame : MonoBehaviour
     go.Owner = playerInfo.player.Id;
     go.Prefub = gameObject.GetComponent<SendObject>().getPrefub();
     go.Position = new GameService.Vec3 { X = gameObject.transform.position.x, Y = gameObject.transform.position.y, Z = gameObject.transform.position.z };
-    go.Rotation = new GameService.Vec3 { X = 0, Y = 0, Z = 0 };
+    go.Rotation = new GameService.Vec3 { X = gameObject.transform.rotation.x, Y = gameObject.transform.rotation.y, Z = gameObject.transform.rotation.z };
     go.Scale = new GameService.Vec3 { X = gameObject.transform.localScale.x, Y = gameObject.transform.localScale.y, Z = gameObject.transform.localScale.z };
     go.Rpc = "";
     return go;
