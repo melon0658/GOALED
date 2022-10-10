@@ -8,7 +8,7 @@ public class MovementBaseScript : MonoBehaviour
     //[SerializeField]
     private PathCreator pathCreator;
 
-    public Roulette rCountScript;
+    public Roulette rScript;
 
     float speed = 1f;
     Vector3 endPos;
@@ -16,6 +16,8 @@ public class MovementBaseScript : MonoBehaviour
     float moveDistance;
 
     private bool arrival = false;
+
+    private int strPosNum = 0;
 
     //車が目的地についてるかの判定を返す
     public bool GetArrival()
@@ -29,11 +31,13 @@ public class MovementBaseScript : MonoBehaviour
         Debug.Log(pathCreator.path.NumPoints);
 
 
-        int rCount = rCountScript.Rcount();
+        int rCount = rScript.Rcount();
         Debug.Log(rCount);
         //60,53,46,
-        endPos = pathCreator.path.GetPoint(pathCreator.path.NumPoints - 1);
-        //endPos = pathCreator.path.GetPoint(pathCreator.path.NumPoints - (pathCreator.path.NumPoints / 10 * (11-rCount)) + 1);
+        //endPos = pathCreator.path.GetPoint(pathCreator.path.NumPoints - 1);
+        int aa = pathCreator.path.NumPoints - (pathCreator.path.NumPoints / 10 * (11 - rCount)) + 1;
+        endPos = pathCreator.path.GetPoint(pathCreator.path.NumPoints - (pathCreator.path.NumPoints / 10 * (11-rCount)) + 1 + strPosNum);
+        strPosNum = aa;
     }
 
     // Start is called before the first frame update
@@ -65,6 +69,7 @@ public class MovementBaseScript : MonoBehaviour
         {
             CancelInvoke("repeat");
             Debug.Log("終わり");
+            rScript.SetisClicked();
         }
     }
 
@@ -85,6 +90,8 @@ public class MovementBaseScript : MonoBehaviour
         //{
         //    arrival = true;
         //}
+        Debug.Log(this.transform.position.z);
+        Debug.Log(endPos.z);
         moveDistance += speed * Time.deltaTime;
         transform.position = pathCreator.path.GetPointAtDistance(moveDistance, EndOfPathInstruction.Stop);
         transform.rotation = pathCreator.path.GetRotationAtDistance(moveDistance, EndOfPathInstruction.Stop);

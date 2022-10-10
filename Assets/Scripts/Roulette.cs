@@ -24,6 +24,11 @@ public class Roulette : MonoBehaviour
         return ang;
     }
 
+    public void SetisClicked()
+    {
+        isClicked = false;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -99,7 +104,7 @@ public class Roulette : MonoBehaviour
         ang = 10 - ang / 36;
         Text tt = GameObject.Find("Text(Legacy)").GetComponent<Text>();
         tt.text = ang.ToString();
-        button.SetActive(false);
+        //button.SetActive(false);
         rightButton.SetActive(true);
         leftButton.SetActive(true);
 
