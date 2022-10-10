@@ -30,14 +30,26 @@ public class MovementBaseScript : MonoBehaviour
         this.pathCreator = pc;
         Debug.Log(pathCreator.path.NumPoints);
 
+        this.SetEndPoth();
+        
+    }
 
+    public void SetEndPoth()
+    {
         int rCount = rScript.Rcount();
         Debug.Log(rCount);
         //60,53,46,
         //endPos = pathCreator.path.GetPoint(pathCreator.path.NumPoints - 1);
         int aa = pathCreator.path.NumPoints - (pathCreator.path.NumPoints / 10 * (11 - rCount)) + 1;
-        endPos = pathCreator.path.GetPoint(pathCreator.path.NumPoints - (pathCreator.path.NumPoints / 10 * (11-rCount)) + 1 + strPosNum);
-        strPosNum = aa;
+        //endPos = pathCreator.path.GetPoint(pathCreator.path.NumPoints - (pathCreator.path.NumPoints / 10 * (11-rCount)) + 1 + strPosNum);
+        endPos = pathCreator.path.GetPoint(pathCreator.path.NumPoints - 50 + strPosNum);
+        strPosNum += 15;
+        Debug.Log(endPos);
+    }
+
+    public PathCreator GetNowPath()
+    {
+        return pathCreator;
     }
 
     // Start is called before the first frame update
@@ -65,10 +77,11 @@ public class MovementBaseScript : MonoBehaviour
         AutoMove();
 
         //目的地に着いたらrepeatを止める
-        if (this.GetArrival() == true)
+        if (arrival == true)
         {
             CancelInvoke("repeat");
             Debug.Log("終わり");
+            arrival = false;
             rScript.SetisClicked();
         }
     }
@@ -90,13 +103,13 @@ public class MovementBaseScript : MonoBehaviour
         //{
         //    arrival = true;
         //}
-        Debug.Log(this.transform.position.z);
-        Debug.Log(endPos.z);
+        //Debug.Log(this.transform.position.z);
+        //Debug.Log(endPos.z);
         moveDistance += speed * Time.deltaTime;
         transform.position = pathCreator.path.GetPointAtDistance(moveDistance, EndOfPathInstruction.Stop);
         transform.rotation = pathCreator.path.GetRotationAtDistance(moveDistance, EndOfPathInstruction.Stop);
         
-        if ((this.transform.position.x >= endPos.x - 0.4 && this.transform.position.x <= endPos.x + 0.4) && (this.transform.position.z >= endPos.z - 0.4 && this.transform.position.z <= endPos.z + 0.4))
+        if ((this.transform.position.x >= endPos.x - 1 && this.transform.position.x <= endPos.x + 1) && (this.transform.position.z >= endPos.z - 1 && this.transform.position.z <= endPos.z + 1))
         {
             arrival = true;
         }

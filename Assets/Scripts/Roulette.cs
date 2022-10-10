@@ -19,6 +19,10 @@ public class Roulette : MonoBehaviour
 
     public GameObject sphere;
 
+    public Action actionScript;
+
+    public MovementBaseScript mbScript;
+
     public int Rcount()
     {
         return ang;
@@ -105,8 +109,18 @@ public class Roulette : MonoBehaviour
         Text tt = GameObject.Find("Text(Legacy)").GetComponent<Text>();
         tt.text = ang.ToString();
         //button.SetActive(false);
-        rightButton.SetActive(true);
-        leftButton.SetActive(true);
+        Debug.Log(actionScript.GetCheckPoint());
+        if(actionScript.GetCheckPoint() == true)
+        {
+            rightButton.SetActive(true);
+            leftButton.SetActive(true);
+        }
+        else
+        {
+            mbScript.SetEndPoth();
+            mbScript.moveStart();
+        }
+        
 
     }
 
