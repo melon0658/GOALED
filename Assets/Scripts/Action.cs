@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,14 +26,14 @@ public class Action : MonoBehaviour
         
     }
 
-    // ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg“¯m‚ªÚG‚µ‚½ƒ^ƒCƒ~ƒ“ƒO‚ÅÀs
+    // ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåŒå£«ãŒæ¥è§¦ã—ãŸã‚¿ã‚¤ãƒŸãƒ³ã‚°ã§å®Ÿè¡Œ
     void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.name);
-        // ‚à‚µÕ“Ë‚µ‚½‘ŠèƒIƒuƒWƒFƒNƒg‚Ì–¼‘O‚ª"Cube"‚È‚ç‚Î
+        // ã‚‚ã—è¡çªã—ãŸç›¸æ‰‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åå‰ãŒ"Cube"ãªã‚‰ã°
         if (other.tag == "CheckPoint")
         {
-            // Õ“Ë‚µ‚½‘ŠèƒIƒuƒWƒFƒNƒg‚ÌRendererƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìmaterial‚ÌF‚ğ•‚É•ÏX‚·‚é
+            // è¡çªã—ãŸç›¸æ‰‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®Rendererã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®materialã®è‰²ã‚’é»’ã«å¤‰æ›´ã™ã‚‹
             Debug.Log("true");
             checkPoint = true;
         }
