@@ -38,6 +38,10 @@ public class MovementBaseScript : MonoBehaviour
     {
         int rCount = rScript.Rcount();
         Debug.Log(rCount);
+        Debug.Log(pathCreator.ToString());
+        if(pathCreator.ToString().IndexOf("StartRight") != -1){
+            Debug.Log("aaaaaaaa");
+        }
         //60,53,46,
         //endPos = pathCreator.path.GetPoint(pathCreator.path.NumPoints - 1);
         int aa = pathCreator.path.NumPoints - (pathCreator.path.NumPoints / 10 * (11 - rCount)) + 1;
