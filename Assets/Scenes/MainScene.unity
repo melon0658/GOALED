@@ -8182,6 +8182,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rScript: {fileID: 5806365}
+  nextSquare1: 0000000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c000000000000001e0000001f000000200000000c000000
+  coordinate:
+  - {x: 0, y: 0, z: 0}
+  - {x: -23.43, y: 0, z: -1.25}
+  - {x: -38.1, y: 0, z: 2.14}
+  - {x: -40.72, y: 0, z: 16.2}
+  - {x: -36.36, y: 0, z: 29.82}
+  - {x: -22.43, y: 0, z: 33.06}
+  - {x: -6.91, y: 0, z: 33.14}
+  - {x: 9.57, y: 0, z: 33.14}
+  - {x: 25.48, y: 0, z: 33.1}
+  - {x: 41.79, y: 0, z: 33.06}
+  - {x: 57.53, y: 0, z: 33.05}
+  - {x: 70.8, y: 0, z: 29.94}
+  - {x: 75.21, y: 0, z: 15.76}
+  - {x: 89.15, y: 0, z: 15.61}
+  - {x: 103.07, y: 0, z: 18.63}
+  - {x: 105.38, y: 0, z: 32.96}
+  - {x: 105.39, y: 0, z: 49.01}
+  - {x: 105.37, y: 0, z: 64.9}
+  - {x: 105.37, y: 0, z: 80.76}
+  - {x: 101.95, y: 0, z: 94.16}
+  - {x: 88.44, y: 0, z: 96.45}
+  - {x: 72.49, y: 0, z: 96.46}
+  - {x: 58.03, y: 0, z: 99.36}
+  - {x: 56.4, y: 0, z: 114}
+  - {x: 58.9, y: 0, z: 128}
 --- !u!114 &196691948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62953,6 +62980,18 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5a08848cd23b31245b07f671228529e6, type: 3}
       propertyPath: m_Name
       value: car1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151388028547126963, guid: 5a08848cd23b31245b07f671228529e6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151388028547126963, guid: 5a08848cd23b31245b07f671228529e6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 5a08848cd23b31245b07f671228529e6, type: 3}
+      propertyPath: m_Name
+      value: defaultCar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a08848cd23b31245b07f671228529e6, type: 3}

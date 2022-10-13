@@ -25,7 +25,9 @@ public class MovementBaseScript : MonoBehaviour
                                            new Vector3(-22.43f, 0f, 33.06f), new Vector3(-6.91f, 0f, 33.14f), new Vector3(9.57f, 0f, 33.14f), new Vector3(25.48f, 0f, 33.10f), new Vector3(41.79f, 0f, 33.06f),
                                            new Vector3(57.53f, 0f, 33.05f), new Vector3(70.80f, 0f, 29.94f), new Vector3(75.21f, 0f, 15.76f), new Vector3(89.15f, 0f, 15.61f), new Vector3(103.07f, 0f, 18.63f),
                                            new Vector3(105.38f, 0f, 32.96f), new Vector3(105.39f, 0f, 49.01f), new Vector3(105.37f, 0f, 64.90f), new Vector3(105.37f, 0f, 80.76f), new Vector3(101.95f, 0f, 94.16f),
-                                           new Vector3(88.44f, 0f, 96.45f), new Vector3(72.49f, 0f, 96.46f), new Vector3(58.03f, 0f, 99.36f), new Vector3(56.40f, 0f, 114.00f), new Vector3(58.90f, 0f, 128.00f), };
+                                           new Vector3(88.44f, 0f, 96.45f), new Vector3(72.49f, 0f, 96.46f), new Vector3(58.03f, 0f, 99.36f), new Vector3(56.40f, 0f, 114.00f), new Vector3(59.30f, 0f, 128.22f),
+                                           new Vector3(73.50f, 0f, 129.40f), new Vector3(89.50f, 0f, 129.30f), new Vector3(102.90f, 0f, 132.40f), new Vector3(104.40f, 0f, 149.20f), new Vector3(25.89f, 0f, -1.57f), 
+                                           new Vector3(41.46f, 0f, -1.43f), new Vector3(57.05f, 0f, -1.30f), new Vector3(71.40f, 0f, 1.90f) };
 
     //車が目的地についてるかの判定を返す
     public bool GetArrival()
@@ -56,7 +58,8 @@ public class MovementBaseScript : MonoBehaviour
         //endPos = pathCreator.path.GetPoint(pathCreator.path.NumPoints - 1);
         int aa = pathCreator.path.NumPoints - (pathCreator.path.NumPoints / 10 * (11 - rCount)) + 1;
         //endPos = pathCreator.path.GetPoint(pathCreator.path.NumPoints - (pathCreator.path.NumPoints / 10 * (11-rCount)) + 1 + strPosNum);
-        endPos = pathCreator.path.GetPoint(pathCreator.path.NumPoints - 50 + strPosNum);
+        //endPos = pathCreator.path.GetPoint(pathCreator.path.NumPoints - 50 + strPosNum);
+        endPos = new Vector3(73.50f, 0f, 129.40f);
         strPosNum += 15;
         Debug.Log(endPos);
     }
@@ -83,8 +86,8 @@ public class MovementBaseScript : MonoBehaviour
 
     public void moveStart()
     {
-        //InvokeRepeating("repeat", 0.0f, 0.015f);
-        InvokeRepeating("repeat", 0.0f, 0.03f);
+        InvokeRepeating("repeat", 0.0f, 0.015f);
+        //InvokeRepeating("repeat", 0.0f, 0.03f);
     }
 
     void repeat()
@@ -124,7 +127,7 @@ public class MovementBaseScript : MonoBehaviour
         transform.position = pathCreator.path.GetPointAtDistance(moveDistance, EndOfPathInstruction.Stop);
         transform.rotation = pathCreator.path.GetRotationAtDistance(moveDistance, EndOfPathInstruction.Stop);
         
-        if ((this.transform.position.x >= endPos.x - 1 && this.transform.position.x <= endPos.x + 1) && (this.transform.position.z >= endPos.z - 1 && this.transform.position.z <= endPos.z + 1))
+        if (this.transform.localPosition.x >= endPos.x - 1.0f && this.transform.localPosition.x <= endPos.x + 1.0 && this.transform.localPosition.z >= endPos.z - 1.0f && this.transform.localPosition.z <= endPos.z + 1.0f)
         {
             arrival = true;
         }
