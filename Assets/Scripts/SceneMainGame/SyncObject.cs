@@ -4,14 +4,18 @@ public class SyncObject : MonoBehaviour
 {
   public string ObjectId;
   private const float InterpolationPeriod = 1 / 20f;
-  private Vector3 p1;
-  private Vector3 p2;
+  private Vector3 positionBefore;
+  private Vector3 positionAfter;
+  private Vector3 rotationBefore;
+  private Vector3 rotationAfter;
   private float elapsedTime;
 
   void Start()
   {
-    p1 = transform.position;
-    p2 = p1;
+    positionBefore = transform.position;
+    positionAfter = positionBefore;
+    rotationBefore = transform.rotation.eulerAngles;
+    rotationAfter = rotationBefore;
     elapsedTime = 0f;
   }
 
@@ -19,13 +23,17 @@ public class SyncObject : MonoBehaviour
   void Update()
   {
     elapsedTime += Time.deltaTime;
-    transform.position = Vector3.Lerp(p1, p2, elapsedTime / InterpolationPeriod);
+    transform.position = Vector3.Lerp(positionBefore, positionAfter, elapsedTime / Settings.RECV_FPS);
+    transform.rotation = Quaternion.Euler(Vector3.Lerp(rotationBefore, rotationAfter, elapsedTime / Settings.RECV_FPS));
   }
 
-  public void Sync(Vector3 pos)
+  public void Sync(Vector3 pos, Vector3 rot, Vector3 scale)
   {
-    p1 = transform.position;
-    p2 = pos;
+    positionBefore = transform.position;
+    positionAfter = pos;
+    rotationBefore = transform.rotation.eulerAngles;
+    rotationAfter = rot;
+    transform.localScale = scale;
     elapsedTime = 0f;
   }
 

@@ -9,7 +9,7 @@ public class MainGame : MonoBehaviour
 {
   private CancellationToken ct;
   [SerializeField] private GameServer gameServer;
-  [SerializeField] private PlayerInfo playerInfo;
+  [SerializeField] public PlayerInfo playerInfo;
   private Dictionary<string, GameObject> syncObjects = new Dictionary<string, GameObject>();
   private ConcurrentDictionary<string, GameObject> sendObjects = new ConcurrentDictionary<string, GameObject>();
   private bool syncEnd = false;
@@ -38,20 +38,7 @@ public class MainGame : MonoBehaviour
     sendObjects.TryAdd(go.GetComponent<SendObject>().getID(), go);
     Debug.Log("AddSendObjects " + go.GetComponent<SendObject>().getID());
   }
-
-  private GameService.Object ToObject(GameObject gameObject)
-  {
-    var go = new GameService.Object();
-    go.Id = gameObject.GetComponent<SendObject>().getID();
-    go.Owner = playerInfo.player.Id;
-    go.Prefub = gameObject.GetComponent<SendObject>().getPrefub();
-    go.Position = new GameService.Vec3 { X = gameObject.transform.position.x, Y = gameObject.transform.position.y, Z = gameObject.transform.position.z };
-    go.Rotation = new GameService.Vec3 { X = gameObject.transform.rotation.x, Y = gameObject.transform.rotation.y, Z = gameObject.transform.rotation.z };
-    go.Scale = new GameService.Vec3 { X = gameObject.transform.localScale.x, Y = gameObject.transform.localScale.y, Z = gameObject.transform.localScale.z };
-    go.Rpc = "";
-    return go;
-  }
-
+  
   private async void SendObject()
   {
     var sendCall = gameServer.client.SendObject();
@@ -65,7 +52,7 @@ public class MainGame : MonoBehaviour
         SendObject sendObject = obj.Value.GetComponent<SendObject>();
         if (sendObject.isTransformChanged())
         {
-          request.Object.Add(ToObject(obj.Value));
+          request.Object.Add(sendObject.toObject());
           sendObject.setTransform();
         }
       }
