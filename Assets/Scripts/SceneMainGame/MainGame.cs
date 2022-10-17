@@ -1,47 +1,75 @@
 using UnityEngine;
+using UnityEngine.Events;
 using Grpc.Core;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
 using System.Threading;
+using System;
+using System.Linq;
 
 public class MainGame : MonoBehaviour
 {
   private CancellationToken ct;
   [SerializeField] private GameServer gameServer;
+  [SerializeField] private MatchingServer matchingServer;
   [SerializeField] public PlayerInfo playerInfo;
   private Dictionary<string, GameObject> syncObjects = new Dictionary<string, GameObject>();
   private ConcurrentDictionary<string, GameObject> sendObjects = new ConcurrentDictionary<string, GameObject>();
+  private Dictionary<string, Dictionary<string, string>> playerData = new Dictionary<string, Dictionary<string, string>>();
+  private Queue<GameService.PlayerData> playerDataQueue = new Queue<GameService.PlayerData>();
+  private AsyncClientStreamingCall<GameService.SendObjectRequest, GameService.SendObjectResponse> sendCall;
+  private AsyncClientStreamingCall<GameService.SendPlayerDataRequest, GameService.SendPlayerDataResponse> playerDataSendCall;
+  [Serializable] public class PlayerDataEvent : UnityEvent<Dictionary<string, Dictionary<string, string>>> { }
+  [SerializeField] private PlayerDataEvent onChangePlayerData;
   private bool syncEnd = false;
-  private Fps sendFps = new Fps();
-  private Fps recvFps = new Fps();
-
 
   void Start()
   {
     SendObject();
     RecvObject();
+    SendPlayerData();
+    RecvPlayerData();
   }
 
 
   void Update()
   {
+    if (Input.GetKeyDown(KeyCode.Escape))
+    {
+      SceneManager.LoadScene("SelectRoomScene");
+    }
   }
 
   void OnDestroy()
   {
+    Close();
+  }
+
+  public void Close()
+  {
+    sendCall.RequestStream.CompleteAsync();
+    playerDataSendCall.RequestStream.CompleteAsync();
+    gameServer.client.CloseStream(new GameService.CloseStreamRequest { PlayerId = playerInfo.player.Id, RoomId = playerInfo.player.RoomId });
+    matchingServer.client.LeaveRoom(new MatchingService.LeaveRoomRequest { PlayerId = playerInfo.player.Id, RoomId = playerInfo.player.RoomId });
     syncEnd = true;
   }
+
 
   public void AddSendObjects(GameObject go)
   {
     sendObjects.TryAdd(go.GetComponent<SendObject>().getID(), go);
-    Debug.Log("AddSendObjects " + go.GetComponent<SendObject>().getID());
   }
-  
+
+  public void AddPlayerData(GameService.PlayerData playerData)
+  {
+    playerDataQueue.Enqueue(playerData);
+  }
+
   private async void SendObject()
   {
-    var sendCall = gameServer.client.SendObject();
+    sendCall = gameServer.client.SendObject();
     while (!syncEnd)
     {
       var request = new GameService.SendObjectRequest();
@@ -59,9 +87,8 @@ public class MainGame : MonoBehaviour
       if (request.Object.Count > 0)
       {
         await sendCall.RequestStream.WriteAsync(request);
-        sendFps.Update();
       }
-      await Task.Delay(1000 / 30);
+      await Task.Delay(1000 / (int)Settings.SEND_FPS);
     }
   }
 
@@ -81,9 +108,10 @@ public class MainGame : MonoBehaviour
         if (syncObjects.ContainsKey(obj.Id))
         {
           var go = syncObjects[obj.Id];
-          go.GetComponent<SyncObject>().Sync(new Vector3(obj.Position.X, obj.Position.Y, obj.Position.Z));
-          go.transform.rotation = Quaternion.Euler(obj.Rotation.X, obj.Rotation.Y, obj.Rotation.Z);
-          go.transform.localScale = new Vector3(obj.Scale.X, obj.Scale.Y, obj.Scale.Z);
+          if (go != null)
+          {
+            go.GetComponent<SyncObject>().Sync(obj);
+          }
         }
         else
         {
@@ -91,14 +119,51 @@ public class MainGame : MonoBehaviour
           go.transform.position = new Vector3(obj.Position.X, obj.Position.Y, obj.Position.Z);
           go.transform.rotation = Quaternion.Euler(new Vector3(obj.Rotation.X, obj.Rotation.Y, obj.Rotation.Z));
           go.transform.localScale = new Vector3(obj.Scale.X, obj.Scale.Y, obj.Scale.Z);
-          // go.AddComponent<SyncObject>();
           go.GetComponent<SyncObject>().ObjectId = obj.Id;
-          // Instantiate(go);
           syncObjects.Add(obj.Id, go);
         }
       }
-      recvFps.Update();
-      // Debug.Log("Recv FPS:" + recvFps.GetFPS() + " Flames:" + recvFps.GetFlames());
+    }
+  }
+
+  private async void SendPlayerData()
+  {
+    playerDataSendCall = gameServer.client.SendPlayerData();
+    while (!syncEnd)
+    {
+      var items = playerDataQueue.Count;
+      if (items > 0)
+      {
+        var request = new GameService.SendPlayerDataRequest();
+        request.RoomId = playerInfo.player.RoomId;
+        for (int i = 0; i < items; i++)
+        {
+          request.PlayerData.Add(playerDataQueue.Dequeue());
+        }
+        await playerDataSendCall.RequestStream.WriteAsync(request);
+      }
+      await Task.Delay(1000 / (int)Settings.SEND_FPS);
+    }
+  }
+
+  private async void RecvPlayerData()
+  {
+    var recvCall = gameServer.client.SyncPlayerData(new GameService.SyncPlayerDataRequest { PlayerId = playerInfo.player.Id, RoomId = playerInfo.player.RoomId });
+    while (await recvCall.ResponseStream.MoveNext(ct))
+    {
+      var response = recvCall.ResponseStream.Current;
+      foreach (var data in response.PlayerData)
+      {
+        if (!playerData.ContainsKey(data.Id))
+        {
+          playerData.Add(data.Id, new Dictionary<string, string>());
+        }
+        foreach ((string key, string value) in data.Key.Zip(data.Value, (k, v) => (k, v)))
+        {
+          playerData[data.Id][key] = value;
+        }
+      }
+      onChangePlayerData.Invoke(playerData);
     }
   }
 }

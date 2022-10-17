@@ -11,7 +11,6 @@ public class PlayerInfo : ScriptableObject, ISerializationCallbackReceiver
     if (player == null)
     {
       player = new MatchingService.Player();
-      Debug.Log("OnEnable");
     }
   }
 

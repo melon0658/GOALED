@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc3f64638f78d704399f5605a3efbf59, type: 3}
   m_Name: MatchingServer
   m_EditorClassIdentifier: 
-  host: localhost
+  localHost: localhost
+  localPort: 8090
+  host: 3.112.253.4
   port: 8090
+  isLocal: 0

@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7b669edaa3ea14fa039bcc2d30c8cc, type: 3}
   m_Name: GameServer
   m_EditorClassIdentifier: 
-  host: localhost
+  localHost: localhost
+  localPort: 8080
+  host: 3.112.253.4
   port: 8080
+  isLocal: 0

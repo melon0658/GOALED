@@ -13,6 +13,7 @@ public class RoomDetail : MonoBehaviour
   [SerializeField] private GameObject userDetail;
   [SerializeField] private GameObject gameStartButton;
   private Dictionary<string, MatchingService.Player> players = new Dictionary<string, MatchingService.Player>();
+  private bool isFinished = false;
   // private AsyncServerStreamingCall<Multiplay.SyncRoomUsersResponse> call;
   void Start()
   {
@@ -29,7 +30,6 @@ public class RoomDetail : MonoBehaviour
 
   void onDestroy()
   {
-    // channel.ShutdownAsync().Wait();
   }
 
   private async void SyncRoom()
@@ -49,7 +49,7 @@ public class RoomDetail : MonoBehaviour
     //   }
     //   UpdateUserList();
     // }
-    while (true)
+    while (!isFinished)
     {
       var response = await matchingServer.client.GetPublicRoomAsync(new MatchingService.GetPublicRoomRequest { });
       foreach (MatchingService.Room room in response.Rooms)
@@ -70,7 +70,6 @@ public class RoomDetail : MonoBehaviour
           }
           break;
         }
-
       }
       UpdateUserList();
       await Task.Delay(1000);
@@ -79,6 +78,10 @@ public class RoomDetail : MonoBehaviour
 
   public void UpdateUserList()
   {
+    if (scrollView == null)
+    {
+      return;
+    }
     foreach (Transform child in scrollView.transform)
     {
       Destroy(child.gameObject);
@@ -102,9 +105,9 @@ public class RoomDetail : MonoBehaviour
     var call = matchingServer.client.GetStartGameStream(new MatchingService.GetStartGameStreamRequest { RoomId = playerInfo.player.RoomId, PlayerId = playerInfo.player.Id });
     while (await call.ResponseStream.MoveNext())
     {
-      Debug.Log(call.ResponseStream.Current);
       if (call.ResponseStream.Current.Success)
       {
+        isFinished = true;
         SceneManager.LoadScene("MainGameScene");
       }
     }
@@ -117,6 +120,7 @@ public class RoomDetail : MonoBehaviour
 
   public async void onClickBack()
   {
+    isFinished = true;
     await matchingServer.client.LeaveRoomAsync(new MatchingService.LeaveRoomRequest { PlayerId = playerInfo.player.Id, RoomId = playerInfo.player.RoomId });
     SceneManager.LoadScene("RoomMatchScene");
   }

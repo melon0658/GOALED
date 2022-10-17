@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5681089589090170577}
   - component: {fileID: 5681089589090170590}
   - component: {fileID: 5681089589090170591}
-  - component: {fileID: 5681089589090170588}
   - component: {fileID: 5681089589090170589}
   - component: {fileID: -1796095332394301774}
   m_Layer: 0
@@ -94,25 +93,13 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5681089589090170586}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ba0670843193e8344940ff779b07e978, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5681089589090170588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5681089589090170586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8bb9d6f475947d4faa21b83a7d0e49a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5681089589090170589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +113,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefub: Bullet
+  isSyncPosition: 1
+  syncPositionPeriod: 0.001
+  isSyncRotation: 1
+  syncRotationPeriod: 0.001
+  isSyncScale: 1
+  syncScalePeriod: 0.001
 --- !u!54 &-1796095332394301774
 Rigidbody:
   m_ObjectHideFlags: 0
