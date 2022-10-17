@@ -619,7 +619,7 @@ MonoBehaviour:
   leftButton: {fileID: 363906106}
   sphere: {fileID: 196691938}
   actionScript: {fileID: 196691948}
-  mbScript: {fileID: 196691945}
+  mbScript: {fileID: 196691952}
 --- !u!43 &8549364
 Mesh:
   m_ObjectHideFlags: 0
@@ -8169,46 +8169,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &196691945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 196691938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 301bb3d136180b24faed22106ef3717a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rScript: {fileID: 5806365}
-  nextSquare1: 0000000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c000000000000001e0000001f000000200000000c000000
-  coordinate:
-  - {x: 0, y: 0, z: 0}
-  - {x: -23.43, y: 0, z: -1.25}
-  - {x: -38.1, y: 0, z: 2.14}
-  - {x: -40.72, y: 0, z: 16.2}
-  - {x: -36.36, y: 0, z: 29.82}
-  - {x: -22.43, y: 0, z: 33.06}
-  - {x: -6.91, y: 0, z: 33.14}
-  - {x: 9.57, y: 0, z: 33.14}
-  - {x: 25.48, y: 0, z: 33.1}
-  - {x: 41.79, y: 0, z: 33.06}
-  - {x: 57.53, y: 0, z: 33.05}
-  - {x: 70.8, y: 0, z: 29.94}
-  - {x: 75.21, y: 0, z: 15.76}
-  - {x: 89.15, y: 0, z: 15.61}
-  - {x: 103.07, y: 0, z: 18.63}
-  - {x: 105.38, y: 0, z: 32.96}
-  - {x: 105.39, y: 0, z: 49.01}
-  - {x: 105.37, y: 0, z: 64.9}
-  - {x: 105.37, y: 0, z: 80.76}
-  - {x: 101.95, y: 0, z: 94.16}
-  - {x: 88.44, y: 0, z: 96.45}
-  - {x: 72.49, y: 0, z: 96.46}
-  - {x: 58.03, y: 0, z: 99.36}
-  - {x: 56.4, y: 0, z: 114}
-  - {x: 58.9, y: 0, z: 128}
 --- !u!114 &196691948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8235,6 +8195,54 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 1, z: 8}
   m_Center: {x: 0, y: 1.5, z: -0.4578644}
+--- !u!114 &196691952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196691938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 301bb3d136180b24faed22106ef3717a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rScript: {fileID: 5806365}
+  nextSquare1: 0000000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b00000000000000000000001e0000001f000000200000000c000000
+  coordinate:
+  - {x: 0, y: 0, z: 0}
+  - {x: -23.43, y: 0, z: -1.25}
+  - {x: -38.1, y: 0, z: 2.14}
+  - {x: -40.72, y: 0, z: 16.2}
+  - {x: -36.36, y: 0, z: 29.82}
+  - {x: -22.43, y: 0, z: 33.06}
+  - {x: -6.91, y: 0, z: 33.14}
+  - {x: 9.57, y: 0, z: 33.14}
+  - {x: 25.48, y: 0, z: 33.1}
+  - {x: 41.79, y: 0, z: 33.06}
+  - {x: 57.53, y: 0, z: 33.05}
+  - {x: 70.8, y: 0, z: 29.94}
+  - {x: 75.21, y: 0, z: 15.76}
+  - {x: 89.15, y: 0, z: 15.61}
+  - {x: 103.07, y: 0, z: 18.63}
+  - {x: 105.38, y: 0, z: 32.96}
+  - {x: 105.39, y: 0, z: 49.01}
+  - {x: 105.37, y: 0, z: 64.9}
+  - {x: 105.37, y: 0, z: 80.76}
+  - {x: 101.95, y: 0, z: 94.16}
+  - {x: 88.44, y: 0, z: 96.45}
+  - {x: 72.49, y: 0, z: 96.46}
+  - {x: 58.03, y: 0, z: 99.36}
+  - {x: 56.4, y: 0, z: 114}
+  - {x: 59.3, y: 0, z: 128.22}
+  - {x: 73.5, y: 0, z: 129.4}
+  - {x: 89.5, y: 0, z: 129.3}
+  - {x: 102.9, y: 0, z: 132.4}
+  - {x: 104.4, y: 0, z: 149.2}
+  - {x: 25.89, y: 0, z: -1.57}
+  - {x: 41.46, y: 0, z: -1.43}
+  - {x: 57.05, y: 0, z: -1.3}
+  - {x: 71.4, y: 0, z: 1.9}
 --- !u!43 &197075134
 Mesh:
   m_ObjectHideFlags: 0
@@ -13286,7 +13294,7 @@ MonoBehaviour:
   leftButton: {fileID: 363906106}
   pathLeft: {fileID: 1413330938}
   pathRight: {fileID: 854600854}
-  mbScript: {fileID: 196691945}
+  mbScript: {fileID: 196691952}
 --- !u!43 &311575430
 Mesh:
   m_ObjectHideFlags: 0
@@ -81926,7 +81934,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887719984}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
