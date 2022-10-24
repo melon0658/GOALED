@@ -40,7 +40,8 @@ public class Manager : MonoBehaviour
     {
       DebugMode();
     }
-    SendObject();
+    sendCall = gameServer.client.SendObject();
+    SendObjectLoop();
     RecvObject();
     SendPlayerData();
     RecvPlayerData();
@@ -54,16 +55,35 @@ public class Manager : MonoBehaviour
     }
   }
 
-  void OnDestroy()
+  async void OnDestroy()
   {
+    while (Array.FindAll(sendObjects.Values.ToArray(), x => x != null).Length > 0)
+    {
+      await Task.Delay(100);
+    }
     Close();
   }
 
   public void Close()
   {
     sendCall.RequestStream.CompleteAsync();
-    // playerDataSendCall.RequestStream.CompleteAsync();
-    gameServer.client.CloseStream(new GameService.CloseStreamRequest { PlayerId = playerInfo.player.Id, RoomId = playerInfo.player.RoomId });
+    playerDataSendCall.RequestStream.CompleteAsync();
+
+    foreach (var obj in sendObjects)
+    {
+      if (obj.Value != null)
+      {
+        Destroy(obj.Value);
+      }
+    }
+    var close = new GameService.CloseStreamRequest { PlayerId = playerInfo.player.Id, RoomId = playerInfo.player.RoomId };
+    foreach (var obj in removeObjects)
+    {
+      close.Object.Add(obj.Value);
+    }
+    gameServer.client.CloseStream(close);
+    Debug.Log("Close");
+
     if (!isDebugMode)
     {
       matchingServer.client.LeaveRoom(new MatchingService.LeaveRoomRequest { PlayerId = playerInfo.player.Id, RoomId = playerInfo.player.RoomId });
@@ -107,15 +127,19 @@ public class Manager : MonoBehaviour
     return request;
   }
 
-  private async void SendObject()
+  private async void SendObject(GameService.SendObjectRequest request)
   {
-    sendCall = gameServer.client.SendObject();
+    await sendCall.RequestStream.WriteAsync(request);
+  }
+
+  private async void SendObjectLoop()
+  {
     while (!isFinish)
     {
       var request = CreateSendRequest();
       if (request.Object.Count > 0)
       {
-        await sendCall.RequestStream.WriteAsync(request);
+        SendObject(request);
       }
       await Task.Delay(1000 / (int)Settings.SEND_FPS);
     }

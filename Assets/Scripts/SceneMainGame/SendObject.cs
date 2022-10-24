@@ -15,12 +15,20 @@ public class SendObject : MonoBehaviour
   [SerializeField] private float syncRotationPeriod = 0.001f;
   [SerializeField] private bool isSyncScale = true;
   [SerializeField] private float syncScalePeriod = 0.001f;
+  [SerializeField] private bool isSyncAnimation = false;
   private Vector3 positionBefore = Vector3.zero;
   private Vector3 rotationBefore = Vector3.zero;
   private Vector3 scaleBefore = Vector3.zero;
   private GameService.Object go = new GameService.Object();
   public List<GameService.RPC> rpcs = new List<GameService.RPC>();
   private Manager manager;
+  private Animator animator;
+  private CharacterController controller;
+
+  void OnEnable()
+  {
+
+  }
 
   void Start()
   {
@@ -29,11 +37,42 @@ public class SendObject : MonoBehaviour
     go.Id = objectId;
     go.Prefub = prefub;
     go.Owner = manager.playerInfo.player.Id;
+    if (isSyncAnimation)
+    {
+      animator = GetComponent<Animator>();
+      controller = GetComponent<CharacterController>();
+      foreach (var param in animator.parameters)
+      {
+        var paramData = new GameService.AnimatorParam();
+        paramData.Name = param.name;
+        if (param.type == AnimatorControllerParameterType.Bool)
+        {
+          paramData.Value = new GameService.ParamValue();
+          paramData.Value.BoolValue = animator.GetBool(param.name);
+        }
+        else if (param.type == AnimatorControllerParameterType.Float)
+        {
+          paramData.Value = new GameService.ParamValue();
+          paramData.Value.FloatValue = animator.GetFloat(param.name);
+        }
+        else if (param.type == AnimatorControllerParameterType.Int)
+        {
+          paramData.Value = new GameService.ParamValue();
+          paramData.Value.IntValue = animator.GetInteger(param.name);
+        }
+        else if (param.type == AnimatorControllerParameterType.Trigger)
+        {
+          paramData.Value = new GameService.ParamValue();
+          paramData.Value.TriggerValue = false;
+        }
+      }
+    }
     manager.AddSendObjects(gameObject);
   }
 
   void OnDestroy()
   {
+    setRPC("Delete", new Dictionary<string, string>());
     manager.AddRemoveObjects(toObject());
   }
 
@@ -57,6 +96,42 @@ public class SendObject : MonoBehaviour
     return (positionBefore - transform.position).magnitude > syncPositionPeriod || (rotationBefore - transform.rotation.eulerAngles).magnitude > syncRotationPeriod || (scaleBefore - transform.localScale).magnitude > syncScalePeriod;
   }
 
+  private void setAnimatorParam()
+  {
+    go.AnimatorParam.Clear();
+    var animatorParams = new List<GameService.AnimatorParam>();
+    foreach (var param in animator.parameters)
+    {
+      var paramData = new GameService.AnimatorParam();
+      paramData.Name = param.name;
+      if (param.type == AnimatorControllerParameterType.Bool)
+      {
+        paramData.Value = new GameService.ParamValue();
+        paramData.Value.BoolValue = animator.GetBool(param.name);
+      }
+      else if (param.type == AnimatorControllerParameterType.Float)
+      {
+        paramData.Value = new GameService.ParamValue();
+        paramData.Value.FloatValue = animator.GetFloat(param.name);
+      }
+      else if (param.type == AnimatorControllerParameterType.Int)
+      {
+        paramData.Value = new GameService.ParamValue();
+        paramData.Value.IntValue = animator.GetInteger(param.name);
+      }
+      else if (param.type == AnimatorControllerParameterType.Trigger)
+      {
+        paramData.Value = new GameService.ParamValue();
+        paramData.Value.TriggerValue = animator.GetBool(param.name);
+      }
+      if (paramData.Value != null)
+      {
+        animatorParams.Add(paramData);
+      }
+    }
+    go.AnimatorParam.AddRange(animatorParams);
+  }
+
   public GameService.Object toObject()
   {
     if (isSyncPosition)
@@ -70,6 +145,10 @@ public class SendObject : MonoBehaviour
     if (isSyncScale)
     {
       go.Scale = new GameService.Vec3 { X = transform.localScale.x, Y = transform.localScale.y, Z = transform.localScale.z };
+    }
+    if (isSyncAnimation)
+    {
+      setAnimatorParam();
     }
     go.Rpc.AddRange(rpcs);
     rpcs.Clear();

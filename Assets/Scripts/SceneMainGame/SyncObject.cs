@@ -37,6 +37,27 @@ public class SyncObject : MonoBehaviour
     {
       transform.localScale = new Vector3(obj.Scale.X, obj.Scale.Y, obj.Scale.Z);
     }
+    if (obj.AnimatorParam != null)
+    {
+      foreach (var param in obj.AnimatorParam)
+      {
+        switch (param.Value.ValueCase)
+        {
+          case GameService.ParamValue.ValueOneofCase.BoolValue:
+            GetComponent<Animator>().SetBool(param.Name, param.Value.BoolValue);
+            break;
+          case GameService.ParamValue.ValueOneofCase.FloatValue:
+            GetComponent<Animator>().SetFloat(param.Name, param.Value.FloatValue);
+            break;
+          case GameService.ParamValue.ValueOneofCase.IntValue:
+            GetComponent<Animator>().SetInteger(param.Name, param.Value.IntValue);
+            break;
+          case GameService.ParamValue.ValueOneofCase.TriggerValue:
+            GetComponent<Animator>().SetBool(param.Name, param.Value.TriggerValue);
+            break;
+        }
+      }
+    }
     elapsedTime = 0f;
   }
 
