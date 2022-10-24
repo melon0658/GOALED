@@ -8,16 +8,20 @@ public class Player : MonoBehaviour
   [SerializeField] private new GameObject camera;
   [SerializeField] private GameObject bullet;
   [SerializeField] private GameObject manager;
+  private Animator animator;
+  private CharacterController controller;
   public int balletCount = 0;
   void Start()
   {
+    animator = GetComponent<Animator>();
+    controller = GetComponent<CharacterController>();
   }
 
   void Update()
   {
     movecon();
     cameracon();
-    shot();
+    // shot();
   }
 
   void shot()
@@ -41,6 +45,14 @@ public class Player : MonoBehaviour
     transform.position = trans.position;
     trans.position += trans.TransformDirection(Vector3.forward) * Input.GetAxis("Vertical") * mainSPEED;
     trans.position += trans.TransformDirection(Vector3.right) * Input.GetAxis("Horizontal") * mainSPEED;
+    if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+    {
+      animator.SetBool("walking", true);
+    }
+    else
+    {
+      animator.SetBool("walking", false);
+    }
   }
 
   void cameracon()

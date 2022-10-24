@@ -17,7 +17,6 @@ public class Bullet : MonoBehaviour
     time += Time.deltaTime;
     if (time > 5f)
     {
-      this.GetComponent<SendObject>().setRPC("Delete", new Dictionary<string, string>());
       Destroy(gameObject);
     }
   }
