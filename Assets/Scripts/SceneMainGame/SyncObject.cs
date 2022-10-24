@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SyncObject : MonoBehaviour
 {
-  public string ObjectId;
+  public string objectId { get; set; }
   private const float InterpolationPeriod = 1f / Settings.RECV_FPS;
   private Vector3 positionBefore;
   private Vector3 positionAfter;
@@ -12,8 +12,6 @@ public class SyncObject : MonoBehaviour
   {
     positionBefore = transform.position;
     positionAfter = positionBefore;
-    // rotationBefore = transform.rotation.eulerAngles;
-    // rotationAfter = rotationBefore;
     elapsedTime = 0f;
   }
 
@@ -42,8 +40,9 @@ public class SyncObject : MonoBehaviour
     elapsedTime = 0f;
   }
 
-  public string getID()
+  [CustomRPC]
+  public void Delete()
   {
-    return ObjectId;
+    Destroy(gameObject);
   }
 }

@@ -16,4 +16,4 @@ MonoBehaviour:
   localPort: 8080
   host: 3.112.253.4
   port: 8080
-  isLocal: 0
+  isLocal: 1

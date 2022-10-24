@@ -1,9 +1,14 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class SendObject : MonoBehaviour
 {
-  private string ObjectId;
-  [SerializeField] private string Prefub;
+  private string objectId;
+  public string ObjectId
+  {
+    get { return objectId; }
+  }
+  [SerializeField] private string prefub;
   [SerializeField] private bool isSyncPosition = true;
   [SerializeField] private float syncPositionPeriod = 0.001f;
   [SerializeField] private bool isSyncRotation = true;
@@ -14,20 +19,22 @@ public class SendObject : MonoBehaviour
   private Vector3 rotationBefore = Vector3.zero;
   private Vector3 scaleBefore = Vector3.zero;
   private GameService.Object go = new GameService.Object();
+  public List<GameService.RPC> rpcs = new List<GameService.RPC>();
+  private Manager manager;
 
   void Start()
   {
-    ObjectId = System.Guid.NewGuid().ToString();
-    var mainGame = GameObject.Find("MainGameManager").GetComponent<MainGame>();
-    go.Id = ObjectId;
-    go.Prefub = Prefub;
-    go.Owner = mainGame.playerInfo.player.Id;
-    mainGame.AddSendObjects(gameObject);
+    objectId = System.Guid.NewGuid().ToString();
+    manager = GameObject.Find("MainGameManager").GetComponent<Manager>();
+    go.Id = objectId;
+    go.Prefub = prefub;
+    go.Owner = manager.playerInfo.player.Id;
+    manager.AddSendObjects(gameObject);
   }
 
-  public string getID()
+  void OnDestroy()
   {
-    return ObjectId;
+    manager.AddRemoveObjects(toObject());
   }
 
   public void setTransform()
@@ -35,6 +42,14 @@ public class SendObject : MonoBehaviour
     positionBefore = transform.position;
     rotationBefore = transform.rotation.eulerAngles;
     scaleBefore = transform.localScale;
+  }
+
+  public void setRPC(string rpc, Dictionary<string, string> args)
+  {
+    var rpcObj = new GameService.RPC();
+    rpcObj.Method = rpc;
+    rpcObj.Args.Add(args);
+    rpcs.Add(rpcObj);
   }
 
   public bool isTransformChanged()
@@ -56,6 +71,8 @@ public class SendObject : MonoBehaviour
     {
       go.Scale = new GameService.Vec3 { X = transform.localScale.x, Y = transform.localScale.y, Z = transform.localScale.z };
     }
+    go.Rpc.AddRange(rpcs);
+    rpcs.Clear();
     return go;
   }
 }

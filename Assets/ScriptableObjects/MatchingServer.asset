@@ -16,4 +16,4 @@ MonoBehaviour:
   localPort: 8090
   host: 3.112.253.4
   port: 8090
-  isLocal: 0
+  isLocal: 1

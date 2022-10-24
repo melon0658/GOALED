@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
   [SerializeField] private new GameObject camera;
   [SerializeField] private GameObject bullet;
   [SerializeField] private GameObject manager;
-  private int balletCount = 0;
+  public int balletCount = 0;
   void Start()
   {
   }
@@ -28,10 +28,10 @@ public class Player : MonoBehaviour
       bulletobj.GetComponent<Rigidbody>().AddForce(camera.transform.TransformDirection(Vector3.forward) * 1000f);
       balletCount++;
       var playerData = new GameService.PlayerData();
-      playerData.Id = manager.GetComponent<MainGame>().playerInfo.player.Id;
+      playerData.Id = manager.GetComponent<Manager>().playerInfo.player.Id;
       playerData.Key.Add("balletCount");
       playerData.Value.Add(balletCount.ToString());
-      manager.GetComponent<MainGame>().AddPlayerData(playerData);
+      // manager.GetComponent<Manager>().AddPlayerData(playerData);
     }
   }
 
