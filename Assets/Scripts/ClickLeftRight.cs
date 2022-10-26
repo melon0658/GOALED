@@ -7,6 +7,7 @@ using UnityEngine;
 public class ClickLeftRight : MonoBehaviour
 {
     public GameObject stopButton;
+    public GameObject upButton;
     public GameObject rightButton;
     public GameObject leftButton;
 
@@ -14,24 +15,49 @@ public class ClickLeftRight : MonoBehaviour
     public GameObject car1;
     public Material carMaterial;
 
-    public PathCreator pathLeft;
-    public PathCreator pathRight;
+    public PathCreator pathStartLeft;
+    public PathCreator pathStartRight;
+    public PathCreator pathSecondLeft;
+    public PathCreator pathSecondUp;
+    public PathCreator pathLastLeft;
+    public PathCreator pathLastUp;
+
     public MovementBaseScript mbScript;
     public Roulette rScript;
+    public Action ActionScript;
 
     // Start is called before the first frame update
     void Start()
     {
         stopButton.GetComponent<Button>().interactable = false;
-        //左右ボタンを隠す
-        //leftButton.SetActive(false);
-        //rightButton.SetActive(false);
+        upButton.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void OnClickUp()
+    {
+        //仮で車のマテリアルを戻す
+        car1.GetComponent<Renderer>().material = this.carMaterial;
+
+        Debug.Log("Up");
+        stopButton.GetComponent<Button>().interactable = true;
+        if (ActionScript.GetCheckPointName() == "CeckPosition2")
+        {
+            mbScript.SetPathCreator(pathSecondUp);
+        }
+        else
+        {
+            mbScript.SetPathCreator(pathLastUp);
+        }
+        
+        rScript.PowerBarStart();
+        HiddenLU();
+
     }
 
     public void OnClickLeft()
@@ -41,7 +67,19 @@ public class ClickLeftRight : MonoBehaviour
 
         Debug.Log("Left");
         stopButton.GetComponent<Button>().interactable = true;
-        mbScript.SetPathCreator(pathLeft);
+        if (ActionScript.GetCheckPointName() == "CeckPosition")
+        {
+            mbScript.SetPathCreator(pathStartLeft);
+        }
+        else if (ActionScript.GetCheckPointName() == "CeckPosition2")
+        {
+            mbScript.SetPathCreator(pathSecondLeft);
+        }
+        else
+        {
+            mbScript.SetPathCreator(pathLastLeft);
+        }
+        
         rScript.PowerBarStart();
         HiddenLR();
         
@@ -54,16 +92,22 @@ public class ClickLeftRight : MonoBehaviour
 
         Debug.Log("Right");
         stopButton.GetComponent<Button>().interactable = true;
-        mbScript.SetPathCreator(pathRight);
+        mbScript.SetPathCreator(pathStartRight);
         rScript.PowerBarStart();
         HiddenLR();
     }
 
     void HiddenLR()
     {
-        //左右ボタンを隠す
+        //左ボタンと右ボタンを隠す
         leftButton.SetActive(false);
         rightButton.SetActive(false);
-        //mbScript.moveStart();
+    }
+
+    void HiddenLU()
+    {
+        //左ボタンと上ボタンを隠す
+        leftButton.SetActive(false);
+        upButton.SetActive(false);
     }
 }

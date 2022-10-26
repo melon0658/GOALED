@@ -8,10 +8,16 @@ public class Action : MonoBehaviour
     public string objName;
 
     private bool checkPoint = false;
+    private string checkPointName;
 
     public bool GetCheckPoint()
     {
         return checkPoint;
+    }
+
+    public string GetCheckPointName()
+    {
+        return checkPointName;
     }
 
     // Start is called before the first frame update
@@ -30,19 +36,18 @@ public class Action : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.name);
-        // もし衝突した相手オブジェクトの名前が"Cube"ならば
+        // 衝突した相手オブジェクトのタグが"CheckPoint"
         if (other.tag == "CheckPoint")
         {
-            // 衝突した相手オブジェクトのRendererコンポーネントのmaterialの色を黒に変更する
+            // 分岐判定をtrueにする
             Debug.Log("true");
+            checkPointName = other.name;
             checkPoint = true;
         }
         else
         {
             Debug.Log("false");
-            
             checkPoint = false;
-            Debug.Log(checkPoint);
         }
     }
 

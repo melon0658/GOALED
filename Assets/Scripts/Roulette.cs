@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 
 
 public class Roulette : MonoBehaviour
@@ -24,7 +24,7 @@ public class Roulette : MonoBehaviour
     private float speed;
     private float slowDownSpeed = 0.99f;
 
-    public GameObject sphere;
+    //public GameObject sphere;
 
     public Action actionScript;
 
@@ -191,7 +191,7 @@ public class Roulette : MonoBehaviour
             ang = (int)(-1.0 * roulette.transform.localEulerAngles.y + 180);
         }
         ang = 10 - ang / 36;
-        Text tt = GameObject.Find("Text(Legacy)").GetComponent<Text>();
+        TextMeshProUGUI tt = GameObject.Find("CountText").GetComponent<TextMeshProUGUI>();
         tt.text = ang.ToString();
 
         mbScript.SetEndPoth();

@@ -10,6 +10,7 @@ public class MovementBaseScript : MonoBehaviour
     public Roulette rScript;
     public Action actionScript;
 
+    public GameObject upButton;
     public GameObject rightButton;
     public GameObject leftButton;
 
@@ -154,11 +155,19 @@ public class MovementBaseScript : MonoBehaviour
             
 
 
-            Debug.Log(actionScript.GetCheckPoint());
-            if (actionScript.GetCheckPoint() == true)
+            Debug.Log("Name " + actionScript.GetCheckPointName());
+            if (actionScript.GetCheckPoint())
             {
-                rightButton.SetActive(true);
-                leftButton.SetActive(true);
+                if(actionScript.GetCheckPointName() == "CheckPosition")
+                {
+                    rightButton.SetActive(true);
+                    leftButton.SetActive(true);
+                }
+                else
+                {
+                    leftButton.SetActive(true);
+                    upButton.SetActive(true);
+                }
             }
             else
             {
