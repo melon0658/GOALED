@@ -26,6 +26,8 @@ public class Manager : MonoBehaviour
   private Dictionary<string, Dictionary<string, string>> recvPlayerData = new Dictionary<string, Dictionary<string, string>>();
   [Serializable] public class PlayerDataEvent : UnityEvent<Dictionary<string, Dictionary<string, string>>> { }
   [SerializeField] private PlayerDataEvent onChangePlayerData;
+  private List<string> players = new List<string>();
+  private bool isAddPlayer = false;
   private bool isFinish = false;
 
   private void DebugMode()
@@ -126,12 +128,13 @@ public class Manager : MonoBehaviour
         continue;
       }
       SendObject sendObject = obj.Value.GetComponent<SendObject>();
-      if (sendObject.isTransformChanged())
+      if (sendObject.isTransformChanged() || isAddPlayer)
       {
         request.Object.Add(sendObject.toObject());
         sendObject.setTransform();
       }
     }
+    isAddPlayer = false;
     foreach (var obj in removeObjects)
     {
       request.Object.Add(obj.Value);
@@ -251,6 +254,11 @@ public class Manager : MonoBehaviour
     {
       return;
     }
+    if (!players.Contains(obj.Owner))
+    {
+      players.Add(obj.Owner);
+      isAddPlayer = true;
+    }
     if (recvObjects.ContainsKey(id))
     {
       var go = recvObjects[id];
@@ -324,6 +332,24 @@ public class Manager : MonoBehaviour
     return request;
   }
 
+  private GameService.SendPlayerDataRequest LocalPlayerDataToPlayerDataRequest()
+  {
+    var request = new GameService.SendPlayerDataRequest();
+    request.RoomId = playerInfo.player.RoomId;
+    foreach (var playerData in recvPlayerData)
+    {
+      var pd = new GameService.PlayerData();
+      pd.Id = playerData.Key;
+      foreach (var data in playerData.Value)
+      {
+        pd.Key.Add(data.Key);
+        pd.Value.Add(data.Value);
+      }
+      request.PlayerData.Add(pd);
+    }
+    return request;
+  }
+
   private async void SendPlayerData()
   {
     playerDataSendCall = gameServer.client.SendPlayerData();
@@ -333,6 +359,10 @@ public class Manager : MonoBehaviour
       if (request.PlayerData.Count > 0)
       {
         await playerDataSendCall.RequestStream.WriteAsync(request);
+      }
+      if (isAddPlayer)
+      {
+        await playerDataSendCall.RequestStream.WriteAsync(LocalPlayerDataToPlayerDataRequest());
       }
       await Task.Delay(1000 / (int)Settings.SEND_FPS);
     }
