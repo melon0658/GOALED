@@ -70,10 +70,15 @@ public class SendObject : MonoBehaviour
     manager.AddSendObjects(gameObject);
   }
 
-  void OnDestroy()
+  public void delete()
   {
     setRPC("Delete", new Dictionary<string, string>());
     manager.AddRemoveObjects(toObject());
+  }
+
+  void OnDestroy()
+  {
+    delete();
   }
 
   public void setTransform()
@@ -100,6 +105,10 @@ public class SendObject : MonoBehaviour
   {
     go.AnimatorParam.Clear();
     var animatorParams = new List<GameService.AnimatorParam>();
+    if (animator == null)
+    {
+      return;
+    }
     foreach (var param in animator.parameters)
     {
       var paramData = new GameService.AnimatorParam();

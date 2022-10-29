@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class Player : MonoBehaviour
 {
@@ -21,21 +22,28 @@ public class Player : MonoBehaviour
   {
     movecon();
     cameracon();
-    // shot();
+    shot();
+    var playerData = new GameService.PlayerData();
+    playerData.Id = manager.GetComponent<Manager>().playerInfo.player.Id;
+    playerData.Key.Add("position");
+    playerData.Value.Add(transform.position.ToString());
+    manager.GetComponent<Manager>().AddPlayerData(playerData);
   }
 
-  void shot()
+  async void shot()
   {
-    if (Input.GetMouseButtonDown(0))
+    if (Input.GetMouseButton(0))
     {
-      var bulletobj = Instantiate(bullet, transform.position, transform.rotation);
+      var position = transform.position + transform.transform.TransformDirection(Vector3.forward) * 5;
+      var bulletobj = Instantiate(bullet, position, transform.rotation);
       bulletobj.GetComponent<Rigidbody>().AddForce(camera.transform.TransformDirection(Vector3.forward) * 1000f);
       balletCount++;
       var playerData = new GameService.PlayerData();
       playerData.Id = manager.GetComponent<Manager>().playerInfo.player.Id;
       playerData.Key.Add("balletCount");
       playerData.Value.Add(balletCount.ToString());
-      // manager.GetComponent<Manager>().AddPlayerData(playerData);
+      manager.GetComponent<Manager>().AddPlayerData(playerData);
+      await Task.Delay(1000);
     }
   }
 

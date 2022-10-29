@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.Events;
 using Grpc.Core;
 using System.Collections.Generic;
@@ -51,38 +52,50 @@ public class Manager : MonoBehaviour
   {
     if (Input.GetKeyDown(KeyCode.Escape))
     {
-      SceneManager.LoadScene("SelectRoomScene");
+      try
+      {
+        SceneManager.LoadScene("SelectRoomScene");
+      }
+      catch (Exception)
+      {
+        Application.Quit();
+      }
     }
   }
 
   async void OnDestroy()
   {
+    // 他のオブジェクトが破棄されるのを待つ
     while (Array.FindAll(sendObjects.Values.ToArray(), x => x != null).Length > 0)
     {
-      await Task.Delay(100);
+      if (EditorApplication.isPlaying)
+      {
+        await Task.Delay(100);
+      }
+      else
+      {
+        foreach (var obj in Array.FindAll(sendObjects.Values.ToArray(), x => x != null))
+        {
+          obj.GetComponent<SendObject>().setRPC("Destroy", new Dictionary<string, string>());
+          AddRemoveObjects(obj.GetComponent<SendObject>().toObject());
+        }
+        break;
+      }
     }
     Close();
   }
 
   public void Close()
   {
+    Debug.Log("Close");
     sendCall.RequestStream.CompleteAsync();
     playerDataSendCall.RequestStream.CompleteAsync();
-
-    foreach (var obj in sendObjects)
-    {
-      if (obj.Value != null)
-      {
-        Destroy(obj.Value);
-      }
-    }
     var close = new GameService.CloseStreamRequest { PlayerId = playerInfo.player.Id, RoomId = playerInfo.player.RoomId };
     foreach (var obj in removeObjects)
     {
       close.Object.Add(obj.Value);
     }
     gameServer.client.CloseStream(close);
-    Debug.Log("Close");
 
     if (!isDebugMode)
     {
@@ -230,6 +243,10 @@ public class Manager : MonoBehaviour
   private void SetRecvObject(GameService.Object obj)
   {
     var id = obj.Id;
+    if (id == "" || id == null)
+    {
+      return;
+    }
     if (obj.Owner == playerInfo.player.Id)
     {
       return;
@@ -263,10 +280,42 @@ public class Manager : MonoBehaviour
     }
   }
 
+  public void AddPlayerData(GameService.PlayerData playerData)
+  {
+    var pd = new GameService.PlayerData();
+    pd.Id = playerData.Id;
+    // 値が変わっているものだけ送信
+    if (recvPlayerData.ContainsKey(playerData.Id))
+    {
+      foreach ((string key, string value) in playerData.Key.Zip(playerData.Value, (k, v) => (k, v)))
+      {
+        if (recvPlayerData[playerData.Id].ContainsKey(key) && recvPlayerData[playerData.Id][key] == value)
+        {
+          continue;
+        }
+        else
+        {
+          pd.Key.Add(key);
+          pd.Value.Add(value);
+        }
+      }
+    }
+    else
+    {
+      SetRecvPlayerData(playerData);
+      playerDataQueue.Enqueue(playerData);
+    }
+    if (pd.Key.Count > 0)
+    {
+      SetRecvPlayerData(playerData);
+      playerDataQueue.Enqueue(pd);
+    }
+  }
+
   private GameService.SendPlayerDataRequest CreateSendPlayerDataRequest()
   {
     var request = new GameService.SendPlayerDataRequest();
-    request.RoomId = playerInfo.player.Id;
+    request.RoomId = playerInfo.player.RoomId;
     var items = playerDataQueue.Count;
     for (int i = 0; i < items; i++)
     {
