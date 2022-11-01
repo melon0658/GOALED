@@ -16,6 +16,7 @@ public class SendObject : MonoBehaviour
   [SerializeField] private bool isSyncScale = true;
   [SerializeField] private float syncScalePeriod = 0.001f;
   [SerializeField] private bool isSyncAnimation = false;
+  [SerializeField] private bool isRoomObject = false;
   private Vector3 positionBefore = Vector3.zero;
   private Vector3 rotationBefore = Vector3.zero;
   private Vector3 scaleBefore = Vector3.zero;
@@ -67,7 +68,21 @@ public class SendObject : MonoBehaviour
         }
       }
     }
-    manager.AddSendObjects(gameObject);
+    if (isRoomObject)
+    {
+      if (manager.playerInfo.isRoomOwner)
+      {
+        manager.AddSendObjects(gameObject);
+      }
+      else
+      {
+        gameObject.SetActive(false);
+      }
+    }
+    else
+    {
+      manager.AddSendObjects(gameObject);
+    }
   }
 
   public void delete()
@@ -153,7 +168,7 @@ public class SendObject : MonoBehaviour
     }
     if (isSyncScale)
     {
-      go.Scale = new GameService.Vec3 { X = transform.localScale.x, Y = transform.localScale.y, Z = transform.localScale.z };
+      go.Scale = new GameService.Vec3 { X = transform.lossyScale.x, Y = transform.lossyScale.y, Z = transform.lossyScale.z };
     }
     if (isSyncAnimation)
     {

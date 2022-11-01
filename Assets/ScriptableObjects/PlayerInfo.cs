@@ -5,12 +5,14 @@ using System;
 public class PlayerInfo : ScriptableObject, ISerializationCallbackReceiver
 {
   [NonSerialized] public MatchingService.Player player;
+  [NonSerialized] public bool isRoomOwner;
 
   public void OnEnable()
   {
     if (player == null)
     {
       player = new MatchingService.Player();
+      isRoomOwner = false;
     }
   }
 

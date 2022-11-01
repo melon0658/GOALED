@@ -17,6 +17,7 @@ public class Manager : MonoBehaviour
   [SerializeField] private MatchingServer matchingServer;
   [SerializeField] public PlayerInfo playerInfo;
   [SerializeField] private bool isDebugMode = false;
+  [SerializeField] private bool isPrintLog = false;
   private AsyncClientStreamingCall<GameService.SendObjectRequest, GameService.SendObjectResponse> sendCall;
   private AsyncClientStreamingCall<GameService.SendPlayerDataRequest, GameService.SendPlayerDataResponse> playerDataSendCall;
   private ConcurrentDictionary<string, GameObject> sendObjects = new ConcurrentDictionary<string, GameObject>();
@@ -34,7 +35,13 @@ public class Manager : MonoBehaviour
   {
     var id = matchingServer.client.GetPlayerId(new MatchingService.GetPlayerIdRequest()).PlayerId;
     playerInfo.player = new MatchingService.Player { Id = id, Name = "test", RoomId = "test" };
-    gameServer.client.CreateRoom(new GameService.Room { Id = "test", Name = "test", Owner = id });
+    var room = gameServer.client.CreateRoom(new GameService.Room { Id = "test", Name = "test", Owner = id });
+    Debug.Log(room.Owner + " " + id);
+    playerInfo.isRoomOwner = room.Owner == id;
+    if (playerInfo.isRoomOwner)
+    {
+      Debug.Log("Owner");
+    }
   }
 
   void Start()
@@ -353,6 +360,7 @@ public class Manager : MonoBehaviour
   private async void SendPlayerData()
   {
     playerDataSendCall = gameServer.client.SendPlayerData();
+    AddPlayerData(new GameService.PlayerData { Id = playerInfo.player.Id, Key = { "name" }, Value = { playerInfo.player.Name } });
     while (!isFinish)
     {
       var request = CreateSendPlayerDataRequest();
@@ -374,9 +382,15 @@ public class Manager : MonoBehaviour
     if (!recvPlayerData.ContainsKey(player_id))
     {
       recvPlayerData.TryAdd(player_id, new Dictionary<string, string>());
+      players.Add(player_id);
+      isAddPlayer = true;
     }
     foreach ((string key, string value) in playerData.Key.Zip(playerData.Value, (k, v) => (k, v)))
     {
+      if (isPrintLog)
+      {
+        Debug.Log("PlayerData: " + player_id + " key: " + key + " value: " + value);
+      }
       recvPlayerData[player_id][key] = value;
     }
   }
