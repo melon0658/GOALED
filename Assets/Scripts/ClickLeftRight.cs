@@ -67,11 +67,11 @@ public class ClickLeftRight : MonoBehaviour
 
         Debug.Log("Left");
         stopButton.GetComponent<Button>().interactable = true;
-        if (ActionScript.GetCheckPointName() == "CeckPosition")
+        if (ActionScript.GetCheckPointName() == "CheckPosition")
         {
             mbScript.SetPathCreator(pathStartLeft);
         }
-        else if (ActionScript.GetCheckPointName() == "CeckPosition2")
+        else if (ActionScript.GetCheckPointName() == "CheckPosition2")
         {
             mbScript.SetPathCreator(pathSecondLeft);
         }
