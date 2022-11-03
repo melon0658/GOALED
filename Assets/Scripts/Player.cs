@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     private string child; //子供
     private int houseNumber; //持ち家の番号
 
+    private GameObject status;
+
     public Player(string plyaerName, int money, int nowPosIndex, string color, string job, string spouse, string child, int houseNumber)
     {
         this.PlyaerName = plyaerName;
@@ -38,12 +40,26 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        status = GameObject.Find("Status");
+        status.SetActive(false);
+        Debug.Log(status);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //Tabキーが入力された場合
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            //ステータス画面を表示
+            status.SetActive(true);
+        }
+        else
+        {
+            //ステータス画面を非表示
+            status.SetActive(false);
+        }
     }
+
+
 }
