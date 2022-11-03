@@ -44,9 +44,9 @@ public class ClickLeftRight : MonoBehaviour
         //仮で車のマテリアルを戻す
         car1.GetComponent<Renderer>().material = this.carMaterial;
 
-        Debug.Log("Up");
+        //Debug.Log("Up");
         stopButton.GetComponent<Button>().interactable = true;
-        if (ActionScript.GetCheckPointName() == "CeckPosition2")
+        if (ActionScript.GetCheckPointName() == "CheckPosition2")
         {
             mbScript.SetPathCreator(pathSecondUp);
         }
@@ -65,24 +65,25 @@ public class ClickLeftRight : MonoBehaviour
         //仮で車のマテリアルを戻す
         car1.GetComponent<Renderer>().material = this.carMaterial;
 
-        Debug.Log("Left");
+        //Debug.Log("Left");
         stopButton.GetComponent<Button>().interactable = true;
         if (ActionScript.GetCheckPointName() == "CheckPosition")
         {
             mbScript.SetPathCreator(pathStartLeft);
+            HiddenLR();
         }
         else if (ActionScript.GetCheckPointName() == "CheckPosition2")
         {
             mbScript.SetPathCreator(pathSecondLeft);
+            HiddenLU();
         }
         else
         {
             mbScript.SetPathCreator(pathLastLeft);
+            HiddenLU();
         }
         
         rScript.PowerBarStart();
-        HiddenLR();
-        
     }
 
     public void OnClickRight()
@@ -90,7 +91,7 @@ public class ClickLeftRight : MonoBehaviour
         //仮で車のマテリアルを戻す
         car1.GetComponent<Renderer>().material = this.carMaterial;
 
-        Debug.Log("Right");
+        //Debug.Log("Right");
         stopButton.GetComponent<Button>().interactable = true;
         mbScript.SetPathCreator(pathStartRight);
         rScript.PowerBarStart();

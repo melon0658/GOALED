@@ -54,44 +54,7 @@ public class Roulette : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //クリックされていなければ実行
-        //if (!isClicked)
-        //{
-        //    //5に達した場合と、0に戻った場合のフラグ切替え
-        //    if (slider.value == 1)
-        //    {
-        //        maxValue = true;
-        //    }
 
-        //    if (slider.value == 0)
-        //    {
-        //        maxValue = false;
-        //    }
-
-        //    //フラグによるスライダー値の増減
-        //    if (maxValue)
-        //    {
-        //        slider.value -= 0.04f;
-        //    }
-        //    else
-        //    {
-        //        slider.value += 0.04f;
-        //    }
-        //    //Debug.Log(slider.value);
-        //}
-
-        //if (rotate)
-        //{
-        //    roulette.transform.Rotate(0, speed, 0);
-        //    speed *= slowDownSpeed;
-        //    slowDownSpeed -= 0.001f * Time.deltaTime;
-
-        //    if (speed < 0.01f)
-        //    {
-        //        rotate = false;
-        //        count();
-        //    }
-        //}
     }
 
     public void PowerBarStart()
@@ -100,7 +63,6 @@ public class Roulette : MonoBehaviour
         {
             button.GetComponent<Button>().interactable = true;
         }
-        
 
         InvokeRepeating("MoveBar", 0.0f, 0.015f);
     }
@@ -158,15 +120,10 @@ public class Roulette : MonoBehaviour
                 count();
             }
         }
-        //if (this.transform.localPosition.x >= endPos.x - 1.0f && this.transform.localPosition.x <= endPos.x + 1.0 && this.transform.localPosition.z >= endPos.z - 1.0f && this.transform.localPosition.z <= endPos.z + 1.0f)
-        //{
-        //    stopBar = true;
-        //}
     }
 
     public void OnClick()
     {
-        Debug.Log("stop!!!!!!!!!!!!");
         isClicked = true;
         rotate = true;
         button.GetComponent<Button>().interactable = false;
@@ -179,8 +136,7 @@ public class Roulette : MonoBehaviour
         car1.GetComponent<Renderer>().material = this.carMaterial;
 
         CancelInvoke("MoveBar");
-        Debug.Log("終わり");
-        //stopBar = false;
+        //Debug.Log("終わり");
 
         if (roulette.transform.localEulerAngles.y > 0)
         {
