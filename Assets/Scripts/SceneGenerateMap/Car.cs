@@ -7,6 +7,9 @@ using System.Linq;
 public class Car : MonoBehaviour
 {
   [SerializeField] private GameObject TileManager;
+  [SerializeField] private GameObject Button;
+  [SerializeField] private GameObject LeftButton;
+  [SerializeField] private GameObject RightButton;
   private Tile tile;
   private const float InterpolationPeriod = 0.5f;
   private Vector3 positionBefore;
@@ -16,6 +19,7 @@ public class Car : MonoBehaviour
   private Vector3 NextPoint;
   private float elapsedTime;
   private bool isMoving = false;
+  private Direction? chooseDirection;
   void Start()
   {
     Debug.Log("Car Start");
@@ -23,7 +27,11 @@ public class Car : MonoBehaviour
     positionAfter = transform.position;
     rotateBefore = transform.eulerAngles;
     rotateAfter = transform.eulerAngles;
+    Button.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(OnClick);
+    LeftButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnClickDirection(0));
+    RightButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnClickDirection(1));
   }
+
   void Update()
   {
     elapsedTime += Time.deltaTime;
@@ -32,12 +40,57 @@ public class Car : MonoBehaviour
       transform.rotation = Quaternion.LookRotation(Vector3.Lerp(positionBefore, positionAfter, elapsedTime / InterpolationPeriod) - transform.position, Vector3.up);
     }
     transform.position = Vector3.Lerp(positionBefore, positionAfter, elapsedTime / InterpolationPeriod);
-    // transform.rotation = Quaternion.Lerp(Quaternion.Euler(rotateBefore), Quaternion.Euler(rotateAfter), elapsedTime / InterpolationPeriod);
+  }
+
+  private void OnClickDirection(int direction)
+  {
+    var carDirection = GetDirection();
+    if (direction == 0)
+    {
+      carDirection = carDirection - 1;
+      if (carDirection < 0)
+      {
+        carDirection = (Direction)3;
+      }
+    }
+    else
+    {
+      carDirection = carDirection + 1;
+      if (carDirection > (Direction)3)
+      {
+        carDirection = 0;
+      }
+    }
+    chooseDirection = carDirection;
+    LeftButton.SetActive(false);
+    RightButton.SetActive(false);
+  }
+
+  private Direction GetDirection()
+  {
+    if (transform.eulerAngles.y == 0)
+    {
+      return Direction.POSITIVE_Z;
+    }
+    else if (transform.eulerAngles.y == 90)
+    {
+      return Direction.POSITIVE_X;
+    }
+    else if (transform.eulerAngles.y == 180)
+    {
+      return Direction.NEGATIVE_Z;
+    }
+    else if (transform.eulerAngles.y == 270)
+    {
+      return Direction.NEGATIVE_X;
+    }
+    return Direction.POSITIVE_X;
   }
 
   private async void Move(List<Vector3> path, List<Vector3> rotations)
   {
     isMoving = true;
+    Button.SetActive(false);
     for (int i = 0; i < path.Count; i++)
     {
       positionBefore = transform.position;
@@ -48,6 +101,12 @@ public class Car : MonoBehaviour
       await Task.Delay((int)(InterpolationPeriod * 1000));
     }
     isMoving = false;
+    Button.SetActive(true);
+    if (tile.GetTileType() == TileType.JUNCTION)
+    {
+      LeftButton.SetActive(true);
+      RightButton.SetActive(true);
+    }
   }
 
   public void OnClick()
@@ -56,10 +115,22 @@ public class Car : MonoBehaviour
     {
       return;
     }
-    var step = 100;
-    Debug.Log("Step: " + step);
     List<Vector3> path, rotate;
-    (tile, path, rotate) = TileManager.GetComponent<GenerateMap>().WayToTile(tile, step);
+    var step = 1;
+    if (tile != null)
+    {
+      if (tile.GetTileType() == TileType.JUNCTION)
+      {
+        if (chooseDirection == null)
+        {
+          return;
+        }
+      }
+    }
+    Debug.Log("Step: " + step);
+    (tile, path, rotate) = TileManager.GetComponent<GenerateMap>().WayToTile(tile, step, (Direction?)chooseDirection);
     Move(path, rotate);
+    chooseDirection = null;
+    Debug.Log(tile.Event.GetEventName());
   }
 }
