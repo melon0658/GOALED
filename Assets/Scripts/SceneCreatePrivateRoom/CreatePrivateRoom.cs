@@ -55,8 +55,8 @@ public class CreatePrivateRoom : MonoBehaviour
   //         SceneManager.LoadScene("RoomDetailScene");
   //     }
 
-  //     public void onClickBack()
-  //     {
-  //         SceneManager.LoadScene("SelectRoomScene");
-  //     }
+      public void onClickBack()
+      {
+          SceneManager.LoadScene("SelectRoomScene");
+      }
 }
