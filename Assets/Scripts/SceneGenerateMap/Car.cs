@@ -10,6 +10,7 @@ public class Car : MonoBehaviour
   [SerializeField] private GameObject Button;
   [SerializeField] private GameObject LeftButton;
   [SerializeField] private GameObject RightButton;
+  [SerializeField] private GameObject CenterButton;
   private Tile tile;
   private const float InterpolationPeriod = 0.5f;
   private Vector3 positionBefore;
@@ -28,8 +29,14 @@ public class Car : MonoBehaviour
     rotateBefore = transform.eulerAngles;
     rotateAfter = transform.eulerAngles;
     Button.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(OnClick);
-    LeftButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnClickDirection(0));
+    LeftButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnClickDirection(-1));
+    CenterButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnClickDirection(0));
     RightButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnClickDirection(1));
+    tile = TileManager.GetComponent<GenerateMap>().StartTile;
+    LeftButton.SetActive(false);
+    CenterButton.SetActive(false);
+    RightButton.SetActive(false);
+    ToggleButton(tile);
   }
 
   void Update()
@@ -42,10 +49,10 @@ public class Car : MonoBehaviour
     transform.position = Vector3.Lerp(positionBefore, positionAfter, elapsedTime / InterpolationPeriod);
   }
 
-  private void OnClickDirection(int direction)
+  private Direction CalcDirection(int direction)
   {
     var carDirection = GetDirection();
-    if (direction == 0)
+    if (direction == -1)
     {
       carDirection = carDirection - 1;
       if (carDirection < 0)
@@ -53,7 +60,7 @@ public class Car : MonoBehaviour
         carDirection = (Direction)3;
       }
     }
-    else
+    else if (direction == 1)
     {
       carDirection = carDirection + 1;
       if (carDirection > (Direction)3)
@@ -61,8 +68,15 @@ public class Car : MonoBehaviour
         carDirection = 0;
       }
     }
-    chooseDirection = carDirection;
+    return carDirection;
+  }
+
+  private void OnClickDirection(int direction)
+  {
+    chooseDirection = CalcDirection(direction);
+    Debug.Log("OnClickDirection:" + chooseDirection);
     LeftButton.SetActive(false);
+    CenterButton.SetActive(false);
     RightButton.SetActive(false);
   }
 
@@ -87,6 +101,28 @@ public class Car : MonoBehaviour
     return Direction.POSITIVE_X;
   }
 
+  private void ToggleButton(Tile t)
+  {
+    if (t.GetTileType() == TileType.LARGE_JUNCTION)
+    {
+      foreach (var tile in t.GetPassebleNeighbors())
+      {
+        if (tile.Key == CalcDirection(-1))
+        {
+          LeftButton.SetActive(true);
+        }
+        else if (tile.Key == CalcDirection(0))
+        {
+          CenterButton.SetActive(true);
+        }
+        else if (tile.Key == CalcDirection(1))
+        {
+          RightButton.SetActive(true);
+        }
+      }
+    }
+  }
+
   private async void Move(List<Vector3> path, List<Vector3> rotations)
   {
     isMoving = true;
@@ -102,11 +138,7 @@ public class Car : MonoBehaviour
     }
     isMoving = false;
     Button.SetActive(true);
-    if (tile.GetTileType() == TileType.JUNCTION)
-    {
-      LeftButton.SetActive(true);
-      RightButton.SetActive(true);
-    }
+    ToggleButton(tile);
   }
 
   public void OnClick()
@@ -119,7 +151,7 @@ public class Car : MonoBehaviour
     var step = 1;
     if (tile != null)
     {
-      if (tile.GetTileType() == TileType.JUNCTION)
+      if (tile.GetTileType() == TileType.LARGE_JUNCTION)
       {
         if (chooseDirection == null)
         {
@@ -127,7 +159,6 @@ public class Car : MonoBehaviour
         }
       }
     }
-    Debug.Log("Step: " + step);
     (tile, path, rotate) = TileManager.GetComponent<GenerateMap>().WayToTile(tile, step, (Direction?)chooseDirection);
     Move(path, rotate);
     chooseDirection = null;
