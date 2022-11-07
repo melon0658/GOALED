@@ -133,7 +133,7 @@ public class Roulette : MonoBehaviour
     public void count()
     {
         // マテリアルの付け替え
-        car1.GetComponent<Renderer>().material = this.carMaterial;
+        //car1.GetComponent<Renderer>().material = this.carMaterial;
 
         CancelInvoke("MoveBar");
         //Debug.Log("終わり");

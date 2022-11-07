@@ -24,13 +24,13 @@ public class ClickLeftRight : MonoBehaviour
 
     public MovementBaseScript mbScript;
     public Roulette rScript;
-    public Action ActionScript;
+    public Action actionScript;
 
     // Start is called before the first frame update
     void Start()
     {
         stopButton.GetComponent<Button>().interactable = false;
-        upButton.SetActive(false);
+        //upButton.SetActive(false);
     }
 
     // Update is called once per frame
@@ -42,11 +42,11 @@ public class ClickLeftRight : MonoBehaviour
     public void OnClickUp()
     {
         //仮で車のマテリアルを戻す
-        car1.GetComponent<Renderer>().material = this.carMaterial;
+        //car1.GetComponent<Renderer>().material = this.carMaterial;
 
         //Debug.Log("Up");
         stopButton.GetComponent<Button>().interactable = true;
-        if (ActionScript.GetCheckPointName() == "CheckPosition2")
+        if (actionScript.GetCheckPointName() == "CheckPosition2")
         {
             mbScript.SetPathCreator(pathSecondUp);
         }
@@ -63,16 +63,16 @@ public class ClickLeftRight : MonoBehaviour
     public void OnClickLeft()
     {
         //仮で車のマテリアルを戻す
-        car1.GetComponent<Renderer>().material = this.carMaterial;
+        //car1.GetComponent<Renderer>().material = this.carMaterial;
 
         //Debug.Log("Left");
         stopButton.GetComponent<Button>().interactable = true;
-        if (ActionScript.GetCheckPointName() == "CheckPosition")
+        if (actionScript.GetCheckPointName() == "CheckPosition")
         {
             mbScript.SetPathCreator(pathStartLeft);
             HiddenLR();
         }
-        else if (ActionScript.GetCheckPointName() == "CheckPosition2")
+        else if (actionScript.GetCheckPointName() == "CheckPosition2")
         {
             mbScript.SetPathCreator(pathSecondLeft);
             HiddenLU();
@@ -89,7 +89,7 @@ public class ClickLeftRight : MonoBehaviour
     public void OnClickRight()
     {
         //仮で車のマテリアルを戻す
-        car1.GetComponent<Renderer>().material = this.carMaterial;
+        //car1.GetComponent<Renderer>().material = this.carMaterial;
 
         //Debug.Log("Right");
         stopButton.GetComponent<Button>().interactable = true;

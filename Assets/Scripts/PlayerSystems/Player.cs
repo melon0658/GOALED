@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     private string child; //子供
     private int houseNumber; //持ち家の番号
 
-    private GameObject status;
+    public GameObject status;
 
     public Player(string plyaerName, int money, int nowPosIndex, string color, string job, string spouse, string child, int houseNumber)
     {
@@ -40,9 +40,9 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        status = GameObject.Find("Status");
-        status.SetActive(false);
-        Debug.Log(status);
+        //status = GameObject.Find("Status");
+        //status.SetActive(false);
+        //Debug.Log(status);
     }
 
     // Update is called once per frame

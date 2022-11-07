@@ -8,6 +8,9 @@ public class MovementBaseScript : MonoBehaviour
   private PathCreator pathCreator;
   public Roulette rScript;
   public Action actionScript;
+  public Player playerScript;
+  public IventSystem iventSystemScript;
+  private TurnSystem turnSystemScript;
 
   public GameObject upButton;
   public GameObject rightButton;
@@ -161,6 +164,8 @@ public class MovementBaseScript : MonoBehaviour
 
     endPos = coordinate[endPosIndex];
 
+    playerScript.NowPosIndex = endPosIndex;
+
     nowPosIndex = nextPosIndexes1[endPosIndex];
     Debug.Log(endPos);
   }
@@ -173,7 +178,7 @@ public class MovementBaseScript : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-
+    turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
   }
 
   // Update is called once per frame
@@ -199,31 +204,41 @@ public class MovementBaseScript : MonoBehaviour
       //Debug.Log("終わり");
       arrival = false;
       rScript.SetisClicked();
+
+      //イベントの実行に移る
+      //iventSystemScript.IventExecutionManager();
+
+      //ターンを終了する　
+      turnSystemScript.TurnEndSystemMaster();
+
+
       // マテリアルの付け替え
-      car.GetComponent<Renderer>().material = this.clearMaterial;
+      //car.GetComponent<Renderer>().material = this.clearMaterial;
+
+
 
       //Debug.Log("Name " + actionScript.GetCheckPointName());
-      if (actionScript.GetCheckPoint())
-      {
-        if (actionScript.GetCheckPointName() == "CheckPosition")
-        {
-          rightButton.SetActive(true);
-          leftButton.SetActive(true);
-        }
-        else if(actionScript.GetCheckPointName() == "CheckPosition2" || actionScript.GetCheckPointName() == "CheckPosition3")
-        {
-          leftButton.SetActive(true);
-          upButton.SetActive(true);
-        }
-        else if(actionScript.GetCheckPointName() == "GoalPosition")
-        {
-          Debug.Log("Goal");
-        }
-      }
-      else
-      {
-        rScript.PowerBarStart();
-      }
+      //if (actionScript.GetCheckPoint())
+      //{
+      //  if (actionScript.GetCheckPointName() == "CheckPosition")
+      //  {
+      //    rightButton.SetActive(true);
+      //    leftButton.SetActive(true);
+      //  }
+      //  else if(actionScript.GetCheckPointName() == "CheckPosition2" || actionScript.GetCheckPointName() == "CheckPosition3")
+      //  {
+      //    leftButton.SetActive(true);
+      //    upButton.SetActive(true);
+      //  }
+      //  else if(actionScript.GetCheckPointName() == "GoalPosition")
+      //  {
+      //    Debug.Log("Goal");
+      //  }
+      //}
+      //else
+      //{
+      //  rScript.PowerBarStart();
+      //}
     }
   }
 

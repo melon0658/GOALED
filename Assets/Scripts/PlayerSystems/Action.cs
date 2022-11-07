@@ -7,8 +7,8 @@ public class Action : MonoBehaviour
 
     public string objName;
 
-    private bool checkPoint = false;
-    private string checkPointName;
+    private bool checkPoint = true;
+    private string checkPointName = "CheckPosition";
 
     public bool GetCheckPoint()
     {
@@ -20,15 +20,18 @@ public class Action : MonoBehaviour
         this.checkPoint = checkPoint;
     }
 
-  public string GetCheckPointName()
+    
+    public string GetCheckPointName()
     {
         return checkPointName;
     }
 
-    // Start is called before the first frame update
+
+  // Start is called before the first frame update
     void Start()
     {
-        
+        this.checkPointName = "CheckPosition";
+        //Debug.Log("setCheckPosition");
     }
 
     // Update is called once per frame
