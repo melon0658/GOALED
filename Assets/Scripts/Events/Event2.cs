@@ -17,8 +17,8 @@ public class Event2 : MonoBehaviour
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
 
     //イベント固有
-    text = GameObject.Find("EventText");
-    eventText = GameObject.Find("EventText").GetComponent<TextMeshProUGUI>();
+    text = GameObject.Find("EventText2");
+    eventText = GameObject.Find("EventText2").GetComponent<TextMeshProUGUI>();
     text.SetActive(false);
   }
 
@@ -34,19 +34,19 @@ public class Event2 : MonoBehaviour
     text.SetActive(true);
     eventText.text = "event2";
     StartCoroutine("sleep");
-    text.SetActive(false);
-
-    //どのイベントにも必要なやつ
-    turnSystemScript.TurnEndSystemMaster(); //ターンを終了
+    
   }
 
   private IEnumerator sleep()
   {
     //イベント固有
-    Debug.Log("開始");
-    yield return new WaitForSeconds(3.0f);  //10秒待つ
-    Debug.Log("3秒経ちました");
+    Debug.Log("イベント開始");
+    yield return new WaitForSeconds(1.5f);  //10秒待つ
+    Debug.Log("イベント終了");
+    text.SetActive(false);
 
+    //どのイベントにも必要なやつ
+    turnSystemScript.TurnEndSystemMaster(); //ターンを終了
   }
 
 }

@@ -206,39 +206,11 @@ public class MovementBaseScript : MonoBehaviour
       rScript.SetisClicked();
 
       //イベントの実行に移る
-      //eventSystemScript.EventExecutionManager();
+      eventSystemScript.EventExecutionManager();
 
       //ターンを終了する　
-      turnSystemScript.TurnEndSystemMaster();
+      //turnSystemScript.TurnEndSystemMaster();
 
-
-      // マテリアルの付け替え
-      //car.GetComponent<Renderer>().material = this.clearMaterial;
-
-
-
-      //Debug.Log("Name " + actionScript.GetCheckPointName());
-      //if (actionScript.GetCheckPoint())
-      //{
-      //  if (actionScript.GetCheckPointName() == "CheckPosition")
-      //  {
-      //    rightButton.SetActive(true);
-      //    leftButton.SetActive(true);
-      //  }
-      //  else if(actionScript.GetCheckPointName() == "CheckPosition2" || actionScript.GetCheckPointName() == "CheckPosition3")
-      //  {
-      //    leftButton.SetActive(true);
-      //    upButton.SetActive(true);
-      //  }
-      //  else if(actionScript.GetCheckPointName() == "GoalPosition")
-      //  {
-      //    Debug.Log("Goal");
-      //  }
-      //}
-      //else
-      //{
-      //  rScript.PowerBarStart();
-      //}
     }
   }
 
