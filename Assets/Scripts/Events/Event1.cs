@@ -2,14 +2,14 @@
 using UnityEngine;
 using TMPro;
 
-public class Ivent2 : MonoBehaviour
+public class Event1 : MonoBehaviour
 {
   //どのイベントにも必要なやつ
   private TurnSystem turnSystemScript;
 
   //イベント固有
   private GameObject text; 
-  private TextMeshProUGUI iventText;
+  private TextMeshProUGUI eventText;
 
   void Start()
   {
@@ -17,8 +17,8 @@ public class Ivent2 : MonoBehaviour
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
 
     //イベント固有
-    text = GameObject.Find("IventText");
-    iventText = GameObject.Find("IventText").GetComponent<TextMeshProUGUI>();
+    text = GameObject.Find("EventText");
+    eventText = GameObject.Find("EventText").GetComponent<TextMeshProUGUI>();
     text.SetActive(false);
   }
 
@@ -32,7 +32,7 @@ public class Ivent2 : MonoBehaviour
   {
     //イベント固有
     text.SetActive(true);
-    iventText.text = "ivent2";
+    eventText.text = "event1";
     StartCoroutine("sleep");
     text.SetActive(false);
 

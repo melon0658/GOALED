@@ -9,7 +9,7 @@ public class MovementBaseScript : MonoBehaviour
   public Roulette rScript;
   public Action actionScript;
   public Player playerScript;
-  public IventSystem iventSystemScript;
+  public EventSystem eventSystemScript;
   private TurnSystem turnSystemScript;
 
   public GameObject upButton;
@@ -206,7 +206,7 @@ public class MovementBaseScript : MonoBehaviour
       rScript.SetisClicked();
 
       //イベントの実行に移る
-      //iventSystemScript.IventExecutionManager();
+      //eventSystemScript.EventExecutionManager();
 
       //ターンを終了する　
       turnSystemScript.TurnEndSystemMaster();
