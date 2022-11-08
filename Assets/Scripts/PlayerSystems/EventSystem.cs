@@ -95,15 +95,15 @@ public class EventSystem : MonoBehaviour
       case 47: event1Script.execution(); break;
       case 48: event2Script.execution(); break;
       case 49: event1Script.execution(); break;
-      case 36: event2Script.execution(); break;
-      case 35: event1Script.execution(); break;
-      case 36: event2Script.execution(); break;
-      case 35: event1Script.execution(); break;
-      case 36: event2Script.execution(); break;
-      case 35: event1Script.execution(); break;
-      case 36: event2Script.execution(); break;
-      case 35: event1Script.execution(); break;
-      case 36: event2Script.execution(); break;
+      case 50: event2Script.execution(); break;
+      case 51: event1Script.execution(); break;
+      case 52: event2Script.execution(); break;
+      case 53: event1Script.execution(); break;
+      case 54: event2Script.execution(); break;
+      case 55: event1Script.execution(); break;
+      case 56: event2Script.execution(); break;
+      case 57: event1Script.execution(); break;
+      case 58: event2Script.execution(); break;
       default: break;
     }
 
