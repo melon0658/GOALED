@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -51,32 +50,32 @@ public enum TileType
 public class Tile
 {
   private Dictionary<Direction, Tile> neighbors = new Dictionary<Direction, Tile>();
-  private Dictionary<Direction, Passable> passableTile = new Dictionary<Direction, Passable>();
+  private Dictionary<Direction, Passable> passableTiles = new Dictionary<Direction, Passable>();
   private Vector3 position = new Vector3(0, 0, 0);
   public Vector3 Position { get { return position; } set { position = value; } }
   private bool checkPoint = false;
   public bool CheckPoint { get { return checkPoint; } set { checkPoint = value; } }
-  private int eventId = -1;
-  public int EventId { get { return eventId; } set { eventId = value; } }
   public Event Event { get; set; } = new DefaultEvent();
   public bool IsGenerated { get; set; } = false;
   public TileType? tileType { get; set; } = null;
-  public string name;
+  public string Name;
+  private Vector2 JunctionTileSize = new Vector2(75 + (75 / 2), 75 + (75 / 2));
+  private Vector2 NormalTileSize = new Vector2(75, 75);
 
   public Tile(int id)
   {
-    name = "Tile " + id;
+    Name = "Tile " + id;
     for (int i = 0; i < 4; i++)
     {
       neighbors.Add((Direction)i, null);
-      passableTile.Add((Direction)i, Passable.BLOCKED);
+      passableTiles.Add((Direction)i, Passable.BLOCKED);
     }
   }
 
   public void SetNeighbor(Direction direction, Passable passable, Tile tile)
   {
     neighbors[direction] = tile;
-    this.passableTile[direction] = passable;
+    passableTiles[direction] = passable;
   }
 
   public Dictionary<Direction, Tile> GetNeighbors()
@@ -89,7 +88,7 @@ public class Tile
     Dictionary<Direction, Tile> passableNeighbors = new Dictionary<Direction, Tile>();
     foreach (var neighbor in neighbors)
     {
-      if (passableTile[neighbor.Key] == Passable.PASSABLE)
+      if (passableTiles[neighbor.Key] == Passable.PASSABLE)
       {
         passableNeighbors.Add(neighbor.Key, neighbor.Value);
       }
@@ -134,6 +133,27 @@ public class Tile
     return TileType.STRAIGHT_HORIZONTAL;
   }
 
+  public Vector2 GetSpace()
+  {
+    TileType tileType = GetTileType();
+    if (tileType == TileType.LARGE_JUNCTION)
+    {
+      return JunctionTileSize;
+    }
+    else if (tileType == TileType.LARGE_STRAIGHT_HORIZONTAL)
+    {
+      return new Vector2(NormalTileSize.x * 1.25f, NormalTileSize.y);
+    }
+    else if (tileType == TileType.LARGE_STRAIGHT_VERTICAL)
+    {
+      return new Vector2(NormalTileSize.x, NormalTileSize.y * 1.25f);
+    }
+    else
+    {
+      return NormalTileSize;
+    }
+  }
+
   public Quaternion GetRotate()
   {
     var tileType = GetTileType();
@@ -166,4 +186,5 @@ public class Tile
     }
     return Quaternion.Euler(0, 0, 0);
   }
+
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,8 +12,7 @@ public class GenerateMap : MonoBehaviour
   [SerializeField] private GameObject largeStraightTilePrefab;
   private Tile startTile;
   public Tile StartTile { get => startTile; }
-  // private Vector2 JunctionTileSize = new Vector2(115, 100);
-  private Vector2 JunctionTileSize = new Vector2(75.0f + 75 / 2, 75.0f + 75 / 2);
+  private Vector2 JunctionTileSize = new Vector2(75 + (75 / 2), 75 + (75 / 2));
   private Vector2 NormalTileSize = new Vector2(75, 75);
 
   private void ConnectTiles(Tile tile1, Tile tile2, Direction direction)
@@ -221,7 +219,6 @@ public class GenerateMap : MonoBehaviour
     Generate();
   }
 
-  // Update is called once per frame
   void Update()
   {
 
@@ -238,58 +235,35 @@ public class GenerateMap : MonoBehaviour
       {
         var tileObject = neighbor.Value;
         TileType tileType = tile.GetTileType();
-        Vector2 space;
-        if (tileType == TileType.LARGE_JUNCTION)
+        Vector2 space = tileObject.GetSpace();
+        switch (tileType)
         {
-          space = JunctionTileSize;
+          case TileType.LARGE_JUNCTION:
+            space = space + new Vector2(37.5f, 37.5f);
+            break;
+          case TileType.LARGE_STRAIGHT_HORIZONTAL:
+            space = space + new Vector2(37.5f / 2, 0);
+            break;
+          case TileType.LARGE_STRAIGHT_VERTICAL:
+            space = space + new Vector2(0, 37.5f / 2);
+            break;
         }
-        else if (tileType == TileType.LARGE_STRAIGHT_HORIZONTAL)
+        switch (neighbor.Key)
         {
-          space.x = NormalTileSize.x * 1.25f;
-          space.y = NormalTileSize.y;
-        }
-        else if (tileType == TileType.LARGE_STRAIGHT_VERTICAL)
-        {
-          space.x = NormalTileSize.x;
-          space.y = NormalTileSize.y * 1.25f;
-        }
-        else
-        {
-          space = NormalTileSize;
-        }
-        // Vector2 space = tileType != TileType.LARGE_JUNCTION ? (tileType != TileType.LARGE_STRAIGHT_HORIZONTAL || tileType != TileType.LARGE_STRAIGHT_VERTICAL) : JunctionTileSize;
-        if (tileObject.GetTileType() == TileType.LARGE_JUNCTION)
-        {
-          space = space + new Vector2(37.5f, 37.5f);
-        }
-        if (tileObject.GetTileType() == TileType.LARGE_STRAIGHT_HORIZONTAL)
-        {
-          space = space + new Vector2(37.5f / 2, 0);
-        }
-        if (tileObject.GetTileType() == TileType.LARGE_STRAIGHT_VERTICAL)
-        {
-          space = space + new Vector2(0, 37.5f / 2);
-        }
-        if (neighbor.Value != null)
-        {
-          if (neighbor.Key == Direction.POSITIVE_X)
-          {
+          case Direction.POSITIVE_X:
             tileObject.Position = new Vector3(tile.Position.x + space.x, tile.Position.y, tile.Position.z);
-          }
-          else if (neighbor.Key == Direction.NEGATIVE_X)
-          {
+            break;
+          case Direction.NEGATIVE_X:
             tileObject.Position = new Vector3(tile.Position.x - space.x, tile.Position.y, tile.Position.z);
-          }
-          else if (neighbor.Key == Direction.POSITIVE_Z)
-          {
+            break;
+          case Direction.POSITIVE_Z:
             tileObject.Position = new Vector3(tile.Position.x, tile.Position.y, tile.Position.z + space.y);
-          }
-          else if (neighbor.Key == Direction.NEGATIVE_Z)
-          {
+            break;
+          case Direction.NEGATIVE_Z:
             tileObject.Position = new Vector3(tile.Position.x, tile.Position.y, tile.Position.z - space.y);
-          }
-          queue.Enqueue(neighbor.Value);
+            break;
         }
+        queue.Enqueue(neighbor.Value);
       }
       GenerateTile(tile);
     }
@@ -303,58 +277,31 @@ public class GenerateMap : MonoBehaviour
     }
     TileType tileType = tile.GetTileType();
     GameObject tileObject = null;
-    if (tileType == TileType.STRAIGHT_HORIZONTAL)
+    switch (tileType)
     {
-      if (tile.CheckPoint)
-      {
-        tileObject = Instantiate(checkpointPrefab, tile.Position, Quaternion.identity);
-      }
-      else
-      {
-        tileObject = Instantiate(straightTilePrefab, tile.Position, Quaternion.identity);
-      }
-      tileObject.name = tile.name;
+      case TileType.STRAIGHT_HORIZONTAL:
+        tileObject = tile.CheckPoint ? Instantiate(checkpointPrefab, tile.Position, tile.GetRotate()) : Instantiate(straightTilePrefab, tile.Position, tile.GetRotate());
+        break;
+      case TileType.STRAIGHT_VERTICAL:
+        tileObject = tile.CheckPoint ? Instantiate(checkpointPrefab, tile.Position, tile.GetRotate()) : Instantiate(straightTilePrefab, tile.Position, tile.GetRotate());
+        break;
+      case TileType.LARGE_STRAIGHT_HORIZONTAL:
+        tileObject = Instantiate(largeStraightTilePrefab, tile.Position, tile.GetRotate());
+        break;
+      case TileType.LARGE_STRAIGHT_VERTICAL:
+        tileObject = Instantiate(largeStraightTilePrefab, tile.Position, tile.GetRotate());
+        break;
+      case TileType.CORNER:
+        tileObject = Instantiate(cornerTilePrefab, tile.Position, tile.GetRotate());
+        break;
+      case TileType.LARGE_JUNCTION:
+        tileObject = Instantiate(junctionTilePrefab, tile.Position, tile.GetRotate());
+        break;
+      case TileType.SMALL_JUNCTION:
+        tileObject = Instantiate(SmallJunctionTilePrefab, tile.Position, tile.GetRotate());
+        break;
     }
-    else if (tileType == TileType.STRAIGHT_VERTICAL)
-    {
-      var rotate = tile.GetRotate();
-      if (tile.CheckPoint)
-      {
-        tileObject = Instantiate(checkpointPrefab, tile.Position, rotate);
-      }
-      else
-      {
-        tileObject = Instantiate(straightTilePrefab, tile.Position, rotate);
-      }
-      tileObject.name = tile.name;
-    }
-    else if (tileType == TileType.LARGE_STRAIGHT_HORIZONTAL)
-    {
-      tileObject = Instantiate(largeStraightTilePrefab, tile.Position, Quaternion.identity);
-      tileObject.name = tile.name;
-    }
-    else if (tileType == TileType.LARGE_STRAIGHT_VERTICAL)
-    {
-      var rotate = tile.GetRotate();
-      tileObject = Instantiate(largeStraightTilePrefab, tile.Position, rotate);
-      tileObject.name = tile.name;
-    }
-    else if (tileType == TileType.CORNER)
-    {
-      var rotate = tile.GetRotate();
-      GameObject newtile = Instantiate(cornerTilePrefab, tile.Position, rotate);
-      newtile.name = tile.name;
-    }
-    else if (tileType == TileType.LARGE_JUNCTION)
-    {
-      GameObject newtile = Instantiate(junctionTilePrefab, tile.Position, Quaternion.identity);
-      newtile.name = tile.name;
-    }
-    else if (tileType == TileType.SMALL_JUNCTION)
-    {
-      GameObject newtile = Instantiate(SmallJunctionTilePrefab, tile.Position, Quaternion.identity);
-      newtile.name = tile.name;
-    }
+    tileObject.name = tile.Name;
     tile.IsGenerated = true;
   }
 
@@ -391,11 +338,7 @@ public class GenerateMap : MonoBehaviour
             rotate.Add(new Vector3(0, 0, 0));
           }
           path.Add(tile.Position);
-          if (tile.CheckPoint == true)
-          {
-            return (tile, path, rotate);
-          }
-          if (tile.GetTileType() == TileType.LARGE_JUNCTION)
+          if (tile.GetTileType() == TileType.LARGE_JUNCTION || tile.CheckPoint)
           {
             return (tile, path, rotate);
           }
