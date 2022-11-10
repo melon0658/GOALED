@@ -10,6 +10,7 @@ public class GenerateMap : MonoBehaviour
   [SerializeField] private GameObject checkpointPrefab;
   [SerializeField] private GameObject SmallJunctionTilePrefab;
   [SerializeField] private GameObject largeStraightTilePrefab;
+  [SerializeField] private GameObject textPrefab;
   private Tile startTile;
   public Tile StartTile { get => startTile; }
   private Vector2 JunctionTileSize = new Vector2(75 + (75 / 2), 75 + (75 / 2));
@@ -301,6 +302,7 @@ public class GenerateMap : MonoBehaviour
         tileObject = Instantiate(SmallJunctionTilePrefab, tile.Position, tile.GetRotate());
         break;
     }
+    Instantiate(textPrefab, tile.Position, Quaternion.Euler(90, 0, 0));
     tileObject.name = tile.Name;
     tile.IsGenerated = true;
   }

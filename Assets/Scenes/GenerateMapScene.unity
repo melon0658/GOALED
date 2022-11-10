@@ -1379,6 +1379,7 @@ MonoBehaviour:
   checkpointPrefab: {fileID: 919132149155446097, guid: abeb3edf60921614693b9ad6a3607031, type: 3}
   SmallJunctionTilePrefab: {fileID: 919132149155446097, guid: f7a2cfc2c7074bd45b3e851c9e1ba73e, type: 3}
   largeStraightTilePrefab: {fileID: 919132149155446097, guid: e8e328efb3f7d3442adcbb55e285d414, type: 3}
+  textPrefab: {fileID: 6492778336782662901, guid: 8d72835666b7a4047a17d1d1a7a9faca, type: 3}
 --- !u!4 &1040776105
 Transform:
   m_ObjectHideFlags: 0
