@@ -33,12 +33,6 @@ public class ClickLeftRight : MonoBehaviour
         //upButton.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnClickUp()
     {
         //仮で車のマテリアルを戻す

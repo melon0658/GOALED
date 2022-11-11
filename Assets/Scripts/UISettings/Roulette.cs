@@ -30,6 +30,8 @@ public class Roulette : MonoBehaviour
 
     public MovementBaseScript mbScript;
 
+    private EventSystem eventSystemScript;
+
     public int Rcount()
     {
         return ang;
@@ -49,12 +51,8 @@ public class Roulette : MonoBehaviour
         maxValue = false;
         isClicked = false;
         rotate = false;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+        eventSystemScript = GameObject.Find("EventScripts").GetComponent<EventSystem>();
     }
 
     public void PowerBarStart()
@@ -70,15 +68,6 @@ public class Roulette : MonoBehaviour
     void MoveBar()
     {
         AutoMoveBar();
-
-        //目的地に着いたらrepeatを止める
-        //if (stopBar == true)
-        //{
-        //    CancelInvoke("MoveBar");
-        //    Debug.Log("終わり");
-        //    stopBar = false;
-        //    rScript.SetisClicked();
-        //}
     }
 
     //目的地まで自動で移動
@@ -149,9 +138,18 @@ public class Roulette : MonoBehaviour
         ang = 10 - ang / 36;
         TextMeshProUGUI tt = GameObject.Find("CountText").GetComponent<TextMeshProUGUI>();
         tt.text = ang.ToString();
-
-        mbScript.SetEndPoth();
-        mbScript.moveStart();
+        
+        //ゴールしているかチェックしてしていたらEventSystemに直に飛ぶ
+        if (car1.GetComponent<Player>().CheckGoal)
+        {
+          eventSystemScript.EventExecutionManager();
+        }
+        else
+        {
+            mbScript.SetEndPoth();
+            mbScript.moveStart();
+        }
+        
     }
 
     

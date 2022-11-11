@@ -33,6 +33,8 @@ public class TurnSystem : MonoBehaviour
   private GameObject upButton;
   private GameObject rightButton;
   private GameObject leftButton;
+
+  private EventEndGame eventEndGameScript;
   
 
   //切り替えるオブジェクト
@@ -46,7 +48,7 @@ public class TurnSystem : MonoBehaviour
   private int nowTurnPlayerNum = 0;
 
   //ゴールした人数を保存
-  private int GoalPlayerNum = 0;
+  private int goalPlayerNum = 0;
 
   public int GetnowTurnPlayerNum()
   {
@@ -56,6 +58,16 @@ public class TurnSystem : MonoBehaviour
   public void SetnowTurnPlayerNum(int nowTurnPlayerNum)
   {
     this.nowTurnPlayerNum = nowTurnPlayerNum;
+  }
+
+  public int GetgoalPlayerNum()
+  {
+    return goalPlayerNum;
+  }
+
+  public void SetgoalPlayerNum(int goalPlayerNum)
+  {
+    this.goalPlayerNum = goalPlayerNum;
   }
 
   // Start is called before the first frame update
@@ -95,13 +107,9 @@ public class TurnSystem : MonoBehaviour
     rScript = GameObject.Find("ButtonStop").GetComponent<Roulette>();
     eventSystemScript = GameObject.Find("EventScripts").GetComponent<EventSystem>();
 
-    TurnStartSystemMaster();
-  }
+    eventEndGameScript = GameObject.Find("EventScripts").GetComponent<EventEndGame>();
 
-  // Update is called once per frame
-  void Update()
-  {
-        
+    TurnStartSystemMaster();
   }
 
   void OnPlayerCamera()
@@ -204,7 +212,6 @@ public class TurnSystem : MonoBehaviour
             else
             {
               player1.GetComponent<Player>().CheckGoal = true;
-              GoalPlayerNum++;
               rScript.PowerBarStart();
             }
             break;
@@ -216,7 +223,6 @@ public class TurnSystem : MonoBehaviour
             else
             {
               player2.GetComponent<Player>().CheckGoal = true;
-              GoalPlayerNum++;
               rScript.PowerBarStart();
             }
             break;
@@ -228,7 +234,6 @@ public class TurnSystem : MonoBehaviour
             else
             {
               player3.GetComponent<Player>().CheckGoal = true;
-              GoalPlayerNum++;
               rScript.PowerBarStart();
             }
             break;
@@ -240,7 +245,6 @@ public class TurnSystem : MonoBehaviour
             else
             {
               player4.GetComponent<Player>().CheckGoal = true;
-              GoalPlayerNum++;
               rScript.PowerBarStart();
             }
             break;
@@ -327,7 +331,7 @@ public class TurnSystem : MonoBehaviour
 
   bool CheckEndGame()
   {
-    if(GoalPlayerNum == 4)
+    if(goalPlayerNum == 4)
     {
       return true;
     }
@@ -350,7 +354,7 @@ public class TurnSystem : MonoBehaviour
 
   public void TurnEndSystemMaster()
   {
-    //4人全員ゴールしているか
+    //4人全員ゴールしているか判定
     if (!CheckEndGame())
     {
       OffPlayerCamera();
@@ -359,7 +363,7 @@ public class TurnSystem : MonoBehaviour
     }
     else
     {
-
+      eventEndGameScript.EndGame();
     }
   }
 }

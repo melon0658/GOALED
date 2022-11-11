@@ -181,12 +181,6 @@ public class MovementBaseScript : MonoBehaviour
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
   }
 
-  // Update is called once per frame
-  void Update()
-  {
-
-  }
-
   public void moveStart()
   {
     InvokeRepeating("repeat", 0.0f, 0.015f);

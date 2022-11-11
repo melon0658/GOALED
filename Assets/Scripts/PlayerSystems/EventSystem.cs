@@ -21,12 +21,6 @@ public class EventSystem : MonoBehaviour
 
   }
 
-  // Update is called once per frame
-  void Update()
-  {
-        
-  }
-
   public void EventExecutionManager()
   {
     int nowPosIndex = playerScript.NowPosIndex;
