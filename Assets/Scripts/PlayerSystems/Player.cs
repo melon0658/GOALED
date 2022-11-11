@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
         this.CheckGoal = checkGoal;
     }
 
+    //各ステータスのgetとset
     public string PlyaerName { get => plyaerName; set => plyaerName = value; }
     public int Money { get => money; set => money = value; }
     public int NowPosIndex { get => nowPosIndex; set => nowPosIndex = value; }
