@@ -35,6 +35,8 @@ public class TurnSystem : MonoBehaviour
   private GameObject leftButton;
 
   private EventEndGame eventEndGameScript;
+  private MoneyUpdate moneyUpdateScript;
+  public PlayerStatusUI playerStatusUIScript;
   
 
   //切り替えるオブジェクト
@@ -108,6 +110,7 @@ public class TurnSystem : MonoBehaviour
     eventSystemScript = GameObject.Find("EventScripts").GetComponent<EventSystem>();
 
     eventEndGameScript = GameObject.Find("EventScripts").GetComponent<EventEndGame>();
+    moneyUpdateScript = GameObject.Find("MoneyUIBox").GetComponent<MoneyUpdate>();
 
     TurnStartSystemMaster();
   }
@@ -348,6 +351,8 @@ public class TurnSystem : MonoBehaviour
     //Debug.Log("OK OnPlayerCamera");
     SetObjects();
     //Debug.Log("OK SetObjects");
+    moneyUpdateScript.UpdateMoneyText();
+
     SwitchRouteSelectButton();
     //Debug.Log("OK SwitchRouteSelectButton");
   }
@@ -357,6 +362,7 @@ public class TurnSystem : MonoBehaviour
     //4人全員ゴールしているか判定
     if (!CheckEndGame())
     {
+      playerStatusUIScript.UpdatePlayersStatus();
       OffPlayerCamera();
       ChangeNowPlayer();
       TurnStartSystemMaster();
