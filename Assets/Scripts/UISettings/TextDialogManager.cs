@@ -27,7 +27,7 @@ public class TextDialogManager : MonoBehaviour
   void Start()
   {
     //初期値は非表示状態
-    //textDialogBox.SetActive(false);
+    textDialogBox.SetActive(false);
   }
 
   //textDialogBoxを表示
