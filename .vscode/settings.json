@@ -1,6 +1,8 @@
-﻿{
+{
+    
     "files.exclude":
     {
+        
         "**/.DS_Store":true,
         "**/.git":true,
         "**/.gitmodules":true,
@@ -52,4 +54,7 @@
         "temp/":true,
         "Temp/":true
     }
+    ,
+    "omnisharp.useGlobalMono": "always",
+    "omnisharp.monoPath": "/Library/Frameworks/Mono.framework/Versions/Current"
 }

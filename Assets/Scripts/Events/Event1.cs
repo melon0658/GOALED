@@ -4,8 +4,9 @@ using TMPro;
 
 public class Event1 : MonoBehaviour
 {
-  //どのイベントにも必要なやつ
+  
   private TurnSystem turnSystemScript;
+  private Player playerScript;
 
   //イベント固有
   private GameObject text; 
@@ -20,6 +21,25 @@ public class Event1 : MonoBehaviour
     text = GameObject.Find("EventText");
     eventText = GameObject.Find("EventText").GetComponent<TextMeshProUGUI>();
     text.SetActive(false);
+
+    //現在のターンが誰かを取得して、それに応じてプレイヤースクリプトを取得
+    switch(turnSystemScript.GetnowTurnPlayerNum())
+    {
+      case 1:
+        playerScript = GameObject.Find("defaultCar1").GetComponent<Player>();
+        break;
+      case 2:
+        playerScript = GameObject.Find("defaultCar2").GetComponent<Player>();
+        break;
+      case 3:
+        playerScript = GameObject.Find("defaultCar3").GetComponent<Player>();
+        break;
+      case 4:
+        playerScript = GameObject.Find("defaultCar4").GetComponent<Player>();
+        break;
+      default:
+        break;
+    }
   }
 
     // Update is called once per frame
@@ -30,23 +50,18 @@ public class Event1 : MonoBehaviour
 
   public void execution()
   {
-    //イベント固有
-    text.SetActive(true);
-    eventText.text = "event1";
-    StartCoroutine("sleep");
-    text.SetActive(false);
-
+    Player.setJob = "programmer";
+    Player.
     //どのイベントにも必要なやつ
     turnSystemScript.TurnEndSystemMaster(); //ターンを終了
   }
 
-  private IEnumerator sleep()
-  {
-    //イベント固有
-    Debug.Log("開始");
-    yield return new WaitForSeconds(3.0f);  //10秒待つ
-    Debug.Log("3秒経ちました");
+  // private IEnumerator sleep()
+  // {
+  //   //イベント固有
+  //   Debug.Log("開始");
+  //   yield return new WaitForSeconds(3.0f);  //10秒待つ
+  //   Debug.Log("3秒経ちました");
 
-  }
-
+  // }
 }
