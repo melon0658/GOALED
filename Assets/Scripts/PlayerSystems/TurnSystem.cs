@@ -33,18 +33,24 @@ public class TurnSystem : MonoBehaviour
   private GameObject upButton;
   private GameObject rightButton;
   private GameObject leftButton;
-  
-  
+
+  private EventEndGame eventEndGameScript;
+  private MoneyUpdate moneyUpdateScript;
+  public PlayerStatusUI playerStatusUIScript;
   
 
   //切り替えるオブジェクト
   private ClickLeftRight gameScripts;
   private Roulette rScript;
   private Action actionScript;
+  private EventSystem eventSystemScript;
 
 
   //現在の操作プレイヤーが誰かを保存
   private int nowTurnPlayerNum = 0;
+
+  //ゴールした人数を保存
+  private int goalPlayerNum = 0;
 
   public int GetnowTurnPlayerNum()
   {
@@ -54,6 +60,16 @@ public class TurnSystem : MonoBehaviour
   public void SetnowTurnPlayerNum(int nowTurnPlayerNum)
   {
     this.nowTurnPlayerNum = nowTurnPlayerNum;
+  }
+
+  public int GetgoalPlayerNum()
+  {
+    return goalPlayerNum;
+  }
+
+  public void SetgoalPlayerNum(int goalPlayerNum)
+  {
+    this.goalPlayerNum = goalPlayerNum;
   }
 
   // Start is called before the first frame update
@@ -91,14 +107,12 @@ public class TurnSystem : MonoBehaviour
 
     gameScripts = GameObject.Find("GameScripts").GetComponent<ClickLeftRight>();
     rScript = GameObject.Find("ButtonStop").GetComponent<Roulette>();
+    eventSystemScript = GameObject.Find("EventScripts").GetComponent<EventSystem>();
+
+    eventEndGameScript = GameObject.Find("EventScripts").GetComponent<EventEndGame>();
+    moneyUpdateScript = GameObject.Find("MoneyUIBox").GetComponent<MoneyUpdate>();
 
     TurnStartSystemMaster();
-  }
-
-  // Update is called once per frame
-  void Update()
-  {
-        
   }
 
   void OnPlayerCamera()
@@ -177,7 +191,6 @@ public class TurnSystem : MonoBehaviour
   {
     if (actionScript.GetCheckPoint())
     {
-      Debug.Log(actionScript.GetCheckPointName());
       if (actionScript.GetCheckPointName() == "CheckPosition")
       {
         Debug.Log("CheckPosition");
@@ -192,6 +205,53 @@ public class TurnSystem : MonoBehaviour
       }
       else if (actionScript.GetCheckPointName() == "GoalPosition")
       {
+        switch (nowTurnPlayerNum)
+        {
+          case 1:
+            if (player1.GetComponent<Player>().CheckGoal)
+            {
+              rScript.PowerBarStart();
+            }
+            else
+            {
+              player1.GetComponent<Player>().CheckGoal = true;
+              rScript.PowerBarStart();
+            }
+            break;
+          case 2:
+            if (player2.GetComponent<Player>().CheckGoal)
+            {
+              rScript.PowerBarStart();
+            }
+            else
+            {
+              player2.GetComponent<Player>().CheckGoal = true;
+              rScript.PowerBarStart();
+            }
+            break;
+          case 3:
+            if (player3.GetComponent<Player>().CheckGoal)
+            {
+              rScript.PowerBarStart();
+            }
+            else
+            {
+              player3.GetComponent<Player>().CheckGoal = true;
+              rScript.PowerBarStart();
+            }
+            break;
+          case 4:
+            if (player4.GetComponent<Player>().CheckGoal)
+            {
+              rScript.PowerBarStart();
+            }
+            else
+            {
+              player4.GetComponent<Player>().CheckGoal = true;
+              rScript.PowerBarStart();
+            }
+            break;
+        }
         Debug.Log("Goal");
       }
     }
@@ -217,6 +277,8 @@ public class TurnSystem : MonoBehaviour
 
         actionScript = player1.GetComponent<Action>();
 
+        eventSystemScript.playerScript = player1.GetComponent<Player>();
+
         player1.GetComponent<Renderer>().material = player1BaseMaterial;
         player1.GetComponent<BoxCollider>().enabled = true;
         break;
@@ -229,6 +291,8 @@ public class TurnSystem : MonoBehaviour
         rScript.actionScript = player2.GetComponent<Action>();
 
         actionScript = player2.GetComponent<Action>();
+
+        eventSystemScript.playerScript = player2.GetComponent<Player>();
 
         player2.GetComponent<Renderer>().material = player2BaseMaterial;
         player2.GetComponent<BoxCollider>().enabled = true;
@@ -243,6 +307,8 @@ public class TurnSystem : MonoBehaviour
 
         actionScript = player3.GetComponent<Action>();
 
+        eventSystemScript.playerScript = player3.GetComponent<Player>();
+
         player3.GetComponent<Renderer>().material = player3BaseMaterial;
         player3.GetComponent<BoxCollider>().enabled = true;
         break;
@@ -256,6 +322,8 @@ public class TurnSystem : MonoBehaviour
 
         actionScript = player4.GetComponent<Action>();
 
+        eventSystemScript.playerScript = player4.GetComponent<Player>();
+
         player4.GetComponent<Renderer>().material = player4BaseMaterial;
         player4.GetComponent<BoxCollider>().enabled = true;
         break;
@@ -264,21 +332,44 @@ public class TurnSystem : MonoBehaviour
     }
   }
 
+  bool CheckEndGame()
+  {
+    if(goalPlayerNum == 4)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
   public void TurnStartSystemMaster()
   {
     Debug.Log("Start");
     OnPlayerCamera();
-    Debug.Log("OK OnPlayerCamera");
+    //Debug.Log("OK OnPlayerCamera");
     SetObjects();
-    Debug.Log("OK SetObjects");
+    //Debug.Log("OK SetObjects");
+    moneyUpdateScript.UpdateMoneyText();
+
     SwitchRouteSelectButton();
-    Debug.Log("OK SwitchRouteSelectButton");
+    //Debug.Log("OK SwitchRouteSelectButton");
   }
 
   public void TurnEndSystemMaster()
   {
-    OffPlayerCamera();
-    ChangeNowPlayer();
-    TurnStartSystemMaster();
+    //4人全員ゴールしているか判定
+    if (!CheckEndGame())
+    {
+      playerStatusUIScript.UpdatePlayersStatus();
+      OffPlayerCamera();
+      ChangeNowPlayer();
+      TurnStartSystemMaster();
+    }
+    else
+    {
+      eventEndGameScript.EndGame();
+    }
   }
 }

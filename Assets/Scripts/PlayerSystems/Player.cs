@@ -29,10 +29,22 @@ public class Player : MonoBehaviour
         this.CheckGoal = checkGoal;
     }
 
+    //各ステータスのgetとset
+    public string PlyaerName { get => plyaerName; set => plyaerName = value; }
+    public int Money { get => money; set => money = value; }
+    public int NowPosIndex { get => nowPosIndex; set => nowPosIndex = value; }
+    public string Color { get => color; set => color = value; }
+    public string Job { get => job; set => job = value; }
+    public bool Spouse { get => spouse; set => spouse = value; }
+    public int Child { get => child; set => child = value; }
+    public int HouseNumber { get => houseNumber; set => houseNumber = value; }
+    public bool CheckGoal { get => checkGoal; set => checkGoal = value; }
 
-    // Start is called before the first frame update
+
+  // Start is called before the first frame update
     void Start()
     {
+        //new Player("aa", 30000, 0, "red", "", false, 0, 0, false);
         //status = GameObject.Find("Status");
         //status.SetActive(false);
         //Debug.Log(status);
