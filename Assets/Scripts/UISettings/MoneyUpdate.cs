@@ -16,7 +16,7 @@ public class MoneyUpdate : MonoBehaviour
   public Player player4;
 
   // Start is called before the first frame update
-  void Start()
+  void Awake()
   {
     moneyText = GameObject.Find("MoneyText").GetComponent<TextMeshProUGUI>();
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();

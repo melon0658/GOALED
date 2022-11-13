@@ -65,17 +65,6 @@ public class Player : MonoBehaviour
             status.SetActive(false);
         }
     }
-
-    //各ステータスのgetとset
-    public string PlyaerName { get => plyaerName; set => plyaerName = value; }
-    public int Money { get => money; set => money = value; }
-    public int NowPosIndex { get => nowPosIndex; set => nowPosIndex = value; }
-    public string Color { get => color; set => color = value; }
-    public string Job { get => job; set => job = value; }
-    public bool Spouse { get => spouse; set => spouse = value; }
-    public int Child { get => child; set => child = value; }
-    public int HouseNumber { get => houseNumber; set => houseNumber = value; }
-    public bool CheckGoal { get => checkGoal; set => checkGoal = value; }
 }
 
 
