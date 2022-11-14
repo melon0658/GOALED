@@ -81,6 +81,10 @@ namespace MatchingService {
     static readonly grpc::Marshaller<global::MatchingService.GetStartGameStreamRequest> __Marshaller_MatchingService_GetStartGameStreamRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::MatchingService.GetStartGameStreamRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::MatchingService.GetStartGameStreamResponse> __Marshaller_MatchingService_GetStartGameStreamResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::MatchingService.GetStartGameStreamResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::MatchingService.GetRoomDetailRequest> __Marshaller_MatchingService_GetRoomDetailRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::MatchingService.GetRoomDetailRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::MatchingService.GetRoomDetailResponse> __Marshaller_MatchingService_GetRoomDetailResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::MatchingService.GetRoomDetailResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::MatchingService.GetPlayerIdRequest, global::MatchingService.GetPlayerIdResponse> __Method_GetPlayerId = new grpc::Method<global::MatchingService.GetPlayerIdRequest, global::MatchingService.GetPlayerIdResponse>(
@@ -154,6 +158,14 @@ namespace MatchingService {
         __Marshaller_MatchingService_GetStartGameStreamRequest,
         __Marshaller_MatchingService_GetStartGameStreamResponse);
 
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::MatchingService.GetRoomDetailRequest, global::MatchingService.GetRoomDetailResponse> __Method_GetRoomDetail = new grpc::Method<global::MatchingService.GetRoomDetailRequest, global::MatchingService.GetRoomDetailResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetRoomDetail",
+        __Marshaller_MatchingService_GetRoomDetailRequest,
+        __Marshaller_MatchingService_GetRoomDetailResponse);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -214,6 +226,12 @@ namespace MatchingService {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task GetStartGameStream(global::MatchingService.GetStartGameStreamRequest request, grpc::IServerStreamWriter<global::MatchingService.GetStartGameStreamResponse> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::MatchingService.GetRoomDetailResponse> GetRoomDetail(global::MatchingService.GetRoomDetailRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -417,6 +435,26 @@ namespace MatchingService {
       {
         return CallInvoker.AsyncServerStreamingCall(__Method_GetStartGameStream, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::MatchingService.GetRoomDetailResponse GetRoomDetail(global::MatchingService.GetRoomDetailRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetRoomDetail(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::MatchingService.GetRoomDetailResponse GetRoomDetail(global::MatchingService.GetRoomDetailRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetRoomDetail, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::MatchingService.GetRoomDetailResponse> GetRoomDetailAsync(global::MatchingService.GetRoomDetailRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetRoomDetailAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::MatchingService.GetRoomDetailResponse> GetRoomDetailAsync(global::MatchingService.GetRoomDetailRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetRoomDetail, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override MatchingServiceClient NewInstance(ClientBaseConfiguration configuration)
@@ -439,7 +477,8 @@ namespace MatchingService {
           .AddMethod(__Method_JoinPrivateRoom, serviceImpl.JoinPrivateRoom)
           .AddMethod(__Method_LeaveRoom, serviceImpl.LeaveRoom)
           .AddMethod(__Method_StartGame, serviceImpl.StartGame)
-          .AddMethod(__Method_GetStartGameStream, serviceImpl.GetStartGameStream).Build();
+          .AddMethod(__Method_GetStartGameStream, serviceImpl.GetStartGameStream)
+          .AddMethod(__Method_GetRoomDetail, serviceImpl.GetRoomDetail).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -458,6 +497,7 @@ namespace MatchingService {
       serviceBinder.AddMethod(__Method_LeaveRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::MatchingService.LeaveRoomRequest, global::MatchingService.LeaveRoomResponse>(serviceImpl.LeaveRoom));
       serviceBinder.AddMethod(__Method_StartGame, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::MatchingService.StartGameRequest, global::MatchingService.StartGameResponse>(serviceImpl.StartGame));
       serviceBinder.AddMethod(__Method_GetStartGameStream, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::MatchingService.GetStartGameStreamRequest, global::MatchingService.GetStartGameStreamResponse>(serviceImpl.GetStartGameStream));
+      serviceBinder.AddMethod(__Method_GetRoomDetail, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::MatchingService.GetRoomDetailRequest, global::MatchingService.GetRoomDetailResponse>(serviceImpl.GetRoomDetail));
     }
 
   }

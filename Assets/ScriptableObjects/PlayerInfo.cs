@@ -6,6 +6,7 @@ public class PlayerInfo : ScriptableObject, ISerializationCallbackReceiver
 {
   [NonSerialized] public MatchingService.Player player;
   [NonSerialized] public bool isRoomOwner;
+  [NonSerialized] public string password;
 
   public void OnEnable()
   {
@@ -13,6 +14,7 @@ public class PlayerInfo : ScriptableObject, ISerializationCallbackReceiver
     {
       player = new MatchingService.Player();
       isRoomOwner = false;
+      password = "";
     }
   }
 
