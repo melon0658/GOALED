@@ -62,7 +62,7 @@ public class Event05 : MonoBehaviour
     StartCoroutine("sleep");
 
     
-    playerScript.Job = "pilot";
+    playerScript.Job = "パイロット";
     Debug.Log(playerScript.Job);
   }
 
@@ -74,6 +74,30 @@ public class Event05 : MonoBehaviour
     Debug.Log("イベント終了");
     //text.SetActive(false);
     textDialogManegerScript.HiddentextDialogBox();
+    Vector3 pos = transform.position;
+    pos.x =145.80f;pos.y=409f;pos.z=-121.40f;
+    switch (turnSystemScript.GetnowTurnPlayerNum())
+    {
+      case 1:
+        GameObject.Find("defaultCar1").transform.position=pos;
+        GameObject.Find("defaultCar1").transform.rotation = Quaternion.Euler(0f,90f,0f);
+        break;
+      case 2:
+        GameObject.Find("defaultCar2").transform.position=pos;
+        GameObject.Find("defaultCar2").transform.rotation = Quaternion.Euler(0f,90f,0f);
+        break;
+      case 3:
+        GameObject.Find("defaultCar3").transform.position=pos;
+        GameObject.Find("defaultCar3").transform.rotation = Quaternion.Euler(0f,90f,0f);
+        break;
+      case 4:
+        GameObject.Find("defaultCar4").transform.position=pos;
+        GameObject.Find("defaultCar4").transform.rotation = Quaternion.Euler(0f,90f,0f);
+        break;
+      default:
+        break;
+    }
+    playerScript.NowPosIndex = 9;
 
     //どのイベントにも必要なやつ
     turnSystemScript.TurnEndSystemMaster(); //ターンを終了
