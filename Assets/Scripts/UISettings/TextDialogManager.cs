@@ -14,13 +14,14 @@ public class TextDialogManager : MonoBehaviour
   //現在のテキスト参照
   public TextMeshProUGUI GetdialogText()
   {
-    return dialogText;
+    return this.transform.Find("DialogText").GetComponent<TextMeshProUGUI>();
   }
 
   //テキスト変更
   public void SetdialogText(string changeText)
   {
-    this.dialogText.text = changeText;
+    this.transform.Find("DialogText").GetComponent<TextMeshProUGUI>().text = changeText;
+    //this.dialogText.text = changeText;
   }
 
   // Start is called before the first frame update
