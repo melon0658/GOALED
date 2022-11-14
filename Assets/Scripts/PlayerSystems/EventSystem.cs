@@ -26,6 +26,7 @@ public class EventSystem : MonoBehaviour
     int nowPosIndex = playerScript.NowPosIndex;
 
     //switch構文で書くしかない　ゴミ
+    //eventScriptsMaster.GetComponent<EventEndGame>().EndGame();
 
     //車があるマスのイベントを実行
     switch (nowPosIndex)
@@ -39,7 +40,7 @@ public class EventSystem : MonoBehaviour
       case 7: eventScriptsMaster.GetComponent<Event1>().execution(); break;
       case 8: eventScriptsMaster.GetComponent<Event2>().execution(); break;
       case 9: eventScriptsMaster.GetComponent<Event1>().execution(); break;
-      case 10: eventScriptsMaster.GetComponent<Event85>().execution(); break;
+      case 10: eventScriptsMaster.GetComponent<Event2>().execution(); break;
       case 11: eventScriptsMaster.GetComponent<Event1>().execution(); break;
       case 12: eventScriptsMaster.GetComponent<Event2>().execution(); break;
       case 13: eventScriptsMaster.GetComponent<Event1>().execution(); break;
@@ -111,10 +112,10 @@ public class EventSystem : MonoBehaviour
       case 79: eventScriptsMaster.GetComponent<Event1>().execution(); break;
       case 80: eventScriptsMaster.GetComponent<Event2>().execution(); break;
       case 81: eventScriptsMaster.GetComponent<Event1>().execution(); break;
-      case 82: eventScriptsMaster.GetComponent<Event85>().execution(); break;
+      case 82: eventScriptsMaster.GetComponent<Event82>().execution(); break;
       case 83: eventScriptsMaster.GetComponent<Event1>().execution(); break;
       case 84: eventScriptsMaster.GetComponent<Event2>().execution(); break;
-      case 85: eventScriptsMaster.GetComponent<Event85>().execution(); break;
+      case 85: eventScriptsMaster.GetComponent<Event1>().execution(); break;
       default: break;
     }
 

@@ -7,6 +7,9 @@ public class Event1 : MonoBehaviour
   //どのイベントにも必要なやつ
   private TurnSystem turnSystemScript;
   private Player playerScript;
+  private GameObject canvas;
+  private TextDialogManager textDialogManegerScript;
+
 
   //イベント固有
   private GameObject text; 
@@ -14,13 +17,12 @@ public class Event1 : MonoBehaviour
 
   void Start()
   {
-    
+    //どのイベントにも必要なやつ
+    canvas = GameObject.Find("Canvas");
 
 
     //イベント固有
-    text = GameObject.Find("EventText");
-    eventText = text.GetComponent<TextMeshProUGUI>();
-    text.SetActive(false);
+
   }
 
     // Update is called once per frame
@@ -53,8 +55,10 @@ public class Event1 : MonoBehaviour
     }
 
     //イベント固有
-    text.SetActive(true);
-    eventText.text = "event1";
+    textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
+    textDialogManegerScript.ShowtextDialogBox();
+    textDialogManegerScript.SetdialogText("ここにイベントテキストを貼り付け");
+
     StartCoroutine("sleep");
 
     //playerのお金が取得して変更したい！(getもsetもこの書き方)
@@ -68,7 +72,8 @@ public class Event1 : MonoBehaviour
     Debug.Log("イベント開始");
     yield return new WaitForSeconds(1f);  //10秒待つ
     Debug.Log("イベント終了");
-    text.SetActive(false);
+    //text.SetActive(false);
+    textDialogManegerScript.HiddentextDialogBox();
 
     //どのイベントにも必要なやつ
     turnSystemScript.TurnEndSystemMaster(); //ターンを終了
