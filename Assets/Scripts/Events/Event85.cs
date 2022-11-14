@@ -13,8 +13,16 @@ public class Event85 : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
+    
+    
+  }
+
+  public void execution()
+  {
     //どのイベントにも必要なやつ
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
+
+    Debug.Log(turnSystemScript.GetnowTurnPlayerNum());
     //現在のターンが誰かを取得して、それに応じてプレイヤースクリプトを取得
     switch (turnSystemScript.GetnowTurnPlayerNum())
     {
@@ -33,13 +41,9 @@ public class Event85 : MonoBehaviour
       default:
         break;
     }
-    
-  }
-
-  public void execution()
-  {
+    Debug.Log(playerScript);
     //イベント固有
-    
+
     if (playerScript.CheckGoal)
     {
       //既にゴールしているならルーレットのマス目×1000ドル所持金プラス
@@ -47,7 +51,7 @@ public class Event85 : MonoBehaviour
       int count = int.Parse(countText.text);
       playerScript.Money = playerScript.Money + (count * 1000);
       //テキスト表示
-
+      Debug.Log("A");
 
     }
     else
@@ -75,7 +79,7 @@ public class Event85 : MonoBehaviour
       int goalPlayerNum = turnSystemScript.GetgoalPlayerNum() + 1;
       turnSystemScript.SetgoalPlayerNum(goalPlayerNum);
       //テキスト表示
-
+      Debug.Log("B");
 
     }
     //どのイベントにも必要なやつ

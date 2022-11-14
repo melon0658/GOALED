@@ -41,7 +41,7 @@ public class Event2 : MonoBehaviour
   {
     //イベント固有
     Debug.Log("イベント開始");
-    yield return new WaitForSeconds(1.5f);  //10秒待つ
+    yield return new WaitForSeconds(1f);  //10秒待つ
     Debug.Log("イベント終了");
     text.SetActive(false);
 

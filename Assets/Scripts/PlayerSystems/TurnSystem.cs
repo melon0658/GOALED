@@ -369,6 +369,7 @@ public class TurnSystem : MonoBehaviour
     }
     else
     {
+      playerStatusUIScript.UpdatePlayersStatus();
       eventEndGameScript.EndGame();
     }
   }

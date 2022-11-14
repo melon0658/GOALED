@@ -21,6 +21,7 @@ public class EventEndGame : MonoBehaviour
 
   public void EndGame()
   {
+    Debug.Log("The End");
     //金額計算して１位を決める
     //残りのプレイヤーを横に並べておく
     //スポットライト当てる

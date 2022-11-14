@@ -14,10 +14,27 @@ public class Event1 : MonoBehaviour
 
   void Start()
   {
+    
+
+
+    //イベント固有
+    text = GameObject.Find("EventText");
+    eventText = text.GetComponent<TextMeshProUGUI>();
+    text.SetActive(false);
+  }
+
+    // Update is called once per frame
+  void Update()
+  {
+        
+  }
+
+  public void execution()
+  {
     //どのイベントにも必要なやつ
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
     //現在のターンが誰かを取得して、それに応じてプレイヤースクリプトを取得
-    switch(turnSystemScript.GetnowTurnPlayerNum())
+    switch (turnSystemScript.GetnowTurnPlayerNum())
     {
       case 1:
         playerScript = GameObject.Find("defaultCar1").GetComponent<Player>();
@@ -35,21 +52,6 @@ public class Event1 : MonoBehaviour
         break;
     }
 
-
-    //イベント固有
-    text = GameObject.Find("EventText");
-    eventText = text.GetComponent<TextMeshProUGUI>();
-    text.SetActive(false);
-  }
-
-    // Update is called once per frame
-  void Update()
-  {
-        
-  }
-
-  public void execution()
-  {
     //イベント固有
     text.SetActive(true);
     eventText.text = "event1";
@@ -64,7 +66,7 @@ public class Event1 : MonoBehaviour
   {
     //イベント固有
     Debug.Log("イベント開始");
-    yield return new WaitForSeconds(1.5f);  //10秒待つ
+    yield return new WaitForSeconds(1f);  //10秒待つ
     Debug.Log("イベント終了");
     text.SetActive(false);
 
