@@ -75,6 +75,10 @@ public class TurnSystem : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
+    //ライトを消す(デバッグ用)
+    //GameObject.Find("StageObjects").transform.Find("Directional Light").gameObject.SetActive(false);
+    //RenderSettings.ambientIntensity = 0.5f;
+
     //プレイヤー配列(気が向いたらfor文でコード短縮化実装)
     Players = new GameObject[] { player1, player2, player3, player4};
 
@@ -370,6 +374,7 @@ public class TurnSystem : MonoBehaviour
     else
     {
       playerStatusUIScript.UpdatePlayersStatus();
+      OffPlayerCamera();
       eventEndGameScript.EndGame();
     }
   }

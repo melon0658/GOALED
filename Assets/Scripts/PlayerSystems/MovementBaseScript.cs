@@ -118,7 +118,13 @@ public class MovementBaseScript : MonoBehaviour
           nowPosIndex = 62;
         }
       }
+
+
       actionScript.SetCheckPoint(false);
+    }
+    else
+    {
+      nowPosIndex = nextPosIndexes1[playerScript.NowPosIndex];
     }
     //Debug.Log(pathCreator.ToString());
 
@@ -126,15 +132,20 @@ public class MovementBaseScript : MonoBehaviour
     //Debug.Log("nowPosIndex" + nowPosIndex);
 
     //デバッグ用
-    if (actionScript.GetCheckPointName() == "CheckPosition3")
-    {
-      rCount = 4;
-    }
-    else
-    {
-      rCount = 10;
-    }
-      
+    //if (actionScript.GetCheckPointName() == "CheckPosition3")
+    //{
+    //  rCount = 4;
+    //}
+    //else
+    //{
+    //  rCount = 10;
+    //}
+    //if (!actionScript.GetCheckPoint())
+    //{
+
+    //}
+    rCount = 10;
+
 
     if (rCount != 1)
     {
@@ -177,7 +188,7 @@ public class MovementBaseScript : MonoBehaviour
 
     playerScript.NowPosIndex = endPosIndex;
 
-    nowPosIndex = nextPosIndexes1[endPosIndex];
+    //nowPosIndex = nextPosIndexes1[endPosIndex];
     Debug.Log(endPos);
   }
 
