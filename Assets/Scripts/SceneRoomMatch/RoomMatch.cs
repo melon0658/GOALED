@@ -15,7 +15,7 @@ public class RoomMatch : MonoBehaviour
   {
     // channel = new Channel(serverInfo.host, serverInfo.port, ChannelCredentials.Insecure);
     // roomClient = new Multiplay.RoomService.RoomServiceClient(channel);
-    Debug.Log(playerInfo.player);
+    // Debug.Log(playerInfo.player);
     onClickReloadRoom();
   }
 
@@ -63,7 +63,7 @@ public class RoomMatch : MonoBehaviour
 
   public async void onClickCreateRoom()
   {
-    Debug.Log(playerInfo.player);
+    // Debug.Log(playerInfo.player);
     var response = await matchingServer.client.CreatePublicRoomAsync(new MatchingService.CreatePublicRoomRequest { Name = "test", MaxPlayer = 4, Owner = playerInfo.player.Id });
     // var res = await roomClient.JoinRoomAsync(new Multiplay.JoinRoomRequest { RoomId = playerInfo.player.RoomId, Player = playerInfo.player });
     // SceneManager.LoadScene("MainGameScene");

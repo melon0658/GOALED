@@ -22,7 +22,7 @@ public class GenerateMap : MonoBehaviour
     tile2.SetNeighbor(direction.Opposite(), Passable.BLOCKED, tile1);
   }
 
-  void Start()
+  public void GenerateTiles()
   {
     startTile = new Tile(0);
     startTile.Position = new Vector3(0, 0, 0);

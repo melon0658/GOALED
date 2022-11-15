@@ -29,7 +29,7 @@ public class CreateUser : MonoBehaviour
     var response = await matchingServer.client.GetPlayerIdAsync(new MatchingService.GetPlayerIdRequest { });
     player.player.Id = response.PlayerId;
     player.player.Name = userName;
-    Debug.Log(player.player);
+    // Debug.Log(player.player);
     SceneManager.LoadScene("SelectRoomScene");
   }
 }

@@ -113,7 +113,7 @@ public class SendObject : MonoBehaviour
 
   public bool isTransformChanged()
   {
-    return (positionBefore - transform.position).magnitude > syncPositionPeriod || (rotationBefore - transform.rotation.eulerAngles).magnitude > syncRotationPeriod || (scaleBefore - transform.localScale).magnitude > syncScalePeriod;
+    return (positionBefore - transform.position).magnitude > syncPositionPeriod || (rotationBefore - transform.rotation.eulerAngles).magnitude > syncRotationPeriod || (scaleBefore - transform.localScale).magnitude > syncScalePeriod || rpcs.Count > 0;
   }
 
   private void setAnimatorParam()

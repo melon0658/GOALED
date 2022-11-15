@@ -86,7 +86,7 @@ public class RoomDetail : MonoBehaviour
       if (call.ResponseStream.Current.Success)
       {
         isFinished = true;
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("GenerateMapScene");
       }
     }
   }

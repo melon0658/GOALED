@@ -6,7 +6,7 @@ using System.Linq;
 
 public class Car : MonoBehaviour
 {
-  [SerializeField] private GameObject TileManager;
+  [SerializeField] public GameObject TileManager;
   [SerializeField] private GameObject Button;
   [SerializeField] private GameObject LeftButton;
   [SerializeField] private GameObject RightButton;
@@ -23,7 +23,6 @@ public class Car : MonoBehaviour
   private Direction? chooseDirection;
   void Start()
   {
-    Debug.Log("Car Start");
     positionBefore = transform.position;
     positionAfter = transform.position;
     rotateBefore = transform.eulerAngles;

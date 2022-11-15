@@ -174,13 +174,26 @@ public class Manager : MonoBehaviour
     go.transform.position = new Vector3(obj.Position.X, obj.Position.Y, obj.Position.Z);
     go.transform.rotation = Quaternion.Euler(new Vector3(obj.Rotation.X, obj.Rotation.Y, obj.Rotation.Z));
     go.transform.localScale = new Vector3(obj.Scale.X, obj.Scale.Y, obj.Scale.Z);
-    go.GetComponent<SyncObject>().objectId = obj.Id;
+    var sync = go.AddComponent<SyncObject>();
+    sync.objectId = obj.Id;
     return go;
   }
 
   private void ResolveRPC(GameService.Object obj)
   {
-    GameObject go = recvObjects[obj.Id];
+    GameObject go;
+    if (recvObjects.ContainsKey(obj.Id))
+    {
+      go = recvObjects[obj.Id];
+    }
+    else if (sendObjects.ContainsKey(obj.Id))
+    {
+      go = sendObjects[obj.Id];
+    }
+    else
+    {
+      return;
+    }
     var rpcs = obj.Rpc;
     if (rpcs.Count == 0)
     {
@@ -259,6 +272,7 @@ public class Manager : MonoBehaviour
     }
     if (obj.Owner == playerInfo.player.Id)
     {
+      ResolveRPC(obj);
       return;
     }
     if (!players.Contains(obj.Owner))
@@ -360,7 +374,6 @@ public class Manager : MonoBehaviour
   private async void SendPlayerData()
   {
     playerDataSendCall = gameServer.client.SendPlayerData();
-    AddPlayerData(new GameService.PlayerData { Id = playerInfo.player.Id, Key = { "name" }, Value = { playerInfo.player.Name } });
     while (!isFinish)
     {
       var request = CreateSendPlayerDataRequest();
