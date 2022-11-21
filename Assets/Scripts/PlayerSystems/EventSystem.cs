@@ -31,14 +31,14 @@ public class EventSystem : MonoBehaviour
     //車があるマスのイベントを実行
     switch (nowPosIndex)
     {
-      case 1: eventScriptsMaster.GetComponent<Event1>().execution(); break;
-      case 2: eventScriptsMaster.GetComponent<Event2>().execution(); break;
-      case 3: eventScriptsMaster.GetComponent<Event1>().execution(); break;
-      case 4: eventScriptsMaster.GetComponent<Event2>().execution(); break;
-      case 5: eventScriptsMaster.GetComponent<Event1>().execution(); break;
-      case 6: eventScriptsMaster.GetComponent<Event2>().execution(); break;
-      case 7: eventScriptsMaster.GetComponent<Event1>().execution(); break;
-      case 8: eventScriptsMaster.GetComponent<Event2>().execution(); break;
+      case 1: eventScriptsMaster.GetComponent<EventTest100>().execution(); break;
+      case 2: eventScriptsMaster.GetComponent<EventTest100>().execution(); break;
+      case 3: eventScriptsMaster.GetComponent<EventTest100>().execution(); break;
+      case 4: eventScriptsMaster.GetComponent<EventTest100>().execution(); break;
+      case 5: eventScriptsMaster.GetComponent<EventTest100>().execution(); break;
+      case 6: eventScriptsMaster.GetComponent<EventTest100>().execution(); break;
+      case 7: eventScriptsMaster.GetComponent<EventTest100>().execution(); break;
+      case 8: eventScriptsMaster.GetComponent<EventTest100>().execution(); break;
       case 9: eventScriptsMaster.GetComponent<Event1>().execution(); break;
       case 10: eventScriptsMaster.GetComponent<Event2>().execution(); break;
       case 11: eventScriptsMaster.GetComponent<Event1>().execution(); break;
@@ -55,9 +55,9 @@ public class EventSystem : MonoBehaviour
       case 22: eventScriptsMaster.GetComponent<Event2>().execution(); break;
       case 23: eventScriptsMaster.GetComponent<Event1>().execution(); break;
       case 24: eventScriptsMaster.GetComponent<Event2>().execution(); break;
-      case 25: eventScriptsMaster.GetComponent<Event1>().execution(); break;
-      case 26: eventScriptsMaster.GetComponent<Event2>().execution(); break;
-      case 27: eventScriptsMaster.GetComponent<Event1>().execution(); break;
+      case 25: eventScriptsMaster.GetComponent<EventTest100>().execution(); break;
+      case 26: eventScriptsMaster.GetComponent<EventTest100>().execution(); break;
+      case 27: eventScriptsMaster.GetComponent<EventTest100>().execution(); break;
       case 28: eventScriptsMaster.GetComponent<Event2>().execution(); break;
       case 29: eventScriptsMaster.GetComponent<Event1>().execution(); break;
       case 30: eventScriptsMaster.GetComponent<Event2>().execution(); break;
