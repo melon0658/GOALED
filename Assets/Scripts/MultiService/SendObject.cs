@@ -22,7 +22,7 @@ public class SendObject : MonoBehaviour
   private Vector3 scaleBefore = Vector3.zero;
   private GameService.Object go = new GameService.Object();
   public List<GameService.RPC> rpcs = new List<GameService.RPC>();
-  private Manager manager;
+  private SyncManager syncManager;
   private Animator animator;
   private CharacterController controller;
 
@@ -34,10 +34,10 @@ public class SendObject : MonoBehaviour
   void Start()
   {
     objectId = System.Guid.NewGuid().ToString();
-    manager = GameObject.Find("MainGameManager").GetComponent<Manager>();
+    syncManager = SyncManager.instance;
     go.Id = objectId;
     go.Prefub = prefub;
-    go.Owner = manager.playerInfo.player.Id;
+    go.Owner = syncManager.playerInfo.player.Id;
     if (isSyncAnimation)
     {
       animator = GetComponent<Animator>();
@@ -70,9 +70,9 @@ public class SendObject : MonoBehaviour
     }
     if (isRoomObject)
     {
-      if (manager.playerInfo.isRoomOwner)
+      if (syncManager.playerInfo.isRoomOwner)
       {
-        manager.AddSendObjects(gameObject);
+        syncManager.AddSendObjects(gameObject);
       }
       else
       {
@@ -81,14 +81,14 @@ public class SendObject : MonoBehaviour
     }
     else
     {
-      manager.AddSendObjects(gameObject);
+      syncManager.AddSendObjects(gameObject);
     }
   }
 
   public void delete()
   {
     setRPC("Delete", new Dictionary<string, string>());
-    manager.AddRemoveObjects(toObject());
+    syncManager.AddRemoveObjects(toObject());
   }
 
   void OnDestroy()

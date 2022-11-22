@@ -10,8 +10,9 @@ using System.Threading;
 using System;
 using System.Linq;
 
-public class Manager : MonoBehaviour
+public class SyncManager : MonoSingleton<SyncManager>
 {
+
   private CancellationToken ct;
   [SerializeField] private GameServer gameServer;
   [SerializeField] private MatchingServer matchingServer;
@@ -420,5 +421,15 @@ public class Manager : MonoBehaviour
       }
       onChangePlayerData.Invoke(recvPlayerData);
     }
+  }
+
+  public override void OnInitialize()
+  {
+    Debug.Log("TestSingleton#OnInitialize");
+  }
+
+  public override void OnFinalize()
+  {
+    Debug.Log("TestSingleton#OnFinalize");
   }
 }
