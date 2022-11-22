@@ -50,7 +50,5 @@
     "ProjectSettings/": true,
     "temp/": true,
     "Temp/": true
-  },
-  "omnisharp.dotnetPath": "/usr/local/share/dotnet/dotnet",
-  "omnisharp.useModernNet": false
+  }
 }
