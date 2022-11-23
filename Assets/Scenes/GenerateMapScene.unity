@@ -294,7 +294,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 288726815}
-  - component: {fileID: 288726814}
+  - component: {fileID: 288726816}
   m_Layer: 0
   m_Name: MainGameManager
   m_TagString: Untagged
@@ -302,7 +302,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &288726814
+--- !u!4 &288726815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288726813}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &288726816
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -311,7 +326,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 288726813}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 953be6a5b6d08a347bb97e04878fa27d, type: 3}
+  m_Script: {fileID: 11500000, guid: b92df40d86f6a4d49895b63a56ad0cb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameServer: {fileID: 11400000, guid: 4e135c7950ccbe24d95b8c691e2f56f1, type: 2}
@@ -321,34 +336,7 @@ MonoBehaviour:
   isPrintLog: 0
   onChangePlayerData:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1467525089}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GameUpdate
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!4 &288726815
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288726813}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 647.1061, y: 300.29327, z: -194.90794}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+      m_Calls: []
 --- !u!1 &1040776103
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,33 +346,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1040776105}
-  - component: {fileID: 1040776104}
+  - component: {fileID: 1040776106}
   m_Layer: 0
-  m_Name: Gen
+  m_Name: MapManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1040776104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1040776103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd5900d335c5f154fb54bd862a6b1de3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  straightTilePrefab: {fileID: 919132149155446097, guid: e252f64512fc8b44189e83234882b00b, type: 3}
-  cornerTilePrefab: {fileID: 919132149155446097, guid: db10bfc174265994c8337d12bdfaadf4, type: 3}
-  junctionTilePrefab: {fileID: 919132149155446097, guid: 19696ba90380c3247ba5ea907a959af6, type: 3}
-  checkpointPrefab: {fileID: 919132149155446097, guid: abeb3edf60921614693b9ad6a3607031, type: 3}
-  SmallJunctionTilePrefab: {fileID: 919132149155446097, guid: f7a2cfc2c7074bd45b3e851c9e1ba73e, type: 3}
-  largeStraightTilePrefab: {fileID: 919132149155446097, guid: e8e328efb3f7d3442adcbb55e285d414, type: 3}
-  textPrefab: {fileID: 6492778336782662901, guid: 8d72835666b7a4047a17d1d1a7a9faca, type: 3}
 --- !u!4 &1040776105
 Transform:
   m_ObjectHideFlags: 0
@@ -398,8 +367,27 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1040776106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040776103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e4dad0eceb5efb41a07059461f6e888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  straightTilePrefab: {fileID: 919132149155446097, guid: e252f64512fc8b44189e83234882b00b, type: 3}
+  cornerTilePrefab: {fileID: 919132149155446097, guid: db10bfc174265994c8337d12bdfaadf4, type: 3}
+  junctionTilePrefab: {fileID: 919132149155446097, guid: 19696ba90380c3247ba5ea907a959af6, type: 3}
+  checkpointPrefab: {fileID: 919132149155446097, guid: abeb3edf60921614693b9ad6a3607031, type: 3}
+  SmallJunctionTilePrefab: {fileID: 919132149155446097, guid: f7a2cfc2c7074bd45b3e851c9e1ba73e, type: 3}
+  largeStraightTilePrefab: {fileID: 919132149155446097, guid: e8e328efb3f7d3442adcbb55e285d414, type: 3}
+  textPrefab: {fileID: 6492778336782662901, guid: 8d72835666b7a4047a17d1d1a7a9faca, type: 3}
 --- !u!1 &1467525088
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,7 +397,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1467525090}
-  - component: {fileID: 1467525089}
+  - component: {fileID: 1467525091}
+  - component: {fileID: 1467525092}
+  - component: {fileID: 488510129280005187}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -417,7 +407,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1467525089
+--- !u!4 &1467525090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467525088}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1467525091
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -429,23 +434,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de09375b9cee9e4f8da9bb868cafacb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carPrefab: {fileID: 2569585481713350825, guid: 9aa67cfdba66a7b44980118f76a55601, type: 3}
-  tileManager: {fileID: 1040776103}
-  manager: {fileID: 288726814}
   playerInfo: {fileID: 11400000, guid: 962fc638adbb3c64d9273342ac0b5ed9, type: 2}
   matchingServer: {fileID: 11400000, guid: b5573040f8be2504eb1f03f22a55a484, type: 2}
---- !u!4 &1467525090
-Transform:
+  carPrefub: {fileID: 2569585481713350825, guid: 9aa67cfdba66a7b44980118f76a55601, type: 3}
+--- !u!114 &1467525092
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1467525088}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -66.31932, y: 23.435379, z: 130.14838}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471b1c2caaf557e41a52bf12f2f14caa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInfo: {fileID: 11400000, guid: 962fc638adbb3c64d9273342ac0b5ed9, type: 2}
+  matchingServer: {fileID: 11400000, guid: b5573040f8be2504eb1f03f22a55a484, type: 2}
+  isDebugMode: 1
+  isDebugModeOwner: 1
+--- !u!114 &488510129280005187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467525088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4797f85935b65984094d6b70abc1ac66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefub: GameManager
+  isSyncPosition: 1
+  syncPositionPeriod: 0.001
+  isSyncRotation: 1
+  syncRotationPeriod: 0.001
+  isSyncScale: 1
+  syncScalePeriod: 0.001
+  isSyncAnimation: 0
+  isRoomObject: 1

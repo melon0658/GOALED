@@ -51,6 +51,7 @@ public class SyncManager : MonoSingleton<SyncManager>
     {
       DebugMode();
     }
+    Debug.Log("roomid " + playerInfo.player.RoomId + " playerid " + playerInfo.player.Id);
     sendCall = gameServer.client.SendObject();
     SendObjectLoop();
     RecvObject();
@@ -182,7 +183,7 @@ public class SyncManager : MonoSingleton<SyncManager>
 
   private void ResolveRPC(GameService.Object obj)
   {
-    GameObject go;
+    GameObject go = null;
     if (recvObjects.ContainsKey(obj.Id))
     {
       go = recvObjects[obj.Id];
@@ -191,7 +192,7 @@ public class SyncManager : MonoSingleton<SyncManager>
     {
       go = sendObjects[obj.Id];
     }
-    else
+    if (go == null)
     {
       return;
     }
@@ -375,6 +376,7 @@ public class SyncManager : MonoSingleton<SyncManager>
   private async void SendPlayerData()
   {
     playerDataSendCall = gameServer.client.SendPlayerData();
+    AddPlayerData(new GameService.PlayerData { Id = playerInfo.player.Id, Key = { "name" }, Value = { playerInfo.player.Name } });
     while (!isFinish)
     {
       var request = CreateSendPlayerDataRequest();
@@ -425,11 +427,9 @@ public class SyncManager : MonoSingleton<SyncManager>
 
   public override void OnInitialize()
   {
-    Debug.Log("TestSingleton#OnInitialize");
   }
 
   public override void OnFinalize()
   {
-    Debug.Log("TestSingleton#OnFinalize");
   }
 }

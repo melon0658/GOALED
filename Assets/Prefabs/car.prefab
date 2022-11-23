@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2946146686134002195}
-  - component: {fileID: -6030160453251324366}
+  - component: {fileID: 4926953735538101368}
   m_Layer: 0
-  m_Name: car2
+  m_Name: car
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6030160453251324366
+--- !u!114 &4926953735538101368
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,14 +44,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 2569585481713350825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c262fa6160f1bf46b641cdc6030d439, type: 3}
+  m_Script: {fileID: 11500000, guid: 4797f85935b65984094d6b70abc1ac66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 3416096524100565639}
-  LeftButton: {fileID: 3416096523574268679}
-  CenterButton: {fileID: 3416096522350888168}
-  RightButton: {fileID: 3416096523550706110}
-  Button: {fileID: 3416096523430318658}
+  prefub: car
+  isSyncPosition: 1
+  syncPositionPeriod: 0.001
+  isSyncRotation: 1
+  syncRotationPeriod: 0.001
+  isSyncScale: 1
+  syncScalePeriod: 0.001
+  isSyncAnimation: 0
+  isRoomObject: 0
 --- !u!1 &3416096522029256527
 GameObject:
   m_ObjectHideFlags: 0

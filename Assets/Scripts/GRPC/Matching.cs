@@ -31,56 +31,56 @@ namespace MatchingService {
             "Z1NlcnZpY2UuUm9vbVN0YXR1cxISCgptYXhfcGxheWVyGAYgASgFEhYKDmN1",
             "cnJlbnRfcGxheWVyGAcgASgFEigKB3BsYXllcnMYCCADKAsyFy5NYXRjaGlu",
             "Z1NlcnZpY2UuUGxheWVyIhQKEkdldFBsYXllcklkUmVxdWVzdCIoChNHZXRQ",
-            "bGF5ZXJJZFJlc3BvbnNlEhEKCXBsYXllcl9pZBgBIAEoCSIWChRHZXRQdWJs",
-            "aWNSb29tUmVxdWVzdCI9ChVHZXRQdWJsaWNSb29tUmVzcG9uc2USJAoFcm9v",
-            "bXMYASADKAsyFS5NYXRjaGluZ1NlcnZpY2UuUm9vbSJKChdDcmVhdGVQdWJs",
-            "aWNSb29tUmVxdWVzdBIMCgRuYW1lGAEgASgJEg0KBW93bmVyGAIgASgJEhIK",
-            "Cm1heF9wbGF5ZXIYAyABKAUiPwoYQ3JlYXRlUHVibGljUm9vbVJlc3BvbnNl",
-            "EiMKBHJvb20YASABKAsyFS5NYXRjaGluZ1NlcnZpY2UuUm9vbSJdChhDcmVh",
-            "dGVQcml2YXRlUm9vbVJlcXVlc3QSDAoEbmFtZRgBIAEoCRINCgVvd25lchgC",
-            "IAEoCRIQCghwYXNzd29yZBgDIAEoCRISCgptYXhfcGxheWVyGAQgASgFIkAK",
-            "GUNyZWF0ZVByaXZhdGVSb29tUmVzcG9uc2USIwoEcm9vbRgBIAEoCzIVLk1h",
-            "dGNoaW5nU2VydmljZS5Sb29tIlEKFUpvaW5QdWJsaWNSb29tUmVxdWVzdBIP",
-            "Cgdyb29tX2lkGAEgASgJEicKBnBsYXllchgCIAEoCzIXLk1hdGNoaW5nU2Vy",
-            "dmljZS5QbGF5ZXIiPQoWSm9pblB1YmxpY1Jvb21SZXNwb25zZRIjCgRyb29t",
-            "GAEgASgLMhUuTWF0Y2hpbmdTZXJ2aWNlLlJvb20iUwoWSm9pblByaXZhdGVS",
-            "b29tUmVxdWVzdBIQCghwYXNzd29yZBgBIAEoCRInCgZwbGF5ZXIYAiABKAsy",
-            "Fy5NYXRjaGluZ1NlcnZpY2UuUGxheWVyIj4KF0pvaW5Qcml2YXRlUm9vbVJl",
-            "c3BvbnNlEiMKBHJvb20YASABKAsyFS5NYXRjaGluZ1NlcnZpY2UuUm9vbSI2",
-            "ChBMZWF2ZVJvb21SZXF1ZXN0Eg8KB3Jvb21faWQYASABKAkSEQoJcGxheWVy",
-            "X2lkGAIgASgJIiQKEUxlYXZlUm9vbVJlc3BvbnNlEg8KB3N1Y2Nlc3MYASAB",
-            "KAgiNgoQU3RhcnRHYW1lUmVxdWVzdBIPCgdyb29tX2lkGAEgASgJEhEKCXBs",
-            "YXllcl9pZBgCIAEoCSIkChFTdGFydEdhbWVSZXNwb25zZRIPCgdzdWNjZXNz",
-            "GAEgASgIIj8KGUdldFN0YXJ0R2FtZVN0cmVhbVJlcXVlc3QSDwoHcm9vbV9p",
-            "ZBgBIAEoCRIRCglwbGF5ZXJfaWQYAiABKAkiLQoaR2V0U3RhcnRHYW1lU3Ry",
-            "ZWFtUmVzcG9uc2USDwoHc3VjY2VzcxgBIAEoCCI5ChRHZXRSb29tRGV0YWls",
-            "UmVxdWVzdBIPCgdyb29tX2lkGAEgASgJEhAKCHBhc3N3b3JkGAIgASgJIjwK",
-            "FUdldFJvb21EZXRhaWxSZXNwb25zZRIjCgRyb29tGAEgASgLMhUuTWF0Y2hp",
-            "bmdTZXJ2aWNlLlJvb20qJgoKUm9vbVN0YXR1cxILCgdXQUlUSU5HEAASCwoH",
-            "UExBWUlORxABMvYHCg9NYXRjaGluZ1NlcnZpY2USWgoLR2V0UGxheWVySWQS",
-            "Iy5NYXRjaGluZ1NlcnZpY2UuR2V0UGxheWVySWRSZXF1ZXN0GiQuTWF0Y2hp",
-            "bmdTZXJ2aWNlLkdldFBsYXllcklkUmVzcG9uc2UiABJgCg1HZXRQdWJsaWNS",
-            "b29tEiUuTWF0Y2hpbmdTZXJ2aWNlLkdldFB1YmxpY1Jvb21SZXF1ZXN0GiYu",
-            "TWF0Y2hpbmdTZXJ2aWNlLkdldFB1YmxpY1Jvb21SZXNwb25zZSIAEmkKEENy",
-            "ZWF0ZVB1YmxpY1Jvb20SKC5NYXRjaGluZ1NlcnZpY2UuQ3JlYXRlUHVibGlj",
-            "Um9vbVJlcXVlc3QaKS5NYXRjaGluZ1NlcnZpY2UuQ3JlYXRlUHVibGljUm9v",
-            "bVJlc3BvbnNlIgASbAoRQ3JlYXRlUHJpdmF0ZVJvb20SKS5NYXRjaGluZ1Nl",
-            "cnZpY2UuQ3JlYXRlUHJpdmF0ZVJvb21SZXF1ZXN0GiouTWF0Y2hpbmdTZXJ2",
-            "aWNlLkNyZWF0ZVByaXZhdGVSb29tUmVzcG9uc2UiABJjCg5Kb2luUHVibGlj",
-            "Um9vbRImLk1hdGNoaW5nU2VydmljZS5Kb2luUHVibGljUm9vbVJlcXVlc3Qa",
-            "Jy5NYXRjaGluZ1NlcnZpY2UuSm9pblB1YmxpY1Jvb21SZXNwb25zZSIAEmYK",
-            "D0pvaW5Qcml2YXRlUm9vbRInLk1hdGNoaW5nU2VydmljZS5Kb2luUHJpdmF0",
-            "ZVJvb21SZXF1ZXN0GiguTWF0Y2hpbmdTZXJ2aWNlLkpvaW5Qcml2YXRlUm9v",
-            "bVJlc3BvbnNlIgASVAoJTGVhdmVSb29tEiEuTWF0Y2hpbmdTZXJ2aWNlLkxl",
-            "YXZlUm9vbVJlcXVlc3QaIi5NYXRjaGluZ1NlcnZpY2UuTGVhdmVSb29tUmVz",
-            "cG9uc2UiABJUCglTdGFydEdhbWUSIS5NYXRjaGluZ1NlcnZpY2UuU3RhcnRH",
-            "YW1lUmVxdWVzdBoiLk1hdGNoaW5nU2VydmljZS5TdGFydEdhbWVSZXNwb25z",
-            "ZSIAEnEKEkdldFN0YXJ0R2FtZVN0cmVhbRIqLk1hdGNoaW5nU2VydmljZS5H",
-            "ZXRTdGFydEdhbWVTdHJlYW1SZXF1ZXN0GisuTWF0Y2hpbmdTZXJ2aWNlLkdl",
-            "dFN0YXJ0R2FtZVN0cmVhbVJlc3BvbnNlIgAwARJgCg1HZXRSb29tRGV0YWls",
-            "EiUuTWF0Y2hpbmdTZXJ2aWNlLkdldFJvb21EZXRhaWxSZXF1ZXN0GiYuTWF0",
-            "Y2hpbmdTZXJ2aWNlLkdldFJvb21EZXRhaWxSZXNwb25zZSIAQgpaCC4uL2dv",
-            "L3BiYgZwcm90bzM="));
+            "bGF5ZXJJZFJlc3BvbnNlEhEKCXBsYXllcl9pZBgBIAEoCSIXChVHZXRQdWJs",
+            "aWNSb29tc1JlcXVlc3QiPgoWR2V0UHVibGljUm9vbXNSZXNwb25zZRIkCgVy",
+            "b29tcxgBIAMoCzIVLk1hdGNoaW5nU2VydmljZS5Sb29tIkoKF0NyZWF0ZVB1",
+            "YmxpY1Jvb21SZXF1ZXN0EgwKBG5hbWUYASABKAkSDQoFb3duZXIYAiABKAkS",
+            "EgoKbWF4X3BsYXllchgDIAEoBSI/ChhDcmVhdGVQdWJsaWNSb29tUmVzcG9u",
+            "c2USIwoEcm9vbRgBIAEoCzIVLk1hdGNoaW5nU2VydmljZS5Sb29tIl0KGENy",
+            "ZWF0ZVByaXZhdGVSb29tUmVxdWVzdBIMCgRuYW1lGAEgASgJEg0KBW93bmVy",
+            "GAIgASgJEhAKCHBhc3N3b3JkGAMgASgJEhIKCm1heF9wbGF5ZXIYBCABKAUi",
+            "QAoZQ3JlYXRlUHJpdmF0ZVJvb21SZXNwb25zZRIjCgRyb29tGAEgASgLMhUu",
+            "TWF0Y2hpbmdTZXJ2aWNlLlJvb20iUQoVSm9pblB1YmxpY1Jvb21SZXF1ZXN0",
+            "Eg8KB3Jvb21faWQYASABKAkSJwoGcGxheWVyGAIgASgLMhcuTWF0Y2hpbmdT",
+            "ZXJ2aWNlLlBsYXllciI9ChZKb2luUHVibGljUm9vbVJlc3BvbnNlEiMKBHJv",
+            "b20YASABKAsyFS5NYXRjaGluZ1NlcnZpY2UuUm9vbSJTChZKb2luUHJpdmF0",
+            "ZVJvb21SZXF1ZXN0EhAKCHBhc3N3b3JkGAEgASgJEicKBnBsYXllchgCIAEo",
+            "CzIXLk1hdGNoaW5nU2VydmljZS5QbGF5ZXIiPgoXSm9pblByaXZhdGVSb29t",
+            "UmVzcG9uc2USIwoEcm9vbRgBIAEoCzIVLk1hdGNoaW5nU2VydmljZS5Sb29t",
+            "IjYKEExlYXZlUm9vbVJlcXVlc3QSDwoHcm9vbV9pZBgBIAEoCRIRCglwbGF5",
+            "ZXJfaWQYAiABKAkiJAoRTGVhdmVSb29tUmVzcG9uc2USDwoHc3VjY2VzcxgB",
+            "IAEoCCI2ChBTdGFydEdhbWVSZXF1ZXN0Eg8KB3Jvb21faWQYASABKAkSEQoJ",
+            "cGxheWVyX2lkGAIgASgJIiQKEVN0YXJ0R2FtZVJlc3BvbnNlEg8KB3N1Y2Nl",
+            "c3MYASABKAgiPwoZR2V0U3RhcnRHYW1lU3RyZWFtUmVxdWVzdBIPCgdyb29t",
+            "X2lkGAEgASgJEhEKCXBsYXllcl9pZBgCIAEoCSItChpHZXRTdGFydEdhbWVT",
+            "dHJlYW1SZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIIjkKFEdldFJvb21EZXRh",
+            "aWxSZXF1ZXN0Eg8KB3Jvb21faWQYASABKAkSEAoIcGFzc3dvcmQYAiABKAki",
+            "PAoVR2V0Um9vbURldGFpbFJlc3BvbnNlEiMKBHJvb20YASABKAsyFS5NYXRj",
+            "aGluZ1NlcnZpY2UuUm9vbSomCgpSb29tU3RhdHVzEgsKB1dBSVRJTkcQABIL",
+            "CgdQTEFZSU5HEAEy+QcKD01hdGNoaW5nU2VydmljZRJaCgtHZXRQbGF5ZXJJ",
+            "ZBIjLk1hdGNoaW5nU2VydmljZS5HZXRQbGF5ZXJJZFJlcXVlc3QaJC5NYXRj",
+            "aGluZ1NlcnZpY2UuR2V0UGxheWVySWRSZXNwb25zZSIAEmMKDkdldFB1Ymxp",
+            "Y1Jvb21zEiYuTWF0Y2hpbmdTZXJ2aWNlLkdldFB1YmxpY1Jvb21zUmVxdWVz",
+            "dBonLk1hdGNoaW5nU2VydmljZS5HZXRQdWJsaWNSb29tc1Jlc3BvbnNlIgAS",
+            "aQoQQ3JlYXRlUHVibGljUm9vbRIoLk1hdGNoaW5nU2VydmljZS5DcmVhdGVQ",
+            "dWJsaWNSb29tUmVxdWVzdBopLk1hdGNoaW5nU2VydmljZS5DcmVhdGVQdWJs",
+            "aWNSb29tUmVzcG9uc2UiABJsChFDcmVhdGVQcml2YXRlUm9vbRIpLk1hdGNo",
+            "aW5nU2VydmljZS5DcmVhdGVQcml2YXRlUm9vbVJlcXVlc3QaKi5NYXRjaGlu",
+            "Z1NlcnZpY2UuQ3JlYXRlUHJpdmF0ZVJvb21SZXNwb25zZSIAEmMKDkpvaW5Q",
+            "dWJsaWNSb29tEiYuTWF0Y2hpbmdTZXJ2aWNlLkpvaW5QdWJsaWNSb29tUmVx",
+            "dWVzdBonLk1hdGNoaW5nU2VydmljZS5Kb2luUHVibGljUm9vbVJlc3BvbnNl",
+            "IgASZgoPSm9pblByaXZhdGVSb29tEicuTWF0Y2hpbmdTZXJ2aWNlLkpvaW5Q",
+            "cml2YXRlUm9vbVJlcXVlc3QaKC5NYXRjaGluZ1NlcnZpY2UuSm9pblByaXZh",
+            "dGVSb29tUmVzcG9uc2UiABJUCglMZWF2ZVJvb20SIS5NYXRjaGluZ1NlcnZp",
+            "Y2UuTGVhdmVSb29tUmVxdWVzdBoiLk1hdGNoaW5nU2VydmljZS5MZWF2ZVJv",
+            "b21SZXNwb25zZSIAElQKCVN0YXJ0R2FtZRIhLk1hdGNoaW5nU2VydmljZS5T",
+            "dGFydEdhbWVSZXF1ZXN0GiIuTWF0Y2hpbmdTZXJ2aWNlLlN0YXJ0R2FtZVJl",
+            "c3BvbnNlIgAScQoSR2V0U3RhcnRHYW1lU3RyZWFtEiouTWF0Y2hpbmdTZXJ2",
+            "aWNlLkdldFN0YXJ0R2FtZVN0cmVhbVJlcXVlc3QaKy5NYXRjaGluZ1NlcnZp",
+            "Y2UuR2V0U3RhcnRHYW1lU3RyZWFtUmVzcG9uc2UiADABEmAKDUdldFJvb21E",
+            "ZXRhaWwSJS5NYXRjaGluZ1NlcnZpY2UuR2V0Um9vbURldGFpbFJlcXVlc3Qa",
+            "Ji5NYXRjaGluZ1NlcnZpY2UuR2V0Um9vbURldGFpbFJlc3BvbnNlIgBCCloI",
+            "Li4vZ28vcGJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MatchingService.RoomStatus), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -88,8 +88,8 @@ namespace MatchingService {
             new pbr::GeneratedClrTypeInfo(typeof(global::MatchingService.Room), global::MatchingService.Room.Parser, new[]{ "Id", "Name", "Owner", "Password", "Status", "MaxPlayer", "CurrentPlayer", "Players" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::MatchingService.GetPlayerIdRequest), global::MatchingService.GetPlayerIdRequest.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::MatchingService.GetPlayerIdResponse), global::MatchingService.GetPlayerIdResponse.Parser, new[]{ "PlayerId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::MatchingService.GetPublicRoomRequest), global::MatchingService.GetPublicRoomRequest.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::MatchingService.GetPublicRoomResponse), global::MatchingService.GetPublicRoomResponse.Parser, new[]{ "Rooms" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::MatchingService.GetPublicRoomsRequest), global::MatchingService.GetPublicRoomsRequest.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::MatchingService.GetPublicRoomsResponse), global::MatchingService.GetPublicRoomsResponse.Parser, new[]{ "Rooms" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::MatchingService.CreatePublicRoomRequest), global::MatchingService.CreatePublicRoomRequest.Parser, new[]{ "Name", "Owner", "MaxPlayer" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::MatchingService.CreatePublicRoomResponse), global::MatchingService.CreatePublicRoomResponse.Parser, new[]{ "Room" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::MatchingService.CreatePrivateRoomRequest), global::MatchingService.CreatePrivateRoomRequest.Parser, new[]{ "Name", "Owner", "Password", "MaxPlayer" }, null, null, null, null),
@@ -1161,16 +1161,16 @@ namespace MatchingService {
 
   }
 
-  public sealed partial class GetPublicRoomRequest : pb::IMessage<GetPublicRoomRequest>
+  public sealed partial class GetPublicRoomsRequest : pb::IMessage<GetPublicRoomsRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<GetPublicRoomRequest> _parser = new pb::MessageParser<GetPublicRoomRequest>(() => new GetPublicRoomRequest());
+    private static readonly pb::MessageParser<GetPublicRoomsRequest> _parser = new pb::MessageParser<GetPublicRoomsRequest>(() => new GetPublicRoomsRequest());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<GetPublicRoomRequest> Parser { get { return _parser; } }
+    public static pb::MessageParser<GetPublicRoomsRequest> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -1186,7 +1186,7 @@ namespace MatchingService {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GetPublicRoomRequest() {
+    public GetPublicRoomsRequest() {
       OnConstruction();
     }
 
@@ -1194,25 +1194,25 @@ namespace MatchingService {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GetPublicRoomRequest(GetPublicRoomRequest other) : this() {
+    public GetPublicRoomsRequest(GetPublicRoomsRequest other) : this() {
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GetPublicRoomRequest Clone() {
-      return new GetPublicRoomRequest(this);
+    public GetPublicRoomsRequest Clone() {
+      return new GetPublicRoomsRequest(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as GetPublicRoomRequest);
+      return Equals(other as GetPublicRoomsRequest);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(GetPublicRoomRequest other) {
+    public bool Equals(GetPublicRoomsRequest other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -1272,7 +1272,7 @@ namespace MatchingService {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(GetPublicRoomRequest other) {
+    public void MergeFrom(GetPublicRoomsRequest other) {
       if (other == null) {
         return;
       }
@@ -1313,16 +1313,16 @@ namespace MatchingService {
 
   }
 
-  public sealed partial class GetPublicRoomResponse : pb::IMessage<GetPublicRoomResponse>
+  public sealed partial class GetPublicRoomsResponse : pb::IMessage<GetPublicRoomsResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<GetPublicRoomResponse> _parser = new pb::MessageParser<GetPublicRoomResponse>(() => new GetPublicRoomResponse());
+    private static readonly pb::MessageParser<GetPublicRoomsResponse> _parser = new pb::MessageParser<GetPublicRoomsResponse>(() => new GetPublicRoomsResponse());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<GetPublicRoomResponse> Parser { get { return _parser; } }
+    public static pb::MessageParser<GetPublicRoomsResponse> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -1338,7 +1338,7 @@ namespace MatchingService {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GetPublicRoomResponse() {
+    public GetPublicRoomsResponse() {
       OnConstruction();
     }
 
@@ -1346,15 +1346,15 @@ namespace MatchingService {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GetPublicRoomResponse(GetPublicRoomResponse other) : this() {
+    public GetPublicRoomsResponse(GetPublicRoomsResponse other) : this() {
       rooms_ = other.rooms_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GetPublicRoomResponse Clone() {
-      return new GetPublicRoomResponse(this);
+    public GetPublicRoomsResponse Clone() {
+      return new GetPublicRoomsResponse(this);
     }
 
     /// <summary>Field number for the "rooms" field.</summary>
@@ -1371,12 +1371,12 @@ namespace MatchingService {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as GetPublicRoomResponse);
+      return Equals(other as GetPublicRoomsResponse);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(GetPublicRoomResponse other) {
+    public bool Equals(GetPublicRoomsResponse other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -1441,7 +1441,7 @@ namespace MatchingService {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(GetPublicRoomResponse other) {
+    public void MergeFrom(GetPublicRoomsResponse other) {
       if (other == null) {
         return;
       }

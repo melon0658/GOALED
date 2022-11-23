@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GenerateMap : MonoBehaviour
+public class MapManager : MonoSingleton<MapManager>
 {
   [SerializeField] private GameObject straightTilePrefab;
   [SerializeField] private GameObject cornerTilePrefab;
@@ -12,6 +12,7 @@ public class GenerateMap : MonoBehaviour
   [SerializeField] private GameObject largeStraightTilePrefab;
   [SerializeField] private GameObject textPrefab;
   private Tile startTile;
+  private Dictionary<string, Tile> tiles = new Dictionary<string, Tile>();
   public Tile StartTile { get => startTile; }
   private Vector2 JunctionTileSize = new Vector2(75 + (75 / 2), 75 + (75 / 2));
   private Vector2 NormalTileSize = new Vector2(75, 75);
@@ -281,30 +282,36 @@ public class GenerateMap : MonoBehaviour
     switch (tileType)
     {
       case TileType.STRAIGHT_HORIZONTAL:
-        tileObject = tile.CheckPoint ? Instantiate(checkpointPrefab, tile.Position, tile.GetRotate()) : Instantiate(straightTilePrefab, tile.Position, tile.GetRotate());
+        tileObject = tile.CheckPoint ? Instantiate(checkpointPrefab, tile.Position, tile.GetRotate(), transform) : Instantiate(straightTilePrefab, tile.Position, tile.GetRotate(), transform);
         break;
       case TileType.STRAIGHT_VERTICAL:
-        tileObject = tile.CheckPoint ? Instantiate(checkpointPrefab, tile.Position, tile.GetRotate()) : Instantiate(straightTilePrefab, tile.Position, tile.GetRotate());
+        tileObject = tile.CheckPoint ? Instantiate(checkpointPrefab, tile.Position, tile.GetRotate(), transform) : Instantiate(straightTilePrefab, tile.Position, tile.GetRotate(), transform);
         break;
       case TileType.LARGE_STRAIGHT_HORIZONTAL:
-        tileObject = Instantiate(largeStraightTilePrefab, tile.Position, tile.GetRotate());
+        tileObject = Instantiate(largeStraightTilePrefab, tile.Position, tile.GetRotate(), transform);
         break;
       case TileType.LARGE_STRAIGHT_VERTICAL:
-        tileObject = Instantiate(largeStraightTilePrefab, tile.Position, tile.GetRotate());
+        tileObject = Instantiate(largeStraightTilePrefab, tile.Position, tile.GetRotate(), transform);
         break;
       case TileType.CORNER:
-        tileObject = Instantiate(cornerTilePrefab, tile.Position, tile.GetRotate());
+        tileObject = Instantiate(cornerTilePrefab, tile.Position, tile.GetRotate(), transform);
         break;
       case TileType.LARGE_JUNCTION:
-        tileObject = Instantiate(junctionTilePrefab, tile.Position, tile.GetRotate());
+        tileObject = Instantiate(junctionTilePrefab, tile.Position, tile.GetRotate(), transform);
         break;
       case TileType.SMALL_JUNCTION:
-        tileObject = Instantiate(SmallJunctionTilePrefab, tile.Position, tile.GetRotate());
+        tileObject = Instantiate(SmallJunctionTilePrefab, tile.Position, tile.GetRotate(), transform);
         break;
     }
-    Instantiate(textPrefab, tile.Position, Quaternion.Euler(90, 0, 0));
+    Instantiate(textPrefab, tile.Position + new Vector3(0, 0.5f, 0), Quaternion.Euler(90, 0, 0), tileObject.transform);
     tileObject.name = tile.Name;
     tile.IsGenerated = true;
+    tiles.Add(tile.id, tile);
+  }
+
+  public Tile GetTile(string id)
+  {
+    return tiles[id];
   }
 
   public (Tile, List<Vector3>, List<Vector3>) WayToTile(Tile start, int step, Direction? direction = null)

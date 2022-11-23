@@ -57,7 +57,7 @@ public class RoomMatch : MonoBehaviour
 
   public async void onClickReloadRoom()
   {
-    var response = await matchingServer.client.GetPublicRoomAsync(new MatchingService.GetPublicRoomRequest { });
+    var response = await matchingServer.client.GetPublicRoomsAsync(new MatchingService.GetPublicRoomsRequest { });
     DisplayRoomList(response.Rooms);
   }
 

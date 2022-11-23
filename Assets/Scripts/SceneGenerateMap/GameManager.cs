@@ -1,85 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
-  [SerializeField] private GameObject carPrefab;
-  [SerializeField] private GameObject tileManager;
-  [SerializeField] private Manager manager;
   [SerializeField] private PlayerInfo playerInfo;
   [SerializeField] private MatchingServer matchingServer;
+  [SerializeField] private GameObject carPrefub;
+  private Dictionary<string, PlayerStetus> players = new Dictionary<string, PlayerStetus>();
   private Dictionary<string, GameObject> cars = new Dictionary<string, GameObject>();
-  async void Start()
-  {
-    var res = await matchingServer.client.GetRoomDetailAsync(new MatchingService.GetRoomDetailRequest
-    {
-      RoomId = playerInfo.player.RoomId,
-      Password = playerInfo.password
-    });
-    if (res.Room == null)
-    {
-      Debug.LogError("Room not found");
-      return;
-    }
 
-    var room = res.Room;
-    if (room.Owner == playerInfo.player.Id)
-    {
-      playerInfo.isRoomOwner = true;
-      var players = room.Players;
-      foreach (var player in players)
-      {
-        var car = Instantiate(carPrefab, new Vector3(10 * cars.Count, 0, 0), Quaternion.identity);
-        cars.Add(player.Id, car);
-        cars[player.Id].GetComponent<Car>().TileManager = tileManager;
-      }
-      InitPlayerData(room.Players);
-    }
-    tileManager.GetComponent<GenerateMap>().GenerateTiles();
+  private async Task<bool> IsRoomOwner()
+  {
+    var res = await matchingServer.client.GetRoomDetailAsync(new MatchingService.GetRoomDetailRequest() { RoomId = playerInfo.player.RoomId });
+    return res.Room.Owner == playerInfo.player.Id;
   }
 
-  private void InitPlayerData(Google.Protobuf.Collections.RepeatedField<MatchingService.Player> players)
+  private async Task<Dictionary<string, PlayerStetus>> GetPlayers()
   {
+    var res = await matchingServer.client.GetRoomDetailAsync(new MatchingService.GetRoomDetailRequest() { RoomId = playerInfo.player.RoomId });
+    var players = new Dictionary<string, PlayerStetus>();
+    foreach (var player in res.Room.Players)
+    {
+      players.Add(player.Id, new PlayerStetus(player.Name, 10000, 0, "red", "job", false, 0, 0, false));
+    }
+    return players;
+  }
+
+  private void InitializeCar()
+  {
+    var position = new Vector3(0, 0, 0);
     foreach (var player in players)
     {
-      var stetus = new PlayerStetus(player.Name, 1000, 0, "red", "Job", false, 0, 0, false);
-      var slstetus = stetus.Serialize();
-      slstetus.Id = player.Id;
-      manager.AddPlayerData(slstetus);
+      var car = Instantiate(carPrefub, position, Quaternion.identity);
+      position += new Vector3(20, 0, 0);
+      cars.Add(player.Key, car);
     }
-    var roomStetus = new GameService.PlayerData();
-    roomStetus.Id = playerInfo.player.RoomId;
-    roomStetus.Key.Add("turn");
-    roomStetus.Value.Add(players[0].Id);
-    manager.AddPlayerData(roomStetus);
+    // for (int i = 0; i < 4; i++)
+    // {
+    //   var car = Instantiate(carPrefub, position, Quaternion.identity);
+    //   position += new Vector3(20, 0, 0);
+    //   cars.Add(i.ToString(), car);
+    // }
   }
 
-  // Update is called once per frame
-  void Update()
-  {
 
-  }
-
-  public void GameUpdate(Dictionary<string, Dictionary<string, string>> datas)
+  async void Start()
   {
+    players = await GetPlayers();
     if (playerInfo.isRoomOwner)
     {
-      foreach (var data in datas)
-      {
-        Debug.Log(data.Key);
-        foreach (var d in data.Value)
-        {
-          Debug.Log(d.Key + " : " + d.Value);
-        }
-        if (data.Key == playerInfo.player.RoomId)
-        {
-          var turn = data.Value["turn"];
-          var car = cars[turn];
-          car.GetComponent<SendObject>().setRPC("ActiveCamera", new Dictionary<string, string>());
-        }
-      }
+      Debug.Log("owner");
+      InitializeCar();
+      gameObject.GetComponent<SendObject>().setRPC("ActiveCamera", new Dictionary<string, string>() { { "id", playerInfo.player.Id } });
     }
+    MapManager.instance.GenerateTiles();
+  }
+
+  [CustomRPC]
+  public void ActiveCamera(string id)
+  {
+    Debug.Log(id);
+    cars[id].GetComponentInChildren<Camera>().enabled = true;
   }
 }
