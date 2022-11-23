@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class HoverEvent : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class HoverEvent : MonoBehaviour
 
     public void OnMouseHover()
     {
-        Debug.Log("あるぱか　あるぱか");
+        // Debug.Log("あるぱか　あるぱか");
         audioSource.PlayOneShot(SE1);
     }
 
