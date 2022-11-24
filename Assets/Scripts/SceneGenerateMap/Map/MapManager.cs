@@ -328,7 +328,7 @@ public class MapManager : MonoSingleton<MapManager>
     for (int i = 0; i < step; i++)
     {
       var neighbors = tile.GetPassebleNeighbors();
-      if (direction != null)
+      if (direction != null && tile.GetTileType() == TileType.LARGE_JUNCTION)
       {
         neighbors = neighbors.Where(x => x.Key == direction.Value).ToDictionary(x => x.Key, x => x.Value);
         direction = null;

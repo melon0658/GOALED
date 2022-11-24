@@ -38,6 +38,7 @@ public class SendObject : MonoBehaviour
     go.Id = objectId;
     go.Prefub = prefub;
     go.Owner = syncManager.playerInfo.player.Id;
+    go.IsRoomObject = isRoomObject;
     if (isSyncAnimation)
     {
       animator = GetComponent<Animator>();
@@ -70,13 +71,15 @@ public class SendObject : MonoBehaviour
     }
     if (isRoomObject)
     {
+      objectId = gameObject.name;
+      go.Id = objectId;
       if (syncManager.playerInfo.isRoomOwner)
       {
         syncManager.AddSendObjects(gameObject);
       }
       else
       {
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
       }
     }
     else
@@ -93,7 +96,10 @@ public class SendObject : MonoBehaviour
 
   void OnDestroy()
   {
-    delete();
+    if (!isRoomObject)
+    {
+      delete();
+    }
   }
 
   public void setTransform()
@@ -158,6 +164,9 @@ public class SendObject : MonoBehaviour
 
   public GameService.Object toObject()
   {
+    go.Rpc.Clear();
+    go.Rpc.AddRange(rpcs);
+    rpcs.Clear();
     if (isSyncPosition)
     {
       go.Position = new GameService.Vec3 { X = transform.position.x, Y = transform.position.y, Z = transform.position.z };
@@ -174,8 +183,6 @@ public class SendObject : MonoBehaviour
     {
       setAnimatorParam();
     }
-    go.Rpc.AddRange(rpcs);
-    rpcs.Clear();
     return go;
   }
 }

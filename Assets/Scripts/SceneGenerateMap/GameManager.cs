@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
   [SerializeField] private PlayerInfo playerInfo;
   [SerializeField] private MatchingServer matchingServer;
   [SerializeField] private GameObject carPrefub;
+  [SerializeField] private RPCManager rpcManager;
   private Dictionary<string, PlayerStetus> players = new Dictionary<string, PlayerStetus>();
   private Dictionary<string, GameObject> cars = new Dictionary<string, GameObject>();
 
@@ -37,14 +38,44 @@ public class GameManager : MonoBehaviour
       position += new Vector3(20, 0, 0);
       cars.Add(player.Key, car);
     }
-    // for (int i = 0; i < 4; i++)
-    // {
-    //   var car = Instantiate(carPrefub, position, Quaternion.identity);
-    //   position += new Vector3(20, 0, 0);
-    //   cars.Add(i.ToString(), car);
-    // }
   }
 
+  public void onClick()
+  {
+    rpcManager.GetComponent<SendObject>().setRPC("MoveCamera", new Dictionary<string, string>() { { "id", playerInfo.player.Id } });
+  }
+
+  public void onClickMove()
+  {
+    rpcManager.GetComponent<SendObject>().setRPC("MoveCar", new Dictionary<string, string>() { { "id", playerInfo.player.Id }, { "step", "1" } });
+  }
+
+  public void MoveCamera(string id)
+  {
+    if (!playerInfo.isRoomOwner)
+    {
+      return;
+    }
+    var car = cars[id];
+    var camera = GameObject.Find("Camera");
+    var backword = car.transform.TransformDirection(Vector3.back);
+    camera.transform.position = car.transform.position + backword * 120 + new Vector3(0, 40, 0);
+    camera.transform.LookAt(car.transform.position);
+    camera.transform.parent = car.transform;
+  }
+
+  public void MoveCar(string id, string step)
+  {
+    if (!playerInfo.isRoomOwner)
+    {
+      return;
+    }
+    var car = cars[id];
+    var carMove = car.GetComponent<CarMove>();
+    var (tile, path, rotate) = carMove.calcPath(MapManager.instance.GetTile(players[id].NowPosIndex.ToString()), int.Parse(step), Direction.NEGATIVE_X);
+    carMove.Move(path, rotate);
+    players[id].NowPosIndex = int.Parse(tile.id);
+  }
 
   async void Start()
   {
@@ -53,15 +84,7 @@ public class GameManager : MonoBehaviour
     {
       Debug.Log("owner");
       InitializeCar();
-      gameObject.GetComponent<SendObject>().setRPC("ActiveCamera", new Dictionary<string, string>() { { "id", playerInfo.player.Id } });
     }
     MapManager.instance.GenerateTiles();
-  }
-
-  [CustomRPC]
-  public void ActiveCamera(string id)
-  {
-    Debug.Log(id);
-    cars[id].GetComponentInChildren<Camera>().enabled = true;
   }
 }

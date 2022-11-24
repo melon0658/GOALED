@@ -172,7 +172,7 @@ public class SyncManager : MonoSingleton<SyncManager>
 
   private GameObject InitiateObject(GameService.Object obj)
   {
-    GameObject go = Instantiate(Resources.Load<GameObject>(obj.Prefub));
+    GameObject go = Instantiate(Resources.Load<GameObject>(obj.Prefub), transform);
     go.transform.position = new Vector3(obj.Position.X, obj.Position.Y, obj.Position.Z);
     go.transform.rotation = Quaternion.Euler(new Vector3(obj.Rotation.X, obj.Rotation.Y, obj.Rotation.Z));
     go.transform.localScale = new Vector3(obj.Scale.X, obj.Scale.Y, obj.Scale.Z);
@@ -200,10 +200,6 @@ public class SyncManager : MonoSingleton<SyncManager>
     if (rpcs.Count == 0)
     {
       return;
-    }
-    foreach (var rpc in rpcs)
-    {
-      Debug.Log(rpc.Method + " " + rpc.Args);
     }
     // アタッチされているものの一覧を取得
     var components = go.GetComponents<MonoBehaviour>();
@@ -293,8 +289,23 @@ public class SyncManager : MonoSingleton<SyncManager>
     }
     else
     {
-      GameObject go = InitiateObject(obj);
-      recvObjects.TryAdd(id, go);
+      if (!obj.IsRoomObject)
+      {
+        GameObject go = InitiateObject(obj);
+        recvObjects.TryAdd(id, go);
+      }
+      else
+      {
+        GameObject go = FindObjectsOfType<SendObject>().Where(o => o.ObjectId == id).FirstOrDefault().gameObject;
+        if (go != null)
+        {
+          Debug.Log("RoomObject: " + id);
+          Destroy(go.GetComponent<SendObject>());
+          var sync = go.AddComponent<SyncObject>();
+          sync.objectId = id;
+          recvObjects.TryAdd(id, go);
+        }
+      }
     }
   }
 
