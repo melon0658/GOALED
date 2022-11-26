@@ -2,6 +2,7 @@
 using UnityEngine;
 using TMPro;
 
+
 public class Event28 : MonoBehaviour
 {
   //どのイベントにも必要なやつ
@@ -57,13 +58,14 @@ public class Event28 : MonoBehaviour
     //イベント固有
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    textDialogManegerScript.SetdialogText("エンジニアになる\n給与：25000$");
+    int event_money = 3000;
+    textDialogManegerScript.SetdialogText("自炊で節約 \n"+ event_money +"$");
 
     StartCoroutine("sleep");
 
     
-    playerScript.Job = "engineer";
-    Debug.Log(playerScript.Job);
+    playerScript.Money = playerScript.Money+event_money;
+    Debug.Log(playerScript.Money);
   }
 
   private IEnumerator sleep()

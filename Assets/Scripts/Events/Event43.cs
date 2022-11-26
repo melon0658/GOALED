@@ -57,13 +57,10 @@ public class Event43 : MonoBehaviour
     //イベント固有
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    textDialogManegerScript.SetdialogText("エンジニアになる\n給与：25000$");
+    textDialogManegerScript.SetdialogText("[コース分岐]\n↑スピードコース\n←ハイリスクハイリターンコース");
 
     StartCoroutine("sleep");
 
-    
-    playerScript.Job = "engineer";
-    Debug.Log(playerScript.Job);
   }
 
   private IEnumerator sleep()

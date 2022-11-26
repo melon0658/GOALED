@@ -2,6 +2,7 @@
 using UnityEngine;
 using TMPro;
 
+
 public class Event80 : MonoBehaviour
 {
   //どのイベントにも必要なやつ
@@ -57,13 +58,14 @@ public class Event80 : MonoBehaviour
     //イベント固有
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    textDialogManegerScript.SetdialogText("エンジニアになる\n給与：25000$");
+    int event_money = 150000;
+    textDialogManegerScript.SetdialogText("新しい星を発見 \n"+ event_money +"$");
 
     StartCoroutine("sleep");
 
     
-    playerScript.Job = "engineer";
-    Debug.Log(playerScript.Job);
+    playerScript.Money = playerScript.Money+event_money;
+    Debug.Log(playerScript.Money);
   }
 
   private IEnumerator sleep()
