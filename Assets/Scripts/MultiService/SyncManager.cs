@@ -25,11 +25,12 @@ public class SyncManager : MonoSingleton<SyncManager>
   private ConcurrentDictionary<string, GameObject> recvObjects = new ConcurrentDictionary<string, GameObject>();
   private ConcurrentDictionary<string, GameService.Object> removeObjects = new ConcurrentDictionary<string, GameService.Object>();
   private Queue<GameService.PlayerData> playerDataQueue = new Queue<GameService.PlayerData>();
-  private Dictionary<string, Dictionary<string, string>> recvPlayerData = new Dictionary<string, Dictionary<string, string>>();
+  public Dictionary<string, Dictionary<string, string>> PlayerData = new Dictionary<string, Dictionary<string, string>>();
   [Serializable] public class PlayerDataEvent : UnityEvent<Dictionary<string, Dictionary<string, string>>> { }
   [SerializeField] private PlayerDataEvent onChangePlayerData;
   private List<string> players = new List<string>();
-  private bool isAddPlayer = false;
+  public bool isRefreshObject = false;
+  public bool isRefreshPlayerData = false;
   private bool isFinish = false;
 
   private void DebugMode()
@@ -137,13 +138,13 @@ public class SyncManager : MonoSingleton<SyncManager>
         continue;
       }
       SendObject sendObject = obj.Value.GetComponent<SendObject>();
-      if (sendObject.isTransformChanged() || isAddPlayer)
+      if (sendObject.isTransformChanged() || isRefreshObject)
       {
         request.Object.Add(sendObject.toObject());
         sendObject.setTransform();
       }
     }
-    isAddPlayer = false;
+    isRefreshObject = false;
     foreach (var obj in removeObjects)
     {
       request.Object.Add(obj.Value);
@@ -205,6 +206,11 @@ public class SyncManager : MonoSingleton<SyncManager>
     var components = go.GetComponents<MonoBehaviour>();
     foreach (var component in components)
     {
+      if (component == null)
+      {
+        Debug.Log("RPC component is null");
+        continue;
+      }
       var methods = component.GetType().GetMethods();
       foreach (var method in methods)
       {
@@ -228,16 +234,25 @@ public class SyncManager : MonoSingleton<SyncManager>
                 if (arg == null)
                 {
                   isMatch = false;
+                  Debug.Log("RPC " + rpc.Method + " " + parameter.Name + " is null");
                   break;
                 }
                 // 引数の型に変換できるか
                 try
                 {
-                  Convert.ChangeType(arg, parameter.ParameterType);
+                  if (parameter.ParameterType.IsEnum)
+                  {
+                    Enum.Parse(parameter.ParameterType, arg);
+                  }
+                  else
+                  {
+                    Convert.ChangeType(arg, parameter.ParameterType);
+                  }
                 }
                 catch (Exception)
                 {
                   isMatch = false;
+                  Debug.Log("RPC " + rpc.Method + " " + parameter.Name + ": " + arg + " is not " + parameter.ParameterType);
                   break;
                 }
               }
@@ -248,9 +263,19 @@ public class SyncManager : MonoSingleton<SyncManager>
                 foreach (var parameter in parameters)
                 {
                   var arg = rpc.Args.ContainsKey(parameter.Name) ? rpc.Args[parameter.Name] : null;
-                  args.Add(Convert.ChangeType(arg, parameter.ParameterType));
+                  if (parameter.ParameterType.IsEnum)
+                  {
+                    args.Add(Enum.Parse(parameter.ParameterType, arg));
+                  }
+                  else
+                  {
+                    args.Add(Convert.ChangeType(arg, parameter.ParameterType));
+                  }
                 }
-                Debug.Log("RPC: " + rpc.Method);
+                if (isPrintLog)
+                {
+                  Debug.Log("RPC: " + rpc.Method);
+                }
                 // メソッドを実行
                 method.Invoke(component, args.ToArray());
               }
@@ -276,7 +301,7 @@ public class SyncManager : MonoSingleton<SyncManager>
     if (!players.Contains(obj.Owner))
     {
       players.Add(obj.Owner);
-      isAddPlayer = true;
+      isRefreshPlayerData = true;
     }
     if (recvObjects.ContainsKey(id))
     {
@@ -327,11 +352,11 @@ public class SyncManager : MonoSingleton<SyncManager>
     var pd = new GameService.PlayerData();
     pd.Id = playerData.Id;
     // 値が変わっているものだけ送信
-    if (recvPlayerData.ContainsKey(playerData.Id))
+    if (PlayerData.ContainsKey(playerData.Id))
     {
       foreach ((string key, string value) in playerData.Key.Zip(playerData.Value, (k, v) => (k, v)))
       {
-        if (recvPlayerData[playerData.Id].ContainsKey(key) && recvPlayerData[playerData.Id][key] == value)
+        if (PlayerData[playerData.Id].ContainsKey(key) && PlayerData[playerData.Id][key] == value)
         {
           continue;
         }
@@ -370,7 +395,7 @@ public class SyncManager : MonoSingleton<SyncManager>
   {
     var request = new GameService.SendPlayerDataRequest();
     request.RoomId = playerInfo.player.RoomId;
-    foreach (var playerData in recvPlayerData)
+    foreach (var playerData in PlayerData)
     {
       var pd = new GameService.PlayerData();
       pd.Id = playerData.Key;
@@ -395,9 +420,10 @@ public class SyncManager : MonoSingleton<SyncManager>
       {
         await playerDataSendCall.RequestStream.WriteAsync(request);
       }
-      if (isAddPlayer)
+      if (isRefreshPlayerData)
       {
         await playerDataSendCall.RequestStream.WriteAsync(LocalPlayerDataToPlayerDataRequest());
+        isRefreshPlayerData = false;
       }
       await Task.Delay(1000 / (int)Settings.SEND_FPS);
     }
@@ -406,11 +432,11 @@ public class SyncManager : MonoSingleton<SyncManager>
   private void SetRecvPlayerData(GameService.PlayerData playerData)
   {
     var player_id = playerData.Id;
-    if (!recvPlayerData.ContainsKey(player_id))
+    if (!PlayerData.ContainsKey(player_id))
     {
-      recvPlayerData.TryAdd(player_id, new Dictionary<string, string>());
+      PlayerData.TryAdd(player_id, new Dictionary<string, string>());
       players.Add(player_id);
-      isAddPlayer = true;
+      isRefreshPlayerData = true;
     }
     foreach ((string key, string value) in playerData.Key.Zip(playerData.Value, (k, v) => (k, v)))
     {
@@ -418,7 +444,7 @@ public class SyncManager : MonoSingleton<SyncManager>
       {
         Debug.Log("PlayerData: " + player_id + " key: " + key + " value: " + value);
       }
-      recvPlayerData[player_id][key] = value;
+      PlayerData[player_id][key] = value;
     }
   }
 
@@ -432,7 +458,7 @@ public class SyncManager : MonoSingleton<SyncManager>
       {
         SetRecvPlayerData(data);
       }
-      onChangePlayerData.Invoke(recvPlayerData);
+      onChangePlayerData.Invoke(PlayerData);
     }
   }
 

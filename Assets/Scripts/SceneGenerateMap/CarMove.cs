@@ -32,7 +32,7 @@ public class CarMove : MonoBehaviour
     transform.position = Vector3.Lerp(positionBefore, positionAfter, elapsedTime / InterpolationPeriod);
   }
 
-  public async void Move(List<Vector3> path, List<Vector3> rotations)
+  public async Task Move(List<Vector3> path, List<Vector3> rotations)
   {
     isMoving = true;
     for (int i = 0; i < path.Count; i++)
@@ -45,6 +45,7 @@ public class CarMove : MonoBehaviour
       await Task.Delay((int)(InterpolationPeriod * 1000));
     }
     isMoving = false;
+    return;
   }
 
   public (Tile, List<Vector3>, List<Vector3>) calcPath(Tile tile, int step, Direction? direction = null)

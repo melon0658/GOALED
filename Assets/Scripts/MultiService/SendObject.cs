@@ -31,9 +31,17 @@ public class SendObject : MonoBehaviour
 
   }
 
+  public void setPreObjectID(string id)
+  {
+    objectId = id;
+  }
+
   void Start()
   {
-    objectId = System.Guid.NewGuid().ToString();
+    if (objectId == null)
+    {
+      objectId = System.Guid.NewGuid().ToString();
+    }
     syncManager = SyncManager.instance;
     go.Id = objectId;
     go.Prefub = prefub;

@@ -11,24 +11,19 @@ public class DebugMode : MonoBehaviour
   [SerializeField] private MatchingServer matchingServer;
   [SerializeField] private bool isDebugMode = false;
   [SerializeField] private bool isDebugModeOwner = false;
+  [SerializeField] private int waitTime = 5;
 
   private void Debugmode()
   {
-    // var res = await matchingServer.client.GetPlayerIdAsync(new MatchingService.GetPlayerIdRequest());
     var res = matchingServer.client.GetPlayerId(new MatchingService.GetPlayerIdRequest());
     playerInfo.player.Id = res.PlayerId;
     playerInfo.player.Name = "test";
     if (isDebugModeOwner)
     {
-      // var room = await matchingServer.client.CreatePublicRoomAsync(new MatchingService.CreatePublicRoomRequest() { Name = "test", Owner = playerInfo.player.Id, MaxPlayer = 4 });
       var room = matchingServer.client.CreatePublicRoom(new MatchingService.CreatePublicRoomRequest() { Name = "test", Owner = playerInfo.player.Id, MaxPlayer = 4 });
       playerInfo.player.RoomId = room.Room.Id;
-      // await matchingServer.client.JoinPublicRoomAsync(new MatchingService.JoinPublicRoomRequest() { RoomId = playerInfo.player.RoomId, Player = playerInfo.player });
       matchingServer.client.JoinPublicRoom(new MatchingService.JoinPublicRoomRequest() { RoomId = playerInfo.player.RoomId, Player = playerInfo.player });
-      for (int i = 0; i < 10; i++)
-      {
-        Thread.Sleep(1000);
-      }
+      Thread.Sleep(1000 * waitTime);
       matchingServer.client.StartGame(new MatchingService.StartGameRequest() { RoomId = playerInfo.player.RoomId, PlayerId = playerInfo.player.Id });
     }
     else
@@ -48,20 +43,9 @@ public class DebugMode : MonoBehaviour
         return;
       }
       matchingServer.client.JoinPublicRoom(new MatchingService.JoinPublicRoomRequest() { RoomId = playerInfo.player.RoomId, Player = playerInfo.player });
-      // var call = matchingServer.client.GetStartGameStream(new MatchingService.GetStartGameStreamRequest { RoomId = playerInfo.player.RoomId, PlayerId = playerInfo.player.Id });
-      // var task = Task.Run(async () =>
-      // {
-      //   await call.ResponseStream.MoveNext();
-      // });
-      // task.Wait();
-      for (int i = 0; i < 10; i++)
-      {
-        Thread.Sleep(1000);
-      }
-      Debug.Log("join room");
+      Thread.Sleep(1000 * waitTime);
     }
   }
-
 
   void Start()
   {

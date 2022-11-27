@@ -58,6 +58,10 @@ public class PlayerStetus
     foreach (var member in members)
     {
       var memberName = member.Name;
+      if (!playerData.ContainsKey(memberName))
+      {
+        continue;
+      }
       var memberType = member.FieldType;
       var str = playerData[memberName];
       var value = Convert.ChangeType(str, memberType);
