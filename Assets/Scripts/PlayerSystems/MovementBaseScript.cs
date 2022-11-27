@@ -85,19 +85,19 @@ public class MovementBaseScript : MonoBehaviour
         if (pathCreator.ToString().IndexOf("StartRight") != -1)
         {
           nowPosIndex = 25;
-          if (rCount > 4)
-          {
-            rCount = 4;
-          }
+          //if (rCount > 4)
+          //{
+          //  rCount = 4;
+          //}
         }
         //pathCreatorがStartLeft
         else
         {
           nowPosIndex = 1;
-          if (rCount > 9)
-          {
-            rCount = 9;
-          }
+          //if (rCount > 9)
+          //{
+          //  rCount = 9;
+          //}
         }
       }
       else if (actionScript.GetCheckPointName() == "CheckPosition2")
@@ -245,6 +245,11 @@ public class MovementBaseScript : MonoBehaviour
       arrival = false;
       rScript.SetisClicked();
 
+      Debug.Log("movedistance " + moveDistance);
+
+      moveDistance -= 1.6839f;
+      //一マス分戻るために減らすべきmoveDistance=0.84196125f
+
       //イベントの実行に移る
       eventSystemScript.EventExecutionManager();
 
@@ -257,14 +262,15 @@ public class MovementBaseScript : MonoBehaviour
   //目的地まで自動で移動
   public void AutoMove()
   {
-    if (actionScript.GetCheckPointName() != "CheckPosition")
-    {
-      moveDistance -= speed * Time.deltaTime;
-    }
-    else{
-      moveDistance += speed * Time.deltaTime;
-    }
-    
+    //if (actionScript.GetCheckPointName() != "CheckPosition")
+    //{
+    //  moveDistance -= speed * Time.deltaTime;
+    //}
+    //else{
+    //  moveDistance += speed * Time.deltaTime;
+    //}
+    moveDistance += speed * Time.deltaTime;
+
     transform.position = pathCreator.path.GetPointAtDistance(moveDistance, EndOfPathInstruction.Stop);
     transform.rotation = pathCreator.path.GetRotationAtDistance(moveDistance, EndOfPathInstruction.Stop);
 

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -21,11 +21,11 @@ public class Event82 : MonoBehaviour
 
   public void execution()
   {
-    //‚Ç‚ÌƒCƒxƒ“ƒg‚É‚à•K—v‚È‚â‚Â
+    //ã©ã®ã‚¤ãƒ™ãƒ³ãƒˆã«ã‚‚å¿…è¦ãªã‚„ã¤
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
 
     //Debug.Log(turnSystemScript.GetnowTurnPlayerNum());
-    //Œ»İ‚Ìƒ^[ƒ“‚ª’N‚©‚ğæ“¾‚µ‚ÄA‚»‚ê‚É‰‚¶‚ÄƒvƒŒƒCƒ„[ƒXƒNƒŠƒvƒg‚ğæ“¾
+    //ç¾åœ¨ã®ã‚¿ãƒ¼ãƒ³ãŒèª°ã‹ã‚’å–å¾—ã—ã¦ã€ãã‚Œã«å¿œã˜ã¦ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’å–å¾—
     switch (turnSystemScript.GetnowTurnPlayerNum())
     {
       case 1:
@@ -44,22 +44,22 @@ public class Event82 : MonoBehaviour
         break;
     }
     //Debug.Log(playerScript);
-    //ƒCƒxƒ“ƒgŒÅ—L
+    //ã‚¤ãƒ™ãƒ³ãƒˆå›ºæœ‰
 
     if (playerScript.CheckGoal)
     {
-      //Šù‚ÉƒS[ƒ‹‚µ‚Ä‚¢‚é‚È‚çƒ‹[ƒŒƒbƒg‚Ìƒ}ƒX–Ú~1000ƒhƒ‹Š‹àƒvƒ‰ƒX
+      //æ—¢ã«ã‚´ãƒ¼ãƒ«ã—ã¦ã„ã‚‹ãªã‚‰ãƒ«ãƒ¼ãƒ¬ãƒƒãƒˆã®ãƒã‚¹ç›®Ã—1000ãƒ‰ãƒ«æ‰€æŒé‡‘ãƒ—ãƒ©ã‚¹
       countText = GameObject.Find("CountText").GetComponent<TextMeshProUGUI>();
       int count = int.Parse(countText.text);
       playerScript.Money = playerScript.Money + (count * 1000);
-      //ƒeƒLƒXƒg•\¦
+      //ãƒ†ã‚­ã‚¹ãƒˆè¡¨ç¤º
       //Debug.Log("A");
 
     }
     else
     {
       playerScript.CheckGoal = true;
-      //‚Â‚¢‚½‡”Ô‚É‰‚¶‚ÄŠ‹àƒvƒ‰ƒX
+      //ã¤ã„ãŸé †ç•ªã«å¿œã˜ã¦æ‰€æŒé‡‘ãƒ—ãƒ©ã‚¹
       switch (turnSystemScript.GetgoalPlayerNum())
       {
         case 0:
@@ -77,22 +77,22 @@ public class Event82 : MonoBehaviour
         default:
           break;
       }
-      //ƒS[ƒ‹‚µ‚½l”‚ğ‘‚â‚·
+      //ã‚´ãƒ¼ãƒ«ã—ãŸäººæ•°ã‚’å¢—ã‚„ã™
       int goalPlayerNum = turnSystemScript.GetgoalPlayerNum() + 1;
       turnSystemScript.SetgoalPlayerNum(goalPlayerNum);
-      //ƒeƒLƒXƒg•\¦
+      //ãƒ†ã‚­ã‚¹ãƒˆè¡¨ç¤º
       //Debug.Log("B");
 
     }
 
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    textDialogManegerScript.SetdialogText("‚±‚±‚ÉƒCƒxƒ“ƒgƒeƒLƒXƒg‚ğ“\‚è•t‚¯"); 
+    textDialogManegerScript.SetdialogText("ã“ã“ã«ã‚¤ãƒ™ãƒ³ãƒˆãƒ†ã‚­ã‚¹ãƒˆã‚’è²¼ã‚Šä»˜ã‘"); 
 
     textDialogManegerScript.HiddentextDialogBox();
 
-    //‚Ç‚ÌƒCƒxƒ“ƒg‚É‚à•K—v‚È‚â‚Â
-    turnSystemScript.TurnEndSystemMaster(); //ƒ^[ƒ“‚ğI—¹
+    //ã©ã®ã‚¤ãƒ™ãƒ³ãƒˆã«ã‚‚å¿…è¦ãªã‚„ã¤
+    turnSystemScript.TurnEndSystemMaster(); //ã‚¿ãƒ¼ãƒ³ã‚’çµ‚äº†
   }
 }
 
