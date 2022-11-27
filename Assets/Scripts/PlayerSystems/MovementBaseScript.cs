@@ -257,7 +257,14 @@ public class MovementBaseScript : MonoBehaviour
   //目的地まで自動で移動
   public void AutoMove()
   {
-    moveDistance += speed * Time.deltaTime;
+    if (actionScript.GetCheckPointName() != "CheckPosition")
+    {
+      moveDistance -= speed * Time.deltaTime;
+    }
+    else{
+      moveDistance += speed * Time.deltaTime;
+    }
+    
     transform.position = pathCreator.path.GetPointAtDistance(moveDistance, EndOfPathInstruction.Stop);
     transform.rotation = pathCreator.path.GetRotationAtDistance(moveDistance, EndOfPathInstruction.Stop);
 
