@@ -1,82 +1,79 @@
-ï»¿using System.Collections;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Event1 : MonoBehaviour
+public class EventTest100 : MonoBehaviour
 {
-  //ã©ã®ã‚¤ãƒ™ãƒ³ãƒˆã«ã‚‚å¿…è¦ãªã‚„ã¤
+  //‚Ç‚ÌƒCƒxƒ“ƒg‚É‚à•K—v‚È‚â‚Â
   private TurnSystem turnSystemScript;
   private Player playerScript;
   private GameObject canvas;
   private TextDialogManager textDialogManegerScript;
 
+  //ƒCƒxƒ“ƒgŒÅ—L
+  private MovementBaseScript moveScript;
 
-  //ã‚¤ãƒ™ãƒ³ãƒˆå›ºæœ‰
-  private GameObject text; 
-  private TextMeshProUGUI eventText;
-
+  // Start is called before the first frame update
   void Start()
   {
-    //ã©ã®ã‚¤ãƒ™ãƒ³ãƒˆã«ã‚‚å¿…è¦ãªã‚„ã¤
+    //‚Ç‚ÌƒCƒxƒ“ƒg‚É‚à•K—v‚È‚â‚Â
     canvas = GameObject.Find("Canvas");
-
-
-    //ã‚¤ãƒ™ãƒ³ãƒˆå›ºæœ‰
-
   }
 
-    // Update is called once per frame
+  // Update is called once per frame
   void Update()
   {
-        
+      
   }
 
   public void execution()
   {
-    //ã©ã®ã‚¤ãƒ™ãƒ³ãƒˆã«ã‚‚å¿…è¦ãªã‚„ã¤
+    //‚Ç‚ÌƒCƒxƒ“ƒg‚É‚à•K—v‚È‚â‚Â
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
-    //ç¾åœ¨ã®ã‚¿ãƒ¼ãƒ³ãŒèª°ã‹ã‚’å–å¾—ã—ã¦ã€ãã‚Œã«å¿œã˜ã¦ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’å–å¾—
+    //Œ»İ‚Ìƒ^[ƒ“‚ª’N‚©‚ğæ“¾‚µ‚ÄA‚»‚ê‚É‰‚¶‚ÄƒvƒŒƒCƒ„[ƒXƒNƒŠƒvƒg‚ğæ“¾
     switch (turnSystemScript.GetnowTurnPlayerNum())
     {
       case 1:
         playerScript = GameObject.Find("defaultCar1").GetComponent<Player>();
+        moveScript = GameObject.Find("defaultCar1").GetComponent<MovementBaseScript>();
         break;
       case 2:
         playerScript = GameObject.Find("defaultCar2").GetComponent<Player>();
+        moveScript = GameObject.Find("defaultCar2").GetComponent<MovementBaseScript>();
         break;
       case 3:
         playerScript = GameObject.Find("defaultCar3").GetComponent<Player>();
+        moveScript = GameObject.Find("defaultCar3").GetComponent<MovementBaseScript>();
         break;
       case 4:
         playerScript = GameObject.Find("defaultCar4").GetComponent<Player>();
+        moveScript = GameObject.Find("defaultCar4").GetComponent<MovementBaseScript>();
         break;
       default:
         break;
     }
 
-    //ã‚¤ãƒ™ãƒ³ãƒˆå›ºæœ‰
+    //ƒCƒxƒ“ƒgŒÅ—L
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    textDialogManegerScript.SetdialogText("ã“ã“ã«ã‚¤ãƒ™ãƒ³ãƒˆãƒ†ã‚­ã‚¹ãƒˆã‚’è²¼ã‚Šä»˜ã‘");
+    textDialogManegerScript.SetdialogText("ƒWƒ‡ƒuŒˆ’è");
 
     StartCoroutine("sleep");
 
-    //playerã®ãŠé‡‘ãŒå–å¾—ã—ã¦å¤‰æ›´ã—ãŸã„ï¼(getã‚‚setã‚‚ã“ã®æ›¸ãæ–¹)
-    playerScript.Money = playerScript.Money + 10000;
-    
+    //player‚Ì‚¨‹à‚ªæ“¾‚µ‚Ä•ÏX‚µ‚½‚¢I(get‚àset‚à‚±‚Ì‘‚«•û)
+    //playerScript.Money = playerScript.Money + 10000;
   }
 
   private IEnumerator sleep()
   {
-    //ã‚¤ãƒ™ãƒ³ãƒˆå›ºæœ‰
-    Debug.Log("ã‚¤ãƒ™ãƒ³ãƒˆé–‹å§‹");
-    yield return new WaitForSeconds(1f);  //10ç§’å¾…ã¤
-    Debug.Log("ã‚¤ãƒ™ãƒ³ãƒˆçµ‚äº†");
-    //text.SetActive(false);
+    //ƒCƒxƒ“ƒgŒÅ—L
+    yield return new WaitForSeconds(1f);  //1•b‘Ò‚Â
     textDialogManegerScript.HiddentextDialogBox();
 
-    //ã©ã®ã‚¤ãƒ™ãƒ³ãƒˆã«ã‚‚å¿…è¦ãªã‚„ã¤
-    turnSystemScript.TurnEndSystemMaster(); //ã‚¿ãƒ¼ãƒ³ã‚’çµ‚äº†
-  }
+    moveScript.jobEventAfterMove();
 
+    //‚Ç‚ÌƒCƒxƒ“ƒg‚É‚à•K—v‚È‚â‚Â
+    //turnSystemScript.TurnEndSystemMaster(); //ƒ^[ƒ“‚ğI—¹
+  }
 }

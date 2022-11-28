@@ -85,11 +85,19 @@ public class MovementBaseScript : MonoBehaviour
         if (pathCreator.ToString().IndexOf("StartRight") != -1)
         {
           nowPosIndex = 25;
+          //if (rCount > 4)
+          //{
+          //  rCount = 4;
+          //}
         }
         //pathCreatorがStartLeft
         else
         {
           nowPosIndex = 1;
+          //if (rCount > 9)
+          //{
+          //  rCount = 9;
+          //}
         }
       }
       else if (actionScript.GetCheckPointName() == "CheckPosition2")
@@ -118,23 +126,35 @@ public class MovementBaseScript : MonoBehaviour
           nowPosIndex = 62;
         }
       }
+
+
       actionScript.SetCheckPoint(false);
     }
+    else
+    {
+      nowPosIndex = nextPosIndexes1[playerScript.NowPosIndex];
+    }
+
+
     //Debug.Log(pathCreator.ToString());
 
     //Debug.Log("rcount " + rCount);
     //Debug.Log("nowPosIndex" + nowPosIndex);
 
     //デバッグ用
-    if (actionScript.GetCheckPointName() == "CheckPosition3")
-    {
-      rCount = 4;
-    }
-    else
-    {
-      rCount = 10;
-    }
-      
+    //if (actionScript.GetCheckPointName() == "CheckPosition3")
+    //{
+    //  rCount = 4;
+    //}
+    //else
+    //{
+    //  rCount = 10;
+    //}
+    //if (!actionScript.GetCheckPoint())
+    //{
+
+    //}
+
 
     if (rCount != 1)
     {
@@ -177,7 +197,7 @@ public class MovementBaseScript : MonoBehaviour
 
     playerScript.NowPosIndex = endPosIndex;
 
-    nowPosIndex = nextPosIndexes1[endPosIndex];
+    //nowPosIndex = nextPosIndexes1[endPosIndex];
     Debug.Log(endPos);
   }
 
@@ -190,6 +210,21 @@ public class MovementBaseScript : MonoBehaviour
   void Start()
   {
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
+  }
+
+  //仕事決まった時用
+  public void jobEventAfterMove()
+  {
+    endPosIndex = 9;
+
+    //チェック用
+    //endPosIndex = 24;
+
+    endPos = coordinate[endPosIndex];
+
+    playerScript.NowPosIndex = endPosIndex;
+
+    moveStart();
   }
 
   public void moveStart()
@@ -210,6 +245,11 @@ public class MovementBaseScript : MonoBehaviour
       arrival = false;
       rScript.SetisClicked();
 
+      Debug.Log("movedistance " + moveDistance);
+
+      moveDistance -= 1.6839f;
+      //一マス分戻るために減らすべきmoveDistance=0.84196125f
+
       //イベントの実行に移る
       eventSystemScript.EventExecutionManager();
 
@@ -222,7 +262,15 @@ public class MovementBaseScript : MonoBehaviour
   //目的地まで自動で移動
   public void AutoMove()
   {
+    //if (actionScript.GetCheckPointName() != "CheckPosition")
+    //{
+    //  moveDistance -= speed * Time.deltaTime;
+    //}
+    //else{
+    //  moveDistance += speed * Time.deltaTime;
+    //}
     moveDistance += speed * Time.deltaTime;
+
     transform.position = pathCreator.path.GetPointAtDistance(moveDistance, EndOfPathInstruction.Stop);
     transform.rotation = pathCreator.path.GetRotationAtDistance(moveDistance, EndOfPathInstruction.Stop);
 

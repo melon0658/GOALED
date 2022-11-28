@@ -23,10 +23,54 @@ public class EventEndGame : MonoBehaviour
   {
     Debug.Log("The End");
     //金額計算して１位を決める
-    //残りのプレイヤーを横に並べておく
+
+    //イベントスタート
+    StartCoroutine("StartEvevt");
+    
+  }
+  private IEnumerator StartEvevt()
+  {
+    //いらないオブジェクト非表示(ライトとかカメラとかUIとか)
+    OffObjects();
+
+    //必要なオブジェクト表示(Prefabとか)
+    OnObjects();
+
+    //1秒まつ
+    yield return new WaitForSeconds(1f);
     //スポットライト当てる
-    //下からせり上げてくる
-    //エモート
+    GameObject.Find("EndGameObjects").transform.Find("SpotLight1").gameObject.SetActive(true);
+    //1秒まつ
+    yield return new WaitForSeconds(1f);
+    //スポットライト当てる
+    GameObject.Find("EndGameObjects").transform.Find("SpotLight2").gameObject.SetActive(true);
+    //1秒まつ
+    yield return new WaitForSeconds(1f);
+    //スポットライト当てる
+    GameObject.Find("EndGameObjects").transform.Find("SpotLight3").gameObject.SetActive(true);
+
     //所持金表示 + You are a Millionaire !!! or GOALED !!!
+
+    //エモート
+
+    ////どのイベントにも必要なやつ
+    //turnSystemScript.TurnEndSystemMaster(); //ターンを終了
+  }
+  void OffObjects()
+  {
+    //ライトを消す
+    GameObject.Find("StageObjects").transform.Find("Directional Light").gameObject.SetActive(false);
+    RenderSettings.ambientIntensity = 0.3f;
+    //ルーレットカメラ消す
+    GameObject.Find(" RouletteCamera").SetActive(false);
+    //Canvas消す
+    GameObject.Find("Canvas").SetActive(false);
+  }
+  void OnObjects()
+  {
+    //Prefab生成
+    
+    //優勝者を真ん中、残りのプレイヤーは周りに置く
+
   }
 }
