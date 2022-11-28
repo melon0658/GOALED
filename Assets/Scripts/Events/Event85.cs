@@ -1,88 +1,86 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+
 public class Event85 : MonoBehaviour
 {
+  //どのイベントにも必要なやつ
   private TurnSystem turnSystemScript;
   private Player playerScript;
-  private TextMeshProUGUI countText;
-  
+  private GameObject canvas;
+  private TextDialogManager textDialogManegerScript;
 
-  // Start is called before the first frame update
+
+  //イベント固有
+  private GameObject text; 
+  private TextMeshProUGUI eventText;
+  private PlayMovieVP pv;
+
   void Start()
   {
-    
-    
+    //どのイベントにも必要なやつ
+    canvas = GameObject.Find("Canvas");
+
+
+    //イベント固有
+
+  }
+
+    // Update is called once per frame
+  void Update()
+  {
+        
   }
 
   public void execution()
   {
-    ////どのイベントにも必要なやつ
-    //turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
+    //どのイベントにも必要なやつ
+    turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
+    //現在のターンが誰かを取得して、それに応じてプレイヤースクリプトを取得
+    switch (turnSystemScript.GetnowTurnPlayerNum())
+    {
+      case 1:
+        playerScript = GameObject.Find("defaultCar1").GetComponent<Player>();
+        break;
+      case 2:
+        playerScript = GameObject.Find("defaultCar2").GetComponent<Player>();
+        break;
+      case 3:
+        playerScript = GameObject.Find("defaultCar3").GetComponent<Player>();
+        break;
+      case 4:
+        playerScript = GameObject.Find("defaultCar4").GetComponent<Player>();
+        break;
+      default:
+        break;
+    }
 
-    //Debug.Log(turnSystemScript.GetnowTurnPlayerNum());
-    ////現在のターンが誰かを取得して、それに応じてプレイヤースクリプトを取得
-    //switch (turnSystemScript.GetnowTurnPlayerNum())
-    //{
-    //  case 1:
-    //    playerScript = GameObject.Find("defaultCar1").GetComponent<Player>();
-    //    break;
-    //  case 2:
-    //    playerScript = GameObject.Find("defaultCar2").GetComponent<Player>();
-    //    break;
-    //  case 3:
-    //    playerScript = GameObject.Find("defaultCar3").GetComponent<Player>();
-    //    break;
-    //  case 4:
-    //    playerScript = GameObject.Find("defaultCar4").GetComponent<Player>();
-    //    break;
-    //  default:
-    //    break;
-    //}
-    //Debug.Log(playerScript);
-    ////イベント固有
+    //イベント固有
+    textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
+    textDialogManegerScript.ShowtextDialogBox();
+    int event_money = -10000;
+    textDialogManegerScript.SetdialogText("洋服をまとめ買い\n"+ event_money +"$");
+    pv = canvas.transform.Find("EventVideo").GetComponent<PlayMovieVP>();
+    pv.showVideoPlayer("46_洋服.mp4");
+    StartCoroutine("sleep");
 
-    //if (playerScript.CheckGoal)
-    //{
-    //  //既にゴールしているならルーレットのマス目×1000ドル所持金プラス
-    //  countText = GameObject.Find("CountText").GetComponent<TextMeshProUGUI>();
-    //  int count = int.Parse(countText.text);
-    //  playerScript.Money = playerScript.Money + (count * 1000);
-    //  //テキスト表示
-    //  Debug.Log("A");
-
-    //}
-    //else
-    //{
-    //  playerScript.CheckGoal = true;
-    //  //ついた順番に応じて所持金プラス
-    //  switch (turnSystemScript.GetgoalPlayerNum())
-    //  {
-    //    case 0:
-    //      playerScript.Money = playerScript.Money + 100000;
-    //      break;
-    //    case 1:
-    //      playerScript.Money = playerScript.Money + 80000;
-    //      break;
-    //    case 2:
-    //      playerScript.Money = playerScript.Money + 50000;
-    //      break;
-    //    case 3:
-    //      playerScript.Money = playerScript.Money + 10000;
-    //      break;
-    //    default:
-    //      break;
-    //  }
-    //  //ゴールした人数を増やす
-    //  int goalPlayerNum = turnSystemScript.GetgoalPlayerNum() + 1;
-    //  turnSystemScript.SetgoalPlayerNum(goalPlayerNum);
-    //  //テキスト表示
-    //  Debug.Log("B");
-
-    //}
-    ////どのイベントにも必要なやつ
-    //turnSystemScript.TurnEndSystemMaster(); //ターンを終了
+    
+    playerScript.Money = playerScript.Money+event_money;
+    Debug.Log(playerScript.Money);
   }
+
+  private IEnumerator sleep()
+  {
+    //イベント固有
+    Debug.Log("イベント開始");
+    yield return new WaitForSeconds(6);  //10秒待つ
+    Debug.Log("イベント終了");
+    //text.SetActive(false);
+    textDialogManegerScript.HiddentextDialogBox();
+
+    //どのイベントにも必要なやつ
+    turnSystemScript.TurnEndSystemMaster(); //ターンを終了
+  }
+
 }

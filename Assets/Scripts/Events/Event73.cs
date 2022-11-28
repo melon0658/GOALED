@@ -14,6 +14,7 @@ public class Event73 : MonoBehaviour
   //イベント固有
   private GameObject text; 
   private TextMeshProUGUI eventText;
+  private PlayMovieVP pv;
 
   void Start()
   {
@@ -57,20 +58,22 @@ public class Event73 : MonoBehaviour
     //イベント固有
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    textDialogManegerScript.SetdialogText("エンジニアになる\n給与：25000$");
+    int event_money = -10000;
+    textDialogManegerScript.SetdialogText("交通事故に巻き込まれる \n"+ event_money +"$");
+    pv = canvas.transform.Find("EventVideo").GetComponent<PlayMovieVP>();
+    pv.showVideoPlayer("12_交通事故.mp4");
+
 
     StartCoroutine("sleep");
-
-    
-    playerScript.Job = "engineer";
-    Debug.Log(playerScript.Job);
+    playerScript.Money = playerScript.Money+event_money;
+    Debug.Log(playerScript.Money);
   }
 
   private IEnumerator sleep()
   {
     //イベント固有
     Debug.Log("イベント開始");
-    yield return new WaitForSeconds(1f);  //10秒待つ
+    yield return new WaitForSeconds(3);  //10秒待つ
     Debug.Log("イベント終了");
     //text.SetActive(false);
     textDialogManegerScript.HiddentextDialogBox();
