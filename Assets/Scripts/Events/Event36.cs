@@ -2,7 +2,8 @@
 using UnityEngine;
 using TMPro;
 
-public class Event2 : MonoBehaviour
+
+public class Event36 : MonoBehaviour
 {
   //どのイベントにも必要なやつ
   private TurnSystem turnSystemScript;
@@ -12,7 +13,7 @@ public class Event2 : MonoBehaviour
 
 
   //イベント固有
-  private GameObject text;
+  private GameObject text; 
   private TextMeshProUGUI eventText;
 
   void Start()
@@ -25,10 +26,10 @@ public class Event2 : MonoBehaviour
 
   }
 
-  // Update is called once per frame
+    // Update is called once per frame
   void Update()
   {
-
+        
   }
 
   public void execution()
@@ -57,13 +58,17 @@ public class Event2 : MonoBehaviour
     //イベント固有
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    textDialogManegerScript.SetdialogText("ここにイベントテキストを貼り付け(Event2)");
-
-    StartCoroutine("sleep");
-
-    //playerのお金が取得して変更したい！(getもsetもこの書き方)
-    playerScript.Money = playerScript.Money + 10000;
-
+    if(playerScript.HouseNumber == 100){
+      int event_money = -50000;
+      textDialogManegerScript.SetdialogText("家を買う \n"+ event_money +"$");
+      playerScript.HouseNumber = 1;
+      StartCoroutine("sleep");
+      playerScript.Money = playerScript.Money+event_money;
+    }else{
+      textDialogManegerScript.SetdialogText("すでに家を持っている!\n");
+      StartCoroutine("sleep");
+    }
+    Debug.Log(playerScript.Money);
   }
 
   private IEnumerator sleep()

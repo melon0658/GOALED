@@ -137,6 +137,11 @@ public class MovementBaseScript : MonoBehaviour
 
 
     //Debug.Log(pathCreator.ToString());
+else
+    {
+      nowPosIndex = nextPosIndexes1[playerScript.NowPosIndex];
+    }
+    //Debug.Log(pathCreator.ToString());
 
     //Debug.Log("rcount " + rCount);
     //Debug.Log("nowPosIndex" + nowPosIndex);
@@ -152,7 +157,6 @@ public class MovementBaseScript : MonoBehaviour
     //}
     //if (!actionScript.GetCheckPoint())
     //{
-
     //}
 
 

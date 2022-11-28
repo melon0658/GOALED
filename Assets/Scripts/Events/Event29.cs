@@ -2,7 +2,7 @@
 using UnityEngine;
 using TMPro;
 
-public class Event1 : MonoBehaviour
+public class Event29 : MonoBehaviour
 {
   //どのイベントにも必要なやつ
   private TurnSystem turnSystemScript;
@@ -57,13 +57,13 @@ public class Event1 : MonoBehaviour
     //イベント固有
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    textDialogManegerScript.SetdialogText("ここにイベントテキストを貼り付け");
+    textDialogManegerScript.SetdialogText("エンジニアになる\n給与：25000$");
 
     StartCoroutine("sleep");
 
-    //playerのお金が取得して変更したい！(getもsetもこの書き方)
-    playerScript.Money = playerScript.Money + 10000;
     
+    playerScript.Job = "engineer";
+    Debug.Log(playerScript.Job);
   }
 
   private IEnumerator sleep()
