@@ -15,7 +15,7 @@ public class Event65 : MonoBehaviour
   //イベント固有
   private GameObject text; 
   private TextMeshProUGUI eventText;
-
+  private PlayMovieVP pv;
   void Start()
   {
     //どのイベントにも必要なやつ
@@ -60,7 +60,8 @@ public class Event65 : MonoBehaviour
     textDialogManegerScript.ShowtextDialogBox();
     int event_money = 50000;
     textDialogManegerScript.SetdialogText("仮想通貨が急上昇 \n"+ event_money +"$");
-
+    pv = canvas.transform.Find("EventVideo").GetComponent<PlayMovieVP>();
+    pv.showVideoPlayer("56_仮想通貨.mp4");
     StartCoroutine("sleep");
 
     
@@ -72,7 +73,7 @@ public class Event65 : MonoBehaviour
   {
     //イベント固有
     Debug.Log("イベント開始");
-    yield return new WaitForSeconds(1f);  //10秒待つ
+    yield return new WaitForSeconds(5);
     Debug.Log("イベント終了");
     //text.SetActive(false);
     textDialogManegerScript.HiddentextDialogBox();

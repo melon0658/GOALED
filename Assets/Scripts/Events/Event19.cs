@@ -15,7 +15,7 @@ public class Event19 : MonoBehaviour
   //イベント固有
   private GameObject text; 
   private TextMeshProUGUI eventText;
-
+private PlayMovieVP pv;
   void Start()
   {
     //どのイベントにも必要なやつ
@@ -60,7 +60,8 @@ public class Event19 : MonoBehaviour
     textDialogManegerScript.ShowtextDialogBox();
     int event_money = -10000;
     textDialogManegerScript.SetdialogText("コンピュータウイルスに感染  \n"+ event_money +"$");
-
+    pv = canvas.transform.Find("EventVideo").GetComponent<PlayMovieVP>();
+    pv.showVideoPlayer("19_交通事故.mp4");
     StartCoroutine("sleep");
 
     
@@ -72,7 +73,7 @@ public class Event19 : MonoBehaviour
   {
     //イベント固有
     Debug.Log("イベント開始");
-    yield return new WaitForSeconds(1f);  //10秒待つ
+    yield return new WaitForSeconds(5);
     Debug.Log("イベント終了");
     //text.SetActive(false);
     textDialogManegerScript.HiddentextDialogBox();

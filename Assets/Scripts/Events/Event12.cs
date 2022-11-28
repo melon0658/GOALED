@@ -59,6 +59,7 @@ public class Event12 : MonoBehaviour
     textDialogManegerScript.ShowtextDialogBox();
     textDialogManegerScript.SetdialogText("交通事故に巻き込まれる\n1ターン休み");
 
+
     StartCoroutine("sleep");
 
     Debug.Log(playerScript.Job);
