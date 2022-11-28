@@ -54,6 +54,8 @@ public class TurnSystem : MonoBehaviour
   //ゴールした人数を保存
   private int goalPlayerNum = 0;
 
+  private int originalMoney = 0;
+
   public int GetnowTurnPlayerNum()
   {
     return nowTurnPlayerNum;
@@ -144,7 +146,7 @@ public class TurnSystem : MonoBehaviour
     }
   }
 
-  void OffPlayerCamera()
+  public void OffPlayerCamera()
   {
     switch (nowTurnPlayerNum)
     {
@@ -289,6 +291,8 @@ public class TurnSystem : MonoBehaviour
 
         player1.GetComponent<Renderer>().material = player1BaseMaterial;
         player1.GetComponent<BoxCollider>().enabled = true;
+
+        originalMoney = player1.GetComponent<Player>().Money;
         break;
       case 2:
         gameScripts.car1 = player2;
@@ -304,6 +308,8 @@ public class TurnSystem : MonoBehaviour
 
         player2.GetComponent<Renderer>().material = player2BaseMaterial;
         player2.GetComponent<BoxCollider>().enabled = true;
+
+        originalMoney = player2.GetComponent<Player>().Money;
         break;
       case 3:
         gameScripts.car1 = player3;
@@ -319,6 +325,8 @@ public class TurnSystem : MonoBehaviour
 
         player3.GetComponent<Renderer>().material = player3BaseMaterial;
         player3.GetComponent<BoxCollider>().enabled = true;
+
+        originalMoney = player3.GetComponent<Player>().Money;
         break;
       case 4:
         gameScripts.car1 = player4;
@@ -334,10 +342,46 @@ public class TurnSystem : MonoBehaviour
 
         player4.GetComponent<Renderer>().material = player4BaseMaterial;
         player4.GetComponent<BoxCollider>().enabled = true;
+
+        originalMoney = player4.GetComponent<Player>().Money;
         break;
       default:
         break;
     }
+  }
+
+  private void JudgeOnSound()
+  {
+    switch (nowTurnPlayerNum)
+    {
+      case 1:
+        if (player1.GetComponent<Player>().Money != originalMoney)
+        {
+          payDayEffect.PlayOneShot(payDayEffect.clip);
+        }
+        break;
+      case 2:
+        if (player2.GetComponent<Player>().Money != originalMoney)
+        {
+          payDayEffect.PlayOneShot(payDayEffect.clip);
+        }
+        break;
+      case 3:
+        if (player3.GetComponent<Player>().Money != originalMoney)
+        {
+          payDayEffect.PlayOneShot(payDayEffect.clip);
+        }
+        break;
+      case 4:
+        if (player4.GetComponent<Player>().Money != originalMoney)
+        {
+          payDayEffect.PlayOneShot(payDayEffect.clip);
+        }
+        break;
+      default:
+        break;
+    }
+    
   }
   public void CheckPayDay()
   {
@@ -435,7 +479,9 @@ public class TurnSystem : MonoBehaviour
   {
     playerStatusUIScript.UpdatePlayersStatus();
     moneyUpdateScript.UpdateMoneyText();
-    payDayEffect.PlayOneShot(payDayEffect.clip);
+
+    JudgeOnSound();
+
     StartCoroutine("sleep");
 
     ////4人全員ゴールしているか判定

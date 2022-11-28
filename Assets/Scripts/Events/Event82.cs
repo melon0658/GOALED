@@ -11,6 +11,8 @@ public class Event82 : MonoBehaviour
   private GameObject canvas;
   private TextDialogManager textDialogManegerScript;
 
+  private string setText = "";
+
 
   // Start is called before the first frame update
   void Start()
@@ -54,7 +56,7 @@ public class Event82 : MonoBehaviour
       playerScript.Money = playerScript.Money + (count * 1000);
       //テキスト表示
       //Debug.Log("A");
-
+      setText = "ゴールした特典として、\nルーレットの目×1000$もらえた!!\n+" + count*1000 + "$";
     }
     else
     {
@@ -64,15 +66,19 @@ public class Event82 : MonoBehaviour
       {
         case 0:
           playerScript.Money = playerScript.Money + 100000;
+          setText = (turnSystemScript.GetgoalPlayerNum()+1) + "番目にゴール!!!\n+" + 100000 + "$";
           break;
         case 1:
           playerScript.Money = playerScript.Money + 80000;
+          setText = (turnSystemScript.GetgoalPlayerNum() + 1) + "番目にゴール!!!\n+" + 80000 + "$";
           break;
         case 2:
           playerScript.Money = playerScript.Money + 50000;
+          setText = (turnSystemScript.GetgoalPlayerNum() + 1) + "番目にゴール!!!\n+" + 50000 + "$";
           break;
         case 3:
           playerScript.Money = playerScript.Money + 10000;
+          setText = (turnSystemScript.GetgoalPlayerNum() + 1) + "番目にゴール!!!\n+" + 10000 + "$";
           break;
         default:
           break;
@@ -82,13 +88,20 @@ public class Event82 : MonoBehaviour
       turnSystemScript.SetgoalPlayerNum(goalPlayerNum);
       //テキスト表示
       //Debug.Log("B");
-
+      
     }
 
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    textDialogManegerScript.SetdialogText("ここにイベントテキストを貼り付け"); 
+    textDialogManegerScript.SetdialogText(setText);
 
+    StartCoroutine("sleep");
+  }
+
+  private IEnumerator sleep()
+  {
+    //イベント固有
+    yield return new WaitForSeconds(1f);  //10秒待つ
     textDialogManegerScript.HiddentextDialogBox();
 
     //どのイベントにも必要なやつ

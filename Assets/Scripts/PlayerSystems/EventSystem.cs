@@ -41,7 +41,8 @@ public class EventSystem : MonoBehaviour
       case 6: eventScriptsMaster.GetComponent<Event06>().execution(); break;
       case 7: eventScriptsMaster.GetComponent<Event07>().execution(); break;
       case 8: eventScriptsMaster.GetComponent<Event08>().execution(); break;
-      case 9: turnSystemScript.CheckPayDay(); break;
+      //case 9: turnSystemScript.CheckPayDay(); break;
+      case 9: eventScriptsMaster.GetComponent<EventEndGame>().EndGame(); break;
       case 10: eventScriptsMaster.GetComponent<Event10>().execution(); break;
       case 11: eventScriptsMaster.GetComponent<Event11>().execution(); break;
       case 12: eventScriptsMaster.GetComponent<Event12>().execution(); break;

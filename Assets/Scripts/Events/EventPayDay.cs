@@ -128,11 +128,11 @@ public class EventPayDay : MonoBehaviour
     }
     if(playerScript.PayDayCount == 1)
     {
-      textDialogManegerScript.SetdialogText("給料日がやってきた!!\n" + jobName + " : " + salary.ToString("N0"));
+      textDialogManegerScript.SetdialogText("給料日がやってきた!!\n" + jobName + " : $" + salary.ToString("N0"));
     }
     else
     {
-      textDialogManegerScript.SetdialogText("給料日がやってきた!!\n" + jobName + " : " + salary.ToString("N0") + " × " + playerScript.PayDayCount + "回");
+      textDialogManegerScript.SetdialogText("給料日がやってきた!!\n" + jobName + " : $" + salary.ToString("N0") + " × " + playerScript.PayDayCount + "回");
     }
 
     playerScript.Money = playerScript.Money + salary * playerScript.PayDayCount;
