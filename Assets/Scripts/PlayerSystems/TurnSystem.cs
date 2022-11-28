@@ -146,7 +146,7 @@ public class TurnSystem : MonoBehaviour
     }
   }
 
-  public void OffPlayerCamera()
+  void OffPlayerCamera()
   {
     switch (nowTurnPlayerNum)
     {

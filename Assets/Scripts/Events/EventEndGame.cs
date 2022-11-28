@@ -47,8 +47,8 @@ public class EventEndGame : MonoBehaviour
     //金額計算して１位を決める
 
     //デバッグ用
-    tsSctript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
-    tsSctript.OffPlayerCamera();
+    //tsSctript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
+    //tsSctript.OffPlayerCamera();
 
     //イベントスタート
     StartCoroutine("StartEvevt");
