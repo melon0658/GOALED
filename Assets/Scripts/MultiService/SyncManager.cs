@@ -29,8 +29,8 @@ public class SyncManager : MonoSingleton<SyncManager>
   [Serializable] public class PlayerDataEvent : UnityEvent<Dictionary<string, Dictionary<string, string>>> { }
   [SerializeField] private PlayerDataEvent onChangePlayerData;
   private List<string> players = new List<string>();
-  public bool isRefreshObject = false;
-  public bool isRefreshPlayerData = false;
+  [NonSerialized] public bool isRefreshObject = false;
+  [NonSerialized] public bool isRefreshPlayerData = false;
   private bool isFinish = false;
 
   private void DebugMode()
