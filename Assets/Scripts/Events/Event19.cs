@@ -61,7 +61,7 @@ private PlayMovieVP pv;
     int event_money = -10000;
     textDialogManegerScript.SetdialogText("コンピュータウイルスに感染  \n"+ event_money +"$");
     pv = canvas.transform.Find("EventVideo").GetComponent<PlayMovieVP>();
-    pv.showVideoPlayer("19_交通事故.mp4");
+    pv.showVideoPlayer("19_ウイルス感染.mp4");
     StartCoroutine("sleep");
 
     
