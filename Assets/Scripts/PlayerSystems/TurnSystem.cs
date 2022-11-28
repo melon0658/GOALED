@@ -36,6 +36,8 @@ public class TurnSystem : MonoBehaviour
 
   private EventEndGame eventEndGameScript;
   private MoneyUpdate moneyUpdateScript;
+  private EventPayDay eventPayDayScript;
+  private AudioSource payDayEffect;
   public PlayerStatusUI playerStatusUIScript;
   
 
@@ -115,6 +117,8 @@ public class TurnSystem : MonoBehaviour
 
     eventEndGameScript = GameObject.Find("EventScripts").GetComponent<EventEndGame>();
     moneyUpdateScript = GameObject.Find("MoneyUIBox").GetComponent<MoneyUpdate>();
+    eventPayDayScript = GameObject.Find("EventScripts").GetComponent<EventPayDay>();
+    payDayEffect = GameObject.Find("PaydayObjects").GetComponent<AudioSource>();
 
     TurnStartSystemMaster();
   }
@@ -335,6 +339,71 @@ public class TurnSystem : MonoBehaviour
         break;
     }
   }
+  public void CheckPayDay()
+  {
+    switch (nowTurnPlayerNum)
+    {
+      case 1:
+        if(player1.GetComponent<Player>().PayDayCount != 0)
+        {
+          eventPayDayScript.execution();
+        }
+        else
+        {
+          LastProcessing();
+        }
+        break;
+      case 2:
+        if (player2.GetComponent<Player>().PayDayCount != 0)
+        {
+          eventPayDayScript.execution();
+        }
+        else
+        {
+          LastProcessing();
+        }
+        break;
+      case 3:
+        if (player3.GetComponent<Player>().PayDayCount != 0)
+        {
+          eventPayDayScript.execution();
+        }
+        else
+        {
+          LastProcessing();
+        }
+        break;
+      case 4:
+        if (player4.GetComponent<Player>().PayDayCount != 0)
+        {
+          eventPayDayScript.execution();
+        }
+        else
+        {
+          LastProcessing();
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  public void LastProcessing()
+  {
+    playerStatusUIScript.UpdatePlayersStatus();
+    //4人全員ゴールしているか判定
+    if (!CheckEndGame())
+    {
+      OffPlayerCamera();
+      ChangeNowPlayer();
+      TurnStartSystemMaster();
+    }
+    else
+    {
+      OffPlayerCamera();
+      eventEndGameScript.EndGame();
+    }
+  }
 
   bool CheckEndGame()
   {
@@ -352,6 +421,7 @@ public class TurnSystem : MonoBehaviour
   {
     Debug.Log("Start");
     OnPlayerCamera();
+
     //Debug.Log("OK OnPlayerCamera");
     SetObjects();
     //Debug.Log("OK SetObjects");
@@ -363,19 +433,29 @@ public class TurnSystem : MonoBehaviour
 
   public void TurnEndSystemMaster()
   {
-    //4人全員ゴールしているか判定
-    if (!CheckEndGame())
-    {
-      playerStatusUIScript.UpdatePlayersStatus();
-      OffPlayerCamera();
-      ChangeNowPlayer();
-      TurnStartSystemMaster();
-    }
-    else
-    {
-      playerStatusUIScript.UpdatePlayersStatus();
-      OffPlayerCamera();
-      eventEndGameScript.EndGame();
-    }
+    playerStatusUIScript.UpdatePlayersStatus();
+    moneyUpdateScript.UpdateMoneyText();
+    payDayEffect.PlayOneShot(payDayEffect.clip);
+    StartCoroutine("sleep");
+
+    ////4人全員ゴールしているか判定
+    //if (!CheckEndGame())
+    //{
+
+    //}
+    //else
+    //{
+    //  playerStatusUIScript.UpdatePlayersStatus();
+    //  moneyUpdateScript.UpdateMoneyText();
+    //  CheckPayDay();
+    //}
+  }
+  private IEnumerator sleep()
+  {
+    //イベント固有
+
+    yield return new WaitForSeconds(1f);  //10秒待つ
+
+    CheckPayDay();
   }
 }

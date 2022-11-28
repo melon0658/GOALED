@@ -95,22 +95,22 @@ public class PlayerStatusUI : MonoBehaviour
       //配偶者の有・無
       if (players[i].Spouse)
       {
-        playersTexts[i][3].text = "YES";
+        playersTexts[i][3].text = "有り";
       }
       else
       {
-        playersTexts[i][3].text = "NO";
+        playersTexts[i][3].text = "無し";
       }
       //子供の数
-      playersTexts[i][4].text = players[i].Child.ToString() + " num";
+      playersTexts[i][4].text = players[i].Child.ToString() + " 人";
       //持ち家の有・無
       if (players[i].HouseNumber != 100)
       {
-        playersTexts[i][5].text = "YES";
+        playersTexts[i][5].text = "有り";
       }
       else
       {
-        playersTexts[i][5].text = "NO";
+        playersTexts[i][5].text = "無し";
       }
     } 
   }

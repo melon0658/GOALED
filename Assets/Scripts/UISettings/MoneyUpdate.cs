@@ -8,6 +8,8 @@ public class MoneyUpdate : MonoBehaviour
 {
   private TextMeshProUGUI moneyText;
   private TurnSystem turnSystemScript;
+  //private AudioSource payDayEffect;
+
 
   //各プレイヤーのスクリプト
   public Player player1;
@@ -20,6 +22,7 @@ public class MoneyUpdate : MonoBehaviour
   {
     moneyText = GameObject.Find("MoneyText").GetComponent<TextMeshProUGUI>();
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
+    
   }
   
   public void UpdateMoneyText()
@@ -42,5 +45,18 @@ public class MoneyUpdate : MonoBehaviour
       default:
         break;
     }
+    StartCoroutine("sleep");
+  }
+  private IEnumerator sleep()
+  {
+    //イベント固有
+    //Debug.Log("イベント開始");
+    //payDayEffect.PlayOneShot(payDayEffect.clip);
+    yield return new WaitForSeconds(0.5f);  //10秒待つ
+    //Debug.Log("イベント終了");
+    //text.SetActive(false);
+
+    //どのイベントにも必要なやつ
+    //turnSystemScript.TurnEndSystemMaster(); //ターンを終了
   }
 }
