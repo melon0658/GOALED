@@ -57,12 +57,11 @@ public class Event46 : MonoBehaviour
     //イベント固有
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    textDialogManegerScript.SetdialogText("エンジニアになる\n給与：25000$");
+    textDialogManegerScript.SetdialogText("子供が生まれる");
+    playerScript.Child = playerScript.Child + 1;
 
     StartCoroutine("sleep");
 
-    
-    playerScript.Job = "engineer";
     Debug.Log(playerScript.Job);
   }
 
