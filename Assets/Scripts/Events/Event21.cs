@@ -15,7 +15,7 @@ public class Event21 : MonoBehaviour
   //イベント固有
   private GameObject text; 
   private TextMeshProUGUI eventText;
-
+  private PlayMovieVP pv;
   void Start()
   {
     //どのイベントにも必要なやつ
@@ -58,18 +58,22 @@ public class Event21 : MonoBehaviour
     //イベント固有
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-
-    textDialogManegerScript.SetdialogText("通行止めで迂回\n4マス戻る");
-
+    int event_money = 10000;
+    textDialogManegerScript.SetdialogText("占いで1位 \n"+ event_money +"$");
+    pv = canvas.transform.Find("EventVideo").GetComponent<PlayMovieVP>();
+    pv.showVideoPlayer("51_占い.mp4");
     StartCoroutine("sleep");
 
+    
+    playerScript.Money = playerScript.Money+event_money;
+    Debug.Log(playerScript.Money);
   }
 
   private IEnumerator sleep()
   {
     //イベント固有
     Debug.Log("イベント開始");
-    yield return new WaitForSeconds(1f);  //10秒待つ
+    yield return new WaitForSeconds(11);  //10秒待つ
     Debug.Log("イベント終了");
     //text.SetActive(false);
     textDialogManegerScript.HiddentextDialogBox();
