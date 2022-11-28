@@ -1,23 +1,23 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class EventTest100 : MonoBehaviour
 {
-  //‚Ç‚ÌƒCƒxƒ“ƒg‚É‚à•K—v‚È‚â‚Â
+  //ã©ã®ã‚¤ãƒ™ãƒ³ãƒˆã«ã‚‚å¿…è¦ãªã‚„ã¤
   private TurnSystem turnSystemScript;
   private Player playerScript;
   private GameObject canvas;
   private TextDialogManager textDialogManegerScript;
 
-  //ƒCƒxƒ“ƒgŒÅ—L
+  //ã‚¤ãƒ™ãƒ³ãƒˆå›ºæœ‰
   private MovementBaseScript moveScript;
 
   // Start is called before the first frame update
   void Start()
   {
-    //‚Ç‚ÌƒCƒxƒ“ƒg‚É‚à•K—v‚È‚â‚Â
+    //ã©ã®ã‚¤ãƒ™ãƒ³ãƒˆã«ã‚‚å¿…è¦ãªã‚„ã¤
     canvas = GameObject.Find("Canvas");
   }
 
@@ -29,9 +29,9 @@ public class EventTest100 : MonoBehaviour
 
   public void execution()
   {
-    //‚Ç‚ÌƒCƒxƒ“ƒg‚É‚à•K—v‚È‚â‚Â
+    //ã©ã®ã‚¤ãƒ™ãƒ³ãƒˆã«ã‚‚å¿…è¦ãªã‚„ã¤
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
-    //Œ»İ‚Ìƒ^[ƒ“‚ª’N‚©‚ğæ“¾‚µ‚ÄA‚»‚ê‚É‰‚¶‚ÄƒvƒŒƒCƒ„[ƒXƒNƒŠƒvƒg‚ğæ“¾
+    //ç¾åœ¨ã®ã‚¿ãƒ¼ãƒ³ãŒèª°ã‹ã‚’å–å¾—ã—ã¦ã€ãã‚Œã«å¿œã˜ã¦ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’å–å¾—
     switch (turnSystemScript.GetnowTurnPlayerNum())
     {
       case 1:
@@ -54,26 +54,26 @@ public class EventTest100 : MonoBehaviour
         break;
     }
 
-    //ƒCƒxƒ“ƒgŒÅ—L
+    //ã‚¤ãƒ™ãƒ³ãƒˆå›ºæœ‰
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    textDialogManegerScript.SetdialogText("ƒWƒ‡ƒuŒˆ’è");
+    textDialogManegerScript.SetdialogText("ã‚¸ãƒ§ãƒ–æ±ºå®š");
 
     StartCoroutine("sleep");
 
-    //player‚Ì‚¨‹à‚ªæ“¾‚µ‚Ä•ÏX‚µ‚½‚¢I(get‚àset‚à‚±‚Ì‘‚«•û)
+    //playerã®ãŠé‡‘ãŒå–å¾—ã—ã¦å¤‰æ›´ã—ãŸã„ï¼(getã‚‚setã‚‚ã“ã®æ›¸ãæ–¹)
     //playerScript.Money = playerScript.Money + 10000;
   }
 
   private IEnumerator sleep()
   {
-    //ƒCƒxƒ“ƒgŒÅ—L
-    yield return new WaitForSeconds(1f);  //1•b‘Ò‚Â
+    //ã‚¤ãƒ™ãƒ³ãƒˆå›ºæœ‰
+    yield return new WaitForSeconds(1f);  //1ç§’å¾…ã¤
     textDialogManegerScript.HiddentextDialogBox();
 
     moveScript.jobEventAfterMove();
 
-    //‚Ç‚ÌƒCƒxƒ“ƒg‚É‚à•K—v‚È‚â‚Â
-    //turnSystemScript.TurnEndSystemMaster(); //ƒ^[ƒ“‚ğI—¹
+    //ã©ã®ã‚¤ãƒ™ãƒ³ãƒˆã«ã‚‚å¿…è¦ãªã‚„ã¤
+    //turnSystemScript.TurnEndSystemMaster(); //ã‚¿ãƒ¼ãƒ³ã‚’çµ‚äº†
   }
 }
