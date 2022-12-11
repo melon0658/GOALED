@@ -10,6 +10,7 @@ public class MapManager : MonoSingleton<MapManager>
   [SerializeField] private GameObject checkpointPrefab;
   [SerializeField] private GameObject SmallJunctionTilePrefab;
   [SerializeField] private GameObject largeStraightTilePrefab;
+  [SerializeField] private GameObject goalTilePrefab;
   [SerializeField] private GameObject textPrefab;
   private Tile startTile;
   private Dictionary<string, Tile> tiles = new Dictionary<string, Tile>();
@@ -23,10 +24,11 @@ public class MapManager : MonoSingleton<MapManager>
     tile2.SetNeighbor(direction.Opposite(), Passable.BLOCKED, tile1);
   }
 
+
   public void GenerateTiles()
   {
     startTile = new Tile(0);
-    startTile.Position = new Vector3(0, 0, 0);
+    startTile.Position = gameObject.transform.position;
     startTile.tileType = TileType.LARGE_JUNCTION;
     Tile tile1 = new Tile(1); tile1.Event = new GetMoneyEvent();
     Tile tile2 = new Tile(2); tile2.Event = new GetMoneyEvent();
@@ -114,6 +116,7 @@ public class MapManager : MonoSingleton<MapManager>
     Tile tile84 = new Tile(84); tile84.Event = new GetMoneyEvent();
     Tile tile85 = new Tile(85); tile85.Event = new GetMoneyEvent();
     Tile tile86 = new Tile(86); tile86.Event = new GetMoneyEvent();
+    tile86.tileType = TileType.GOAL;
 
 
     ConnectTiles(startTile, tile1, Direction.POSITIVE_X);
@@ -230,6 +233,8 @@ public class MapManager : MonoSingleton<MapManager>
   {
     Queue<Tile> queue = new Queue<Tile>();
     queue.Enqueue(startTile);
+    var scale = gameObject.transform.localScale.x;
+    Debug.Log(scale);
     while (queue.Count > 0)
     {
       Tile tile = queue.Dequeue();
@@ -301,6 +306,9 @@ public class MapManager : MonoSingleton<MapManager>
         break;
       case TileType.SMALL_JUNCTION:
         tileObject = Instantiate(SmallJunctionTilePrefab, tile.Position, tile.GetRotate(), transform);
+        break;
+      case TileType.GOAL:
+        tileObject = Instantiate(goalTilePrefab, tile.Position, tile.GetRotate(), transform);
         break;
     }
     Instantiate(textPrefab, tile.Position + new Vector3(0, 0.5f, 0), Quaternion.Euler(90, 0, 0), tileObject.transform);

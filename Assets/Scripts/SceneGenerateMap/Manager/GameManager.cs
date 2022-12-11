@@ -28,6 +28,7 @@ public class GameManager : MonoSingleton<GameManager>
   async void Start()
   {
     players = await GetPlayers();
+    MapManager.instance.GenerateTiles();
     if (playerInfo.isRoomOwner)
     {
       Debug.Log("owner");
@@ -40,7 +41,6 @@ public class GameManager : MonoSingleton<GameManager>
       await Task.Delay(1000);
       rpcManager.GetComponent<SendObject>().setRPC("Refresh", new Dictionary<string, string>());
     }
-    MapManager.instance.GenerateTiles();
   }
 
   public string getMyUserId()
@@ -80,7 +80,7 @@ public class GameManager : MonoSingleton<GameManager>
 
   private void InitializeCar()
   {
-    var position = new Vector3(0, 0, 0);
+    var position = MapManager.instance.StartTile.Position;
     foreach (var player in players)
     {
       var car = Instantiate(carPrefub, position, Quaternion.identity);

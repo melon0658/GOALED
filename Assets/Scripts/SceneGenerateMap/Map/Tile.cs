@@ -17,6 +17,7 @@ public enum TileType
   CORNER,
   LARGE_JUNCTION,
   SMALL_JUNCTION,
+  GOAL,
 }
 
 public class Tile
@@ -110,7 +111,7 @@ public class Tile
   public Vector2 GetSpace()
   {
     TileType tileType = GetTileType();
-    if (tileType == TileType.LARGE_JUNCTION)
+    if (tileType == TileType.LARGE_JUNCTION || tileType == TileType.GOAL)
     {
       return JunctionTileSize;
     }
