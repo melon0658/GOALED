@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using System.Linq;
+using DG.Tweening;
 
 public class CarMove : MonoBehaviour
 {
@@ -24,26 +25,16 @@ public class CarMove : MonoBehaviour
 
   void Update()
   {
-    elapsedTime += Time.deltaTime;
-    if (Vector3.Lerp(positionBefore, positionAfter, elapsedTime / InterpolationPeriod) - transform.position != Vector3.zero)
-    {
-      transform.rotation = Quaternion.LookRotation(Vector3.Lerp(positionBefore, positionAfter, elapsedTime / InterpolationPeriod) - transform.position, Vector3.up);
-    }
-    transform.position = Vector3.Lerp(positionBefore, positionAfter, elapsedTime / InterpolationPeriod);
   }
 
   public async Task Move(List<Vector3> path, List<Vector3> rotations)
   {
-    isMoving = true;
-    for (int i = 0; i < path.Count; i++)
+    foreach (var item in path.Zip(rotations, (a, b) => new { a, b }))
     {
-      positionBefore = transform.position;
-      positionAfter = path[i];
-      rotateBefore = transform.eulerAngles;
-      rotateAfter = rotations[i];
-      elapsedTime = 0;
-      await Task.Delay((int)(InterpolationPeriod * 1000));
+      Debug.Log(item.a + " " + item.b);
     }
+    isMoving = true;
+    await transform.DOPath(path.ToArray(), InterpolationPeriod * path.Count, PathType.CatmullRom, PathMode.Full3D, 10, Color.red).SetEase(Ease.Linear).SetLookAt(0.01f, Vector3.forward).AsyncWaitForCompletion();
     isMoving = false;
     return;
   }

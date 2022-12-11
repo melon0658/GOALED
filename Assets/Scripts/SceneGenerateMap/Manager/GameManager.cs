@@ -32,15 +32,14 @@ public class GameManager : MonoSingleton<GameManager>
     {
       Debug.Log("owner");
       InitializeCar();
+      await Task.Delay(5000);
       rpcManager.GetComponent<SendObject>().setRPC("ActiveTurn", new Dictionary<string, string>() { { "id", playerInfo.player.Id } });
     }
     else
     {
-      await Task.Delay(5000);
+      await Task.Delay(1000);
       rpcManager.GetComponent<SendObject>().setRPC("Refresh", new Dictionary<string, string>());
     }
-    // OnUpdatePlayerStetus.Subscribe(x => ).AddTo(this);
-
     MapManager.instance.GenerateTiles();
   }
 
@@ -121,12 +120,12 @@ public class GameManager : MonoSingleton<GameManager>
       return;
     }
     var car = cars[id];
-    var camera = GameObject.Find("Camera");
-    camera.transform.parent = car.transform;
+    var display = GameObject.Find("Display");
+    display.transform.parent = car.transform;
     var backword = car.transform.TransformDirection(Vector3.back);
     var position = car.transform.position + (backword * 120) + new Vector3(0, 30, 0);
     var rotation = Quaternion.LookRotation(car.transform.position - position);
-    await camera.GetComponent<CameraManager>().MoveTo(position, rotation.eulerAngles);
+    await display.GetComponent<CameraManager>().MoveTo(position, rotation.eulerAngles);
   }
 
   public async void ResolveTurn(string id, string step, Direction direction)
@@ -139,10 +138,29 @@ public class GameManager : MonoSingleton<GameManager>
     var carMove = car.GetComponent<CarMove>();
     var (tile, path, rotate) = carMove.calcPath(MapManager.instance.GetTile(players[id].NowPosIndex.ToString()), int.Parse(step), direction);
     await carMove.Move(path, rotate);
-    players[id].NowPosIndex = int.Parse(tile.id);
-    SyncManager.instance.AddPlayerData(new GameService.PlayerData() { Id = id, Key = { "nowPosIndex" }, Value = { tile.id } });
-    var nextPlayerID = GetNextPlayerId(id);
-    rpcManager.GetComponent<SendObject>().setRPC("ActiveTurn", new Dictionary<string, string>() { { "id", nextPlayerID } });
+    rpcManager.GetComponent<SendObject>().setRPC("EventStart", new Dictionary<string, string>() { { "tileID", tile.id }, { "playerID", id } });
+  }
+
+  public async void EventStart(string tileID, string playerID)
+  {
+    Tile tile = MapManager.instance.GetTile(tileID);
+    TileEvent tileEvent = tile.Event;
+    if (playerInfo.isRoomOwner)
+    {
+      tileEvent.OnEventChangeStetus(players, playerID);
+      players[playerID].NowPosIndex = int.Parse(tileID);
+      EncodePlayerStetus();
+    }
+    await tileEvent.OnEventAnimation();
+    if (playerInfo.isRoomOwner)
+    {
+      rpcManager.GetComponent<SendObject>().setRPC("ActiveTurn", new Dictionary<string, string>() { { "id", GetNextPlayerId(playerID) } });
+    }
+  }
+
+  private void EncodePlayerStetus()
+  {
+    players.Select(x => x.Value.Serialize(x.Key)).ToList().ForEach(x => SyncManager.instance.AddPlayerData(x));
   }
 
   public void ActiveTurn(string id)
@@ -150,8 +168,8 @@ public class GameManager : MonoSingleton<GameManager>
     MoveCamera(id);
     if (playerInfo.player.Id == id)
     {
-      uiManager.ActiveDiceUI();
-      uiManager.ActiveDirectionUI(MapManager.instance.GetTile(players[id].NowPosIndex.ToString()));
+      uiManager.ActiveDiceButton();
+      uiManager.ActiveDirectionButton(MapManager.instance.GetTile(players[id].NowPosIndex.ToString()));
     }
   }
 
@@ -161,5 +179,6 @@ public class GameManager : MonoSingleton<GameManager>
     {
       players[player.Key].Deserialize(player.Value);
     }
+    uiManager.UpdatePlayerStetus(players);
   }
 }

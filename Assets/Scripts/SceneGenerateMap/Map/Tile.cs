@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum Passable
@@ -26,7 +27,7 @@ public class Tile
   public Vector3 Position { get { return position; } set { position = value; } }
   private bool checkPoint = false;
   public bool CheckPoint { get { return checkPoint; } set { checkPoint = value; } }
-  public Event Event { get; set; } = new DefaultEvent();
+  public TileEvent Event { get; set; } = new DefaultEvent();
   public bool IsGenerated { get; set; } = false;
   public TileType? tileType { get; set; } = null;
   public string Name;
@@ -160,4 +161,46 @@ public class Tile
     return Quaternion.Euler(0, 0, 0);
   }
 
+  public Vector3 GetCarAddRotate()
+  {
+    var tileType = GetTileType();
+    if (tileType == TileType.CORNER)
+    {
+      Direction passableDirection = GetPassebleNeighbors().Keys.First();
+      Direction blockedDirection = GetNeighbors().Keys.First(x => x != passableDirection);
+      if (passableDirection == Direction.POSITIVE_X && blockedDirection == Direction.POSITIVE_Z)
+      {
+        return new Vector3(0, 90, 0);
+      }
+      else if (passableDirection == Direction.POSITIVE_X && blockedDirection == Direction.NEGATIVE_Z)
+      {
+        return new Vector3(0, -90, 0);
+      }
+      else if (passableDirection == Direction.NEGATIVE_X && blockedDirection == Direction.NEGATIVE_Z)
+      {
+        return new Vector3(0, 90, 0);
+      }
+      else if (passableDirection == Direction.NEGATIVE_X && blockedDirection == Direction.POSITIVE_Z)
+      {
+        return new Vector3(0, -90, 0);
+      }
+      else if (passableDirection == Direction.POSITIVE_Z && blockedDirection == Direction.POSITIVE_X)
+      {
+        return new Vector3(0, 90, 0);
+      }
+      else if (passableDirection == Direction.POSITIVE_Z && blockedDirection == Direction.NEGATIVE_X)
+      {
+        return new Vector3(0, -90, 0);
+      }
+      else if (passableDirection == Direction.NEGATIVE_Z && blockedDirection == Direction.NEGATIVE_X)
+      {
+        return new Vector3(0, 90, 0);
+      }
+      else if (passableDirection == Direction.NEGATIVE_Z && blockedDirection == Direction.POSITIVE_X)
+      {
+        return new Vector3(0, -90, 0);
+      }
+    }
+    return new Vector3(0, 0, 0);
+  }
 }

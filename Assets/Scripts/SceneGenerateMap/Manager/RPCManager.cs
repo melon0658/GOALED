@@ -35,4 +35,10 @@ public class RPCManager : MonoBehaviour
       Debug.Log("Refresh");
     }
   }
+
+  [CustomRPC]
+  public void EventStart(string tileID, string playerID)
+  {
+    GameManager.instance.EventStart(tileID, playerID);
+  }
 }

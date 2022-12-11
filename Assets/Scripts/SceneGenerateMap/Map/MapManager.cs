@@ -28,92 +28,92 @@ public class MapManager : MonoSingleton<MapManager>
     startTile = new Tile(0);
     startTile.Position = new Vector3(0, 0, 0);
     startTile.tileType = TileType.LARGE_JUNCTION;
-    Tile tile1 = new Tile(1);
-    Tile tile2 = new Tile(2);
-    Tile tile3 = new Tile(3);
-    Tile tile4 = new Tile(4);
-    Tile tile5 = new Tile(5);
-    Tile tile6 = new Tile(6);
-    Tile tile7 = new Tile(7);
-    Tile tile8 = new Tile(8);
-    Tile tile9 = new Tile(9);
-    Tile tile10 = new Tile(10);
-    Tile tile11 = new Tile(11);
-    Tile tile12 = new Tile(12);
-    Tile tile13 = new Tile(13);
-    Tile tile14 = new Tile(14);
-    Tile tile15 = new Tile(15);
-    Tile tile16 = new Tile(16);
-    Tile tile17 = new Tile(17);
-    Tile tile18 = new Tile(18);
-    Tile tile19 = new Tile(19);
-    Tile tile20 = new Tile(20);
-    Tile tile21 = new Tile(21);
-    Tile tile22 = new Tile(22);
-    Tile tile23 = new Tile(23);
+    Tile tile1 = new Tile(1); tile1.Event = new GetMoneyEvent();
+    Tile tile2 = new Tile(2); tile2.Event = new GetMoneyEvent();
+    Tile tile3 = new Tile(3); tile3.Event = new GetMoneyEvent();
+    Tile tile4 = new Tile(4); tile4.Event = new GetMoneyEvent();
+    Tile tile5 = new Tile(5); tile5.Event = new GetMoneyEvent();
+    Tile tile6 = new Tile(6); tile6.Event = new GetMoneyEvent();
+    Tile tile7 = new Tile(7); tile7.Event = new GetMoneyEvent();
+    Tile tile8 = new Tile(8); tile8.Event = new GetMoneyEvent();
+    Tile tile9 = new Tile(9); tile9.Event = new GetMoneyEvent();
+    Tile tile10 = new Tile(10); tile10.Event = new GetMoneyEvent();
+    Tile tile11 = new Tile(11); tile11.Event = new GetMoneyEvent();
+    Tile tile12 = new Tile(12); tile12.Event = new GetMoneyEvent();
+    Tile tile13 = new Tile(13); tile13.Event = new GetMoneyEvent();
+    Tile tile14 = new Tile(14); tile14.Event = new GetMoneyEvent();
+    Tile tile15 = new Tile(15); tile15.Event = new GetMoneyEvent();
+    Tile tile16 = new Tile(16); tile16.Event = new GetMoneyEvent();
+    Tile tile17 = new Tile(17); tile17.Event = new GetMoneyEvent();
+    Tile tile18 = new Tile(18); tile18.Event = new GetMoneyEvent();
+    Tile tile19 = new Tile(19); tile19.Event = new GetMoneyEvent();
+    Tile tile20 = new Tile(20); tile20.Event = new GetMoneyEvent();
+    Tile tile21 = new Tile(21); tile21.Event = new GetMoneyEvent();
+    Tile tile22 = new Tile(22); tile22.Event = new GetMoneyEvent();
+    Tile tile23 = new Tile(23); tile23.Event = new GetMoneyEvent();
     // Tile tile24 = new Tile(24);
-    Tile tile25 = new Tile(25);
-    Tile tile26 = new Tile(26);
-    Tile tile27 = new Tile(27);
-    Tile tile28 = new Tile(28);
-    Tile tile29 = new Tile(29);
-    Tile tile30 = new Tile(30);
-    Tile tile31 = new Tile(31);
-    Tile tile32 = new Tile(32);
-    Tile tile33 = new Tile(33);
-    Tile tile34 = new Tile(34);
-    Tile tile35 = new Tile(35);
-    Tile tile36 = new Tile(36);
-    Tile tile37 = new Tile(37);
-    Tile tile38 = new Tile(38);
-    Tile tile39 = new Tile(39);
-    Tile tile40 = new Tile(40);
-    Tile tile41 = new Tile(41);
-    Tile tile42 = new Tile(42);
-    Tile tile43 = new Tile(43);
-    Tile tile44 = new Tile(44);
-    Tile tile45 = new Tile(45);
-    Tile tile46 = new Tile(46);
-    Tile tile47 = new Tile(47);
-    Tile tile48 = new Tile(48);
-    Tile tile49 = new Tile(49);
-    Tile tile50 = new Tile(50);
-    Tile tile51 = new Tile(51);
-    Tile tile52 = new Tile(52);
-    Tile tile53 = new Tile(53);
-    Tile tile54 = new Tile(54);
-    Tile tile55 = new Tile(55);
-    Tile tile56 = new Tile(56);
-    Tile tile57 = new Tile(57);
-    Tile tile58 = new Tile(58);
-    Tile tile59 = new Tile(59);
-    Tile tile60 = new Tile(60);
-    Tile tile61 = new Tile(61);
-    Tile tile62 = new Tile(62);
-    Tile tile63 = new Tile(63);
-    Tile tile64 = new Tile(64);
-    Tile tile65 = new Tile(65);
-    Tile tile66 = new Tile(66);
-    Tile tile67 = new Tile(67);
-    Tile tile68 = new Tile(68);
-    Tile tile69 = new Tile(69);
-    Tile tile70 = new Tile(70);
-    Tile tile71 = new Tile(71);
-    Tile tile72 = new Tile(72);
-    Tile tile73 = new Tile(73);
-    Tile tile74 = new Tile(74);
-    Tile tile75 = new Tile(75);
-    Tile tile76 = new Tile(76);
-    Tile tile77 = new Tile(77);
-    Tile tile78 = new Tile(78);
-    Tile tile79 = new Tile(79);
-    Tile tile80 = new Tile(80);
-    Tile tile81 = new Tile(81);
-    Tile tile82 = new Tile(82);
-    Tile tile83 = new Tile(83);
-    Tile tile84 = new Tile(84);
-    Tile tile85 = new Tile(85);
-    Tile tile86 = new Tile(86);
+    Tile tile25 = new Tile(25); tile25.Event = new GetMoneyEvent();
+    Tile tile26 = new Tile(26); tile26.Event = new GetMoneyEvent();
+    Tile tile27 = new Tile(27); tile27.Event = new GetMoneyEvent();
+    Tile tile28 = new Tile(28); tile28.Event = new GetMoneyEvent();
+    Tile tile29 = new Tile(29); tile29.Event = new GetMoneyEvent();
+    Tile tile30 = new Tile(30); tile30.Event = new GetMoneyEvent();
+    Tile tile31 = new Tile(31); tile31.Event = new GetMoneyEvent();
+    Tile tile32 = new Tile(32); tile32.Event = new GetMoneyEvent();
+    Tile tile33 = new Tile(33); tile33.Event = new GetMoneyEvent();
+    Tile tile34 = new Tile(34); tile34.Event = new GetMoneyEvent();
+    Tile tile35 = new Tile(35); tile35.Event = new GetMoneyEvent();
+    Tile tile36 = new Tile(36); tile36.Event = new GetMoneyEvent();
+    Tile tile37 = new Tile(37); tile37.Event = new GetMoneyEvent();
+    Tile tile38 = new Tile(38); tile38.Event = new GetMoneyEvent();
+    Tile tile39 = new Tile(39); tile39.Event = new GetMoneyEvent();
+    Tile tile40 = new Tile(40); tile40.Event = new GetMoneyEvent();
+    Tile tile41 = new Tile(41); tile41.Event = new GetMoneyEvent();
+    Tile tile42 = new Tile(42); tile42.Event = new GetMoneyEvent();
+    Tile tile43 = new Tile(43); tile43.Event = new GetMoneyEvent();
+    Tile tile44 = new Tile(44); tile44.Event = new GetMoneyEvent();
+    Tile tile45 = new Tile(45); tile45.Event = new GetMoneyEvent();
+    Tile tile46 = new Tile(46); tile46.Event = new GetMoneyEvent();
+    Tile tile47 = new Tile(47); tile47.Event = new GetMoneyEvent();
+    Tile tile48 = new Tile(48); tile48.Event = new GetMoneyEvent();
+    Tile tile49 = new Tile(49); tile49.Event = new GetMoneyEvent();
+    Tile tile50 = new Tile(50); tile50.Event = new GetMoneyEvent();
+    Tile tile51 = new Tile(51); tile51.Event = new GetMoneyEvent();
+    Tile tile52 = new Tile(52); tile52.Event = new GetMoneyEvent();
+    Tile tile53 = new Tile(53); tile53.Event = new GetMoneyEvent();
+    Tile tile54 = new Tile(54); tile54.Event = new GetMoneyEvent();
+    Tile tile55 = new Tile(55); tile55.Event = new GetMoneyEvent();
+    Tile tile56 = new Tile(56); tile56.Event = new GetMoneyEvent();
+    Tile tile57 = new Tile(57); tile57.Event = new GetMoneyEvent();
+    Tile tile58 = new Tile(58); tile58.Event = new GetMoneyEvent();
+    Tile tile59 = new Tile(59); tile59.Event = new GetMoneyEvent();
+    Tile tile60 = new Tile(60); tile60.Event = new GetMoneyEvent();
+    Tile tile61 = new Tile(61); tile61.Event = new GetMoneyEvent();
+    Tile tile62 = new Tile(62); tile62.Event = new GetMoneyEvent();
+    Tile tile63 = new Tile(63); tile63.Event = new GetMoneyEvent();
+    Tile tile64 = new Tile(64); tile64.Event = new GetMoneyEvent();
+    Tile tile65 = new Tile(65); tile65.Event = new GetMoneyEvent();
+    Tile tile66 = new Tile(66); tile66.Event = new GetMoneyEvent();
+    Tile tile67 = new Tile(67); tile67.Event = new GetMoneyEvent();
+    Tile tile68 = new Tile(68); tile68.Event = new GetMoneyEvent();
+    Tile tile69 = new Tile(69); tile69.Event = new GetMoneyEvent();
+    Tile tile70 = new Tile(70); tile70.Event = new GetMoneyEvent();
+    Tile tile71 = new Tile(71); tile71.Event = new GetMoneyEvent();
+    Tile tile72 = new Tile(72); tile72.Event = new GetMoneyEvent();
+    Tile tile73 = new Tile(73); tile73.Event = new GetMoneyEvent();
+    Tile tile74 = new Tile(74); tile74.Event = new GetMoneyEvent();
+    Tile tile75 = new Tile(75); tile75.Event = new GetMoneyEvent();
+    Tile tile76 = new Tile(76); tile76.Event = new GetMoneyEvent();
+    Tile tile77 = new Tile(77); tile77.Event = new GetMoneyEvent();
+    Tile tile78 = new Tile(78); tile78.Event = new GetMoneyEvent();
+    Tile tile79 = new Tile(79); tile79.Event = new GetMoneyEvent();
+    Tile tile80 = new Tile(80); tile80.Event = new GetMoneyEvent();
+    Tile tile81 = new Tile(81); tile81.Event = new GetMoneyEvent();
+    Tile tile82 = new Tile(82); tile82.Event = new GetMoneyEvent();
+    Tile tile83 = new Tile(83); tile83.Event = new GetMoneyEvent();
+    Tile tile84 = new Tile(84); tile84.Event = new GetMoneyEvent();
+    Tile tile85 = new Tile(85); tile85.Event = new GetMoneyEvent();
+    Tile tile86 = new Tile(86); tile86.Event = new GetMoneyEvent();
 
 
     ConnectTiles(startTile, tile1, Direction.POSITIVE_X);
@@ -323,7 +323,6 @@ public class MapManager : MonoSingleton<MapManager>
     List<Vector3> path = new List<Vector3>();
     List<Vector3> rotate = new List<Vector3>();
 
-    // Tile tile = direction == null ? start : start.GetNeighbor(direction.Value);
     Tile tile = start;
     for (int i = 0; i < step; i++)
     {
@@ -338,14 +337,15 @@ public class MapManager : MonoSingleton<MapManager>
         if (neighbor.Value != null)
         {
           tile = neighbor.Value;
-          if (neighbor.Value.GetTileType() == TileType.CORNER)
-          {
-            rotate.Add(new Vector3(0, -90, 0));
-          }
-          else
-          {
-            rotate.Add(new Vector3(0, 0, 0));
-          }
+          rotate.Add(tile.GetCarAddRotate());
+          // if (neighbor.Value.GetTileType() == TileType.CORNER)
+          // {
+          //   rotate.Add(new Vector3(0, -90, 0));
+          // }
+          // else
+          // {
+          //   rotate.Add(new Vector3(0, 0, 0));
+          // }
           path.Add(tile.Position);
           if (tile.GetTileType() == TileType.LARGE_JUNCTION || tile.CheckPoint)
           {

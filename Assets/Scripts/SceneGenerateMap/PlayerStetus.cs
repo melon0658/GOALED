@@ -36,7 +36,7 @@ public class PlayerStetus
     this.CheckGoal = checkGoal;
   }
 
-  public GameService.PlayerData Serialize()
+  public GameService.PlayerData Serialize(string playerId)
   {
     var members = typeof(PlayerStetus).GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
     var playerData = new GameService.PlayerData();
@@ -49,6 +49,7 @@ public class PlayerStetus
       playerData.Key.Add(memberName);
       playerData.Value.Add(str);
     }
+    playerData.Id = playerId;
     return playerData;
   }
 

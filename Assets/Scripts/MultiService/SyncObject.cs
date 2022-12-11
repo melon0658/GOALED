@@ -6,12 +6,16 @@ public class SyncObject : MonoBehaviour
   private const float InterpolationPeriod = 1f / Settings.RECV_FPS;
   private Vector3 positionBefore;
   private Vector3 positionAfter;
+  private Vector3 rotateBefore;
+  private Vector3 rotateAfter;
   private float elapsedTime;
 
   void Start()
   {
     positionBefore = transform.position;
     positionAfter = positionBefore;
+    rotateBefore = transform.eulerAngles;
+    rotateAfter = rotateBefore;
     elapsedTime = 0f;
   }
 
@@ -20,6 +24,7 @@ public class SyncObject : MonoBehaviour
   {
     elapsedTime += Time.deltaTime;
     transform.position = Vector3.Lerp(positionBefore, positionAfter, elapsedTime / InterpolationPeriod);
+    transform.eulerAngles = Vector3.Lerp(rotateBefore, rotateAfter, elapsedTime / InterpolationPeriod);
   }
 
   public void Sync(GameService.Object obj)
@@ -31,7 +36,9 @@ public class SyncObject : MonoBehaviour
     }
     if (obj.Rotation != null)
     {
-      transform.eulerAngles = new Vector3(obj.Rotation.X, obj.Rotation.Y, obj.Rotation.Z);
+      rotateBefore = transform.eulerAngles;
+      rotateAfter = new Vector3(obj.Rotation.X, obj.Rotation.Y, obj.Rotation.Z);
+      // transform.eulerAngles = new Vector3(obj.Rotation.X, obj.Rotation.Y, obj.Rotation.Z);
     }
     if (obj.Scale != null)
     {
