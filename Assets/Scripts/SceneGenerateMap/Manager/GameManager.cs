@@ -16,18 +16,17 @@ public class GameManager : MonoSingleton<GameManager>
   [SerializeField] private RPCManager rpcManager;
   [SerializeField] private UIManager uiManager;
   private Dictionary<string, PlayerStetus> players = new Dictionary<string, PlayerStetus>();
-  public Dictionary<string, PlayerStetus> Players = new Dictionary<string, PlayerStetus>();
   private List<string> playerIds = new List<string>();
-  public Dictionary<string, GameObject> cars = new Dictionary<string, GameObject>();
-  private Subject<Dictionary<string, PlayerStetus>> _onUpdatePlayerStetus = new Subject<Dictionary<string, PlayerStetus>>();
-  public IObservable<Dictionary<string, PlayerStetus>> OnUpdatePlayerStetus
+  private Dictionary<string, GameObject> cars = new Dictionary<string, GameObject>();
+
+  public GameObject GetCar(string id)
   {
-    get { return _onUpdatePlayerStetus; }
+    return cars[id];
   }
 
   async void Start()
   {
-    players = await GetPlayers();
+    players = await GetPlayersAsync();
     MapManager.instance.GenerateTiles();
     if (playerInfo.isRoomOwner)
     {
@@ -60,13 +59,7 @@ public class GameManager : MonoSingleton<GameManager>
     return playerInfo.player.Id;
   }
 
-  private async Task<bool> IsRoomOwner()
-  {
-    var res = await matchingServer.client.GetRoomDetailAsync(new MatchingService.GetRoomDetailRequest() { RoomId = playerInfo.player.RoomId });
-    return res.Room.Owner == playerInfo.player.Id;
-  }
-
-  private async Task<Dictionary<string, PlayerStetus>> GetPlayers()
+  private async Task<Dictionary<string, PlayerStetus>> GetPlayersAsync()
   {
     var res = await matchingServer.client.GetRoomDetailAsync(new MatchingService.GetRoomDetailRequest() { RoomId = playerInfo.player.RoomId });
     var players = new Dictionary<string, PlayerStetus>();
@@ -89,8 +82,8 @@ public class GameManager : MonoSingleton<GameManager>
       GameService.PlayerData playerData = new GameService.PlayerData();
       playerData.Id = player.Key;
       playerData.Key.Add("carID");
+      playerData.Value.Add(player.Key);
       car.GetComponent<SendObject>().setPreObjectID(player.Key);
-      playerData.Value.Add(car.GetComponent<SendObject>().ObjectId);
       SyncManager.instance.AddPlayerData(playerData);
     }
   }

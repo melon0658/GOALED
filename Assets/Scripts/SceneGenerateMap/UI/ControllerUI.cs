@@ -65,7 +65,7 @@ public class ControllerUI : MonoBehaviour
 
   private Direction GetCarDirection()
   {
-    var car = GameManager.instance.cars[GameManager.instance.getMyUserId()];
+    var car = GameManager.instance.GetCar(GameManager.instance.getMyUserId());
     return DirectionExtensions.GetDirection(car.transform.eulerAngles.y);
   }
 
