@@ -7,6 +7,7 @@ public class EventSystem : MonoBehaviour
 {
   public Player playerScript;
   public GameObject eventScriptsMaster;
+  private TurnSystem turnSystemScript;
 
   //各イベントのスクリプト
   #region
@@ -23,9 +24,11 @@ public class EventSystem : MonoBehaviour
 
   public void EventExecutionManager()
   {
+    turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
     int nowPosIndex = playerScript.NowPosIndex;
 
     //switch構文で書くしかない　ゴミ
+    //eventScriptsMaster.GetComponent<EventEndGame>().EndGame();
 
     //車があるマスのイベントを実行
     switch (nowPosIndex)
@@ -38,14 +41,15 @@ public class EventSystem : MonoBehaviour
       case 6: eventScriptsMaster.GetComponent<Event06>().execution(); break;
       case 7: eventScriptsMaster.GetComponent<Event07>().execution(); break;
       case 8: eventScriptsMaster.GetComponent<Event08>().execution(); break;
-      case 9: eventScriptsMaster.GetComponent<Event01>().execution(); break;
+      case 9: turnSystemScript.CheckPayDay(); break;
+      //case 9: eventScriptsMaster.GetComponent<EventEndGame>().EndGame(); break;
       case 10: eventScriptsMaster.GetComponent<Event10>().execution(); break;
       case 11: eventScriptsMaster.GetComponent<Event11>().execution(); break;
       case 12: eventScriptsMaster.GetComponent<Event12>().execution(); break;
       case 13: eventScriptsMaster.GetComponent<Event13>().execution(); break;
       case 14: eventScriptsMaster.GetComponent<Event14>().execution(); break;
       case 15: eventScriptsMaster.GetComponent<Event15>().execution(); break;
-      case 16: eventScriptsMaster.GetComponent<Event01>().execution(); break;
+      case 16: turnSystemScript.CheckPayDay(); break;
       case 17: eventScriptsMaster.GetComponent<Event17>().execution(); break;
       case 18: eventScriptsMaster.GetComponent<Event18>().execution(); break;
       case 19: eventScriptsMaster.GetComponent<Event19>().execution(); break;
@@ -63,7 +67,7 @@ public class EventSystem : MonoBehaviour
       case 31: eventScriptsMaster.GetComponent<Event31>().execution(); break;
       case 32: eventScriptsMaster.GetComponent<Event32>().execution(); break;
       case 33: eventScriptsMaster.GetComponent<Event33>().execution(); break;
-      case 34: eventScriptsMaster.GetComponent<Event01>().execution(); break;
+      case 34: turnSystemScript.CheckPayDay(); break;
       case 35: eventScriptsMaster.GetComponent<Event35>().execution(); break;
       case 36: eventScriptsMaster.GetComponent<Event36>().execution(); break;
       case 37: eventScriptsMaster.GetComponent<Event37>().execution(); break;
@@ -71,7 +75,7 @@ public class EventSystem : MonoBehaviour
       case 39: eventScriptsMaster.GetComponent<Event39>().execution(); break;
       case 40: eventScriptsMaster.GetComponent<Event40>().execution(); break;
       case 41: eventScriptsMaster.GetComponent<Event41>().execution(); break;
-      case 42: eventScriptsMaster.GetComponent<Event01>().execution(); break;
+      case 42: turnSystemScript.CheckPayDay(); break;
       case 43: eventScriptsMaster.GetComponent<Event43>().execution(); break;
       case 44: eventScriptsMaster.GetComponent<Event44>().execution(); break;
       case 45: eventScriptsMaster.GetComponent<Event45>().execution(); break;
@@ -104,14 +108,14 @@ public class EventSystem : MonoBehaviour
       case 72: eventScriptsMaster.GetComponent<Event72>().execution(); break;
       case 73: eventScriptsMaster.GetComponent<Event73>().execution(); break;
       case 74: eventScriptsMaster.GetComponent<Event74>().execution(); break;
-      case 75: eventScriptsMaster.GetComponent<Event01>().execution(); break;
+      case 75: turnSystemScript.CheckPayDay(); break;
       case 76: eventScriptsMaster.GetComponent<Event76>().execution(); break;
       case 77: eventScriptsMaster.GetComponent<Event77>().execution(); break;
       case 78: eventScriptsMaster.GetComponent<Event78>().execution(); break;
       case 79: eventScriptsMaster.GetComponent<Event79>().execution(); break;
       case 80: eventScriptsMaster.GetComponent<Event80>().execution(); break;
       case 81: eventScriptsMaster.GetComponent<Event81>().execution(); break;
-      case 82: eventScriptsMaster.GetComponent<Event01>().execution(); break;
+      case 82: eventScriptsMaster.GetComponent<Event82>().execution(); break;
       case 83: eventScriptsMaster.GetComponent<Event83>().execution(); break;
       case 84: eventScriptsMaster.GetComponent<Event84>().execution(); break;
       case 85: eventScriptsMaster.GetComponent<Event85>().execution(); break;

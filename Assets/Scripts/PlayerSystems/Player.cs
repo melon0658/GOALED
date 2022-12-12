@@ -13,8 +13,14 @@ public class Player : MonoBehaviour
   private int child; //子供
   private int houseNumber; //持ち家の番号
   private bool checkGoal; //ゴールしているか
+  private int payDayCount; //給料日を過ぎた回数
+  private bool restTurn; //ターン休みかどうか
+
 
   public GameObject status;
+  public GameObject birdCamera;
+  private GameObject canvas;
+  private GameObject rouletteCamera;
 
   public Player(string plyaerName, int money, int nowPosIndex, string color, string job, bool spouse, int child, int houseNumber, bool checkGoal)
   {
@@ -39,7 +45,8 @@ public class Player : MonoBehaviour
   public int Child { get => child; set => child = value; }
   public int HouseNumber { get => houseNumber; set => houseNumber = value; }
   public bool CheckGoal { get => checkGoal; set => checkGoal = value; }
-
+  public int PayDayCount { get => payDayCount; set => payDayCount = value; }
+  public bool RestTurn { get => restTurn; set => restTurn = value; }
 
   // Start is called before the first frame update
   void Start()
@@ -48,6 +55,11 @@ public class Player : MonoBehaviour
     //status = GameObject.Find("Status");
     //status.SetActive(false);
     //Debug.Log(status);
+    this.PayDayCount = 0;
+    this.RestTurn = false;
+
+    canvas = GameObject.Find("Canvas");
+    rouletteCamera = GameObject.Find(" RouletteCamera");
   }
 
   // Update is called once per frame
@@ -63,6 +75,37 @@ public class Player : MonoBehaviour
     {
       //ステータス画面を非表示
       status.SetActive(false);
+    }
+    //Mキーが入力された場合
+    if (Input.GetKey(KeyCode.M))
+    {
+      //ステータス画面を表示
+      birdCamera.SetActive(true);
+      canvas.SetActive(false);
+      rouletteCamera.SetActive(false);
+    }
+    else
+    {
+      //ステータス画面を非表示
+      birdCamera.SetActive(false);
+    }
+    if (Input.GetKeyUp(KeyCode.M))
+    {
+      canvas.SetActive(true);
+      rouletteCamera.SetActive(true);
+    }
+
+  }
+
+  void OnTriggerExit(Collider other)
+  {
+    //Debug.Log(other.name);
+    // 衝突した相手オブジェクトのタグが"CheckPoint"
+    if (other.tag == "PayDay")
+    {
+      // 分岐判定をtrueにする
+      Debug.Log("true");
+      PayDayCount++;
     }
   }
 }

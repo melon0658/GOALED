@@ -15,6 +15,8 @@ public class Event05 : MonoBehaviour
   private GameObject text; 
   private TextMeshProUGUI eventText;
 
+  private MovementBaseScript moveScript;
+
   void Start()
   {
     //どのイベントにも必要なやつ
@@ -40,15 +42,19 @@ public class Event05 : MonoBehaviour
     {
       case 1:
         playerScript = GameObject.Find("defaultCar1").GetComponent<Player>();
+        moveScript = GameObject.Find("defaultCar1").GetComponent<MovementBaseScript>();
         break;
       case 2:
         playerScript = GameObject.Find("defaultCar2").GetComponent<Player>();
+        moveScript = GameObject.Find("defaultCar2").GetComponent<MovementBaseScript>();
         break;
       case 3:
         playerScript = GameObject.Find("defaultCar3").GetComponent<Player>();
+        moveScript = GameObject.Find("defaultCar3").GetComponent<MovementBaseScript>();
         break;
       case 4:
         playerScript = GameObject.Find("defaultCar4").GetComponent<Player>();
+        moveScript = GameObject.Find("defaultCar4").GetComponent<MovementBaseScript>();
         break;
       default:
         break;
@@ -69,38 +75,39 @@ public class Event05 : MonoBehaviour
   private IEnumerator sleep()
   {
     //イベント固有
-    Debug.Log("イベント開始");
+    //Debug.Log("イベント開始");
     yield return new WaitForSeconds(1f);  //10秒待つ
-    Debug.Log("イベント終了");
+    //Debug.Log("イベント終了");
     //text.SetActive(false);
     textDialogManegerScript.HiddentextDialogBox();
-    Vector3 pos = transform.position;
-    pos.x =145.80f;pos.y=409f;pos.z=-121.40f;
-    switch (turnSystemScript.GetnowTurnPlayerNum())
-    {
-      case 1:
-        GameObject.Find("defaultCar1").transform.position=pos;
-        GameObject.Find("defaultCar1").transform.rotation = Quaternion.Euler(0f,90f,0f);
-        break;
-      case 2:
-        GameObject.Find("defaultCar2").transform.position=pos;
-        GameObject.Find("defaultCar2").transform.rotation = Quaternion.Euler(0f,90f,0f);
-        break;
-      case 3:
-        GameObject.Find("defaultCar3").transform.position=pos;
-        GameObject.Find("defaultCar3").transform.rotation = Quaternion.Euler(0f,90f,0f);
-        break;
-      case 4:
-        GameObject.Find("defaultCar4").transform.position=pos;
-        GameObject.Find("defaultCar4").transform.rotation = Quaternion.Euler(0f,90f,0f);
-        break;
-      default:
-        break;
-    }
-    playerScript.NowPosIndex = 9;
+    //Vector3 pos = transform.position;
+    //pos.x =145.80f;pos.y=409f;pos.z=-121.40f;
+    //switch (turnSystemScript.GetnowTurnPlayerNum())
+    //{
+    //  case 1:
+    //    GameObject.Find("defaultCar1").transform.position=pos;
+    //    GameObject.Find("defaultCar1").transform.rotation = Quaternion.Euler(0f,90f,0f);
+    //    break;
+    //  case 2:
+    //    GameObject.Find("defaultCar2").transform.position=pos;
+    //    GameObject.Find("defaultCar2").transform.rotation = Quaternion.Euler(0f,90f,0f);
+    //    break;
+    //  case 3:
+    //    GameObject.Find("defaultCar3").transform.position=pos;
+    //    GameObject.Find("defaultCar3").transform.rotation = Quaternion.Euler(0f,90f,0f);
+    //    break;
+    //  case 4:
+    //    GameObject.Find("defaultCar4").transform.position=pos;
+    //    GameObject.Find("defaultCar4").transform.rotation = Quaternion.Euler(0f,90f,0f);
+    //    break;
+    //  default:
+    //    break;
+    //}
+    //playerScript.NowPosIndex = 9;
+    moveScript.jobEventAfterMove();
 
     //どのイベントにも必要なやつ
-    turnSystemScript.TurnEndSystemMaster(); //ターンを終了
+    //turnSystemScript.TurnEndSystemMaster(); //ターンを終了
   }
 
 }

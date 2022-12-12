@@ -28,7 +28,7 @@ public class SettingInitialPlayerStatus : MonoBehaviour
     player1.PlyaerName = "A";
     player1.Money = 3000;
     player1.Color = "Green";
-    player1.Job = "None";
+    player1.Job = "無し";
     player1.Spouse = false;
     player1.Child = 0;
     player1.HouseNumber = 100;
@@ -40,7 +40,7 @@ public class SettingInitialPlayerStatus : MonoBehaviour
     player2.PlyaerName = "B";
     player2.Money = 3000;
     player2.Color = "Blue";
-    player2.Job = "None";
+    player2.Job = "無し";
     player2.Spouse = false;
     player2.Child = 0;
     player2.HouseNumber = 100;
@@ -51,7 +51,7 @@ public class SettingInitialPlayerStatus : MonoBehaviour
     player3.PlyaerName = "C";
     player3.Money = 3000;
     player3.Color = "Red";
-    player3.Job = "None";
+    player3.Job = "無し";
     player3.Spouse = false;
     player3.Child = 0;
     player3.HouseNumber = 100;
@@ -62,7 +62,7 @@ public class SettingInitialPlayerStatus : MonoBehaviour
     player4.PlyaerName = "D";
     player4.Money = 3000;
     player4.Color = "Yellow";
-    player4.Job = "None";
+    player4.Job = "無し";
     player4.Spouse = false;
     player4.Child = 0;
     player4.HouseNumber = 100;

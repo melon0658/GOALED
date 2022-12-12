@@ -61,6 +61,7 @@ public class Event13 : MonoBehaviour
     int event_money = -5000;
     textDialogManegerScript.SetdialogText("アプリに課金  \n"+ event_money +"$");
 
+
     StartCoroutine("sleep");
 
     

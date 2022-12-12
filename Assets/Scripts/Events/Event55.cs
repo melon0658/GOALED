@@ -58,13 +58,16 @@ public class Event55 : MonoBehaviour
     //イベント固有
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    int event_money = -10000;
-    textDialogManegerScript.SetdialogText("家を買う \n"+ event_money +"$");
-
-    StartCoroutine("sleep");
-
-    
-    playerScript.Money = playerScript.Money+event_money;
+    if(playerScript.HouseNumber == 100){
+      int event_money = -10000;
+      textDialogManegerScript.SetdialogText("家を買う \n"+ event_money +"$");
+      playerScript.HouseNumber = 3;
+      StartCoroutine("sleep");
+      playerScript.Money = playerScript.Money+event_money;
+    }else{
+      textDialogManegerScript.SetdialogText("すでに家を持っている!\n");
+      StartCoroutine("sleep");
+    }
     Debug.Log(playerScript.Money);
   }
 

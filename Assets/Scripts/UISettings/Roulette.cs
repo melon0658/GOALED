@@ -61,7 +61,7 @@ public class Roulette : MonoBehaviour
         {
             button.GetComponent<Button>().interactable = true;
         }
-
+        slowDownSpeed = 0.99f;
         InvokeRepeating("MoveBar", 0.0f, 0.015f);
     }
 

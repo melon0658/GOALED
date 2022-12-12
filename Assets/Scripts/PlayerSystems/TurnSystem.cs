@@ -36,6 +36,8 @@ public class TurnSystem : MonoBehaviour
 
   private EventEndGame eventEndGameScript;
   private MoneyUpdate moneyUpdateScript;
+  private EventPayDay eventPayDayScript;
+  private AudioSource payDayEffect;
   public PlayerStatusUI playerStatusUIScript;
   
 
@@ -51,6 +53,8 @@ public class TurnSystem : MonoBehaviour
 
   //ゴールした人数を保存
   private int goalPlayerNum = 0;
+
+  private int originalMoney = 0;
 
   public int GetnowTurnPlayerNum()
   {
@@ -75,6 +79,10 @@ public class TurnSystem : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
+    //ライトを消す(デバッグ用)
+    //GameObject.Find("StageObjects").transform.Find("Directional Light").gameObject.SetActive(false);
+    //RenderSettings.ambientIntensity = 0.5f;
+
     //プレイヤー配列(気が向いたらfor文でコード短縮化実装)
     Players = new GameObject[] { player1, player2, player3, player4};
 
@@ -111,6 +119,8 @@ public class TurnSystem : MonoBehaviour
 
     eventEndGameScript = GameObject.Find("EventScripts").GetComponent<EventEndGame>();
     moneyUpdateScript = GameObject.Find("MoneyUIBox").GetComponent<MoneyUpdate>();
+    eventPayDayScript = GameObject.Find("EventScripts").GetComponent<EventPayDay>();
+    payDayEffect = GameObject.Find("PaydayObjects").GetComponent<AudioSource>();
 
     TurnStartSystemMaster();
   }
@@ -281,6 +291,8 @@ public class TurnSystem : MonoBehaviour
 
         player1.GetComponent<Renderer>().material = player1BaseMaterial;
         player1.GetComponent<BoxCollider>().enabled = true;
+
+        originalMoney = player1.GetComponent<Player>().Money;
         break;
       case 2:
         gameScripts.car1 = player2;
@@ -296,6 +308,8 @@ public class TurnSystem : MonoBehaviour
 
         player2.GetComponent<Renderer>().material = player2BaseMaterial;
         player2.GetComponent<BoxCollider>().enabled = true;
+
+        originalMoney = player2.GetComponent<Player>().Money;
         break;
       case 3:
         gameScripts.car1 = player3;
@@ -311,6 +325,8 @@ public class TurnSystem : MonoBehaviour
 
         player3.GetComponent<Renderer>().material = player3BaseMaterial;
         player3.GetComponent<BoxCollider>().enabled = true;
+
+        originalMoney = player3.GetComponent<Player>().Money;
         break;
       case 4:
         gameScripts.car1 = player4;
@@ -326,9 +342,110 @@ public class TurnSystem : MonoBehaviour
 
         player4.GetComponent<Renderer>().material = player4BaseMaterial;
         player4.GetComponent<BoxCollider>().enabled = true;
+
+        originalMoney = player4.GetComponent<Player>().Money;
         break;
       default:
         break;
+    }
+  }
+
+  private void JudgeOnSound()
+  {
+    switch (nowTurnPlayerNum)
+    {
+      case 1:
+        if (player1.GetComponent<Player>().Money != originalMoney)
+        {
+          payDayEffect.PlayOneShot(payDayEffect.clip);
+        }
+        break;
+      case 2:
+        if (player2.GetComponent<Player>().Money != originalMoney)
+        {
+          payDayEffect.PlayOneShot(payDayEffect.clip);
+        }
+        break;
+      case 3:
+        if (player3.GetComponent<Player>().Money != originalMoney)
+        {
+          payDayEffect.PlayOneShot(payDayEffect.clip);
+        }
+        break;
+      case 4:
+        if (player4.GetComponent<Player>().Money != originalMoney)
+        {
+          payDayEffect.PlayOneShot(payDayEffect.clip);
+        }
+        break;
+      default:
+        break;
+    }
+    
+  }
+  public void CheckPayDay()
+  {
+    switch (nowTurnPlayerNum)
+    {
+      case 1:
+        if(player1.GetComponent<Player>().PayDayCount != 0)
+        {
+          eventPayDayScript.execution();
+        }
+        else
+        {
+          LastProcessing();
+        }
+        break;
+      case 2:
+        if (player2.GetComponent<Player>().PayDayCount != 0)
+        {
+          eventPayDayScript.execution();
+        }
+        else
+        {
+          LastProcessing();
+        }
+        break;
+      case 3:
+        if (player3.GetComponent<Player>().PayDayCount != 0)
+        {
+          eventPayDayScript.execution();
+        }
+        else
+        {
+          LastProcessing();
+        }
+        break;
+      case 4:
+        if (player4.GetComponent<Player>().PayDayCount != 0)
+        {
+          eventPayDayScript.execution();
+        }
+        else
+        {
+          LastProcessing();
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  public void LastProcessing()
+  {
+    playerStatusUIScript.UpdatePlayersStatus();
+    //4人全員ゴールしているか判定
+    if (!CheckEndGame())
+    {
+      OffPlayerCamera();
+      ChangeNowPlayer();
+      TurnStartSystemMaster();
+    }
+    else
+    {
+      OffPlayerCamera();
+      eventEndGameScript.EndGame();
     }
   }
 
@@ -348,6 +465,7 @@ public class TurnSystem : MonoBehaviour
   {
     Debug.Log("Start");
     OnPlayerCamera();
+
     //Debug.Log("OK OnPlayerCamera");
     SetObjects();
     //Debug.Log("OK SetObjects");
@@ -359,17 +477,31 @@ public class TurnSystem : MonoBehaviour
 
   public void TurnEndSystemMaster()
   {
-    //4人全員ゴールしているか判定
-    if (!CheckEndGame())
-    {
-      playerStatusUIScript.UpdatePlayersStatus();
-      OffPlayerCamera();
-      ChangeNowPlayer();
-      TurnStartSystemMaster();
-    }
-    else
-    {
-      eventEndGameScript.EndGame();
-    }
+    playerStatusUIScript.UpdatePlayersStatus();
+    moneyUpdateScript.UpdateMoneyText();
+
+    JudgeOnSound();
+
+    StartCoroutine("sleep");
+
+    ////4人全員ゴールしているか判定
+    //if (!CheckEndGame())
+    //{
+
+    //}
+    //else
+    //{
+    //  playerStatusUIScript.UpdatePlayersStatus();
+    //  moneyUpdateScript.UpdateMoneyText();
+    //  CheckPayDay();
+    //}
+  }
+  private IEnumerator sleep()
+  {
+    //イベント固有
+
+    yield return new WaitForSeconds(1f);  //10秒待つ
+
+    CheckPayDay();
   }
 }

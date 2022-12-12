@@ -2,6 +2,7 @@
 using UnityEngine;
 using TMPro;
 
+
 public class Event74 : MonoBehaviour
 {
   //どのイベントにも必要なやつ
@@ -14,7 +15,7 @@ public class Event74 : MonoBehaviour
   //イベント固有
   private GameObject text; 
   private TextMeshProUGUI eventText;
-
+private PlayMovieVP pv;
   void Start()
   {
     //どのイベントにも必要なやつ
@@ -57,20 +58,22 @@ public class Event74 : MonoBehaviour
     //イベント固有
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    textDialogManegerScript.SetdialogText("エンジニアになる\n給与：25000$");
-
+    int event_money = -10000;
+    textDialogManegerScript.SetdialogText("コンピュータウイルスに感染  \n"+ event_money +"$");
+    pv = canvas.transform.Find("EventVideo").GetComponent<PlayMovieVP>();
+    pv.showVideoPlayer("19_ウイルス感染.mp4");
     StartCoroutine("sleep");
 
     
-    playerScript.Job = "engineer";
-    Debug.Log(playerScript.Job);
+    playerScript.Money = playerScript.Money+event_money;
+    Debug.Log(playerScript.Money);
   }
 
   private IEnumerator sleep()
   {
     //イベント固有
     Debug.Log("イベント開始");
-    yield return new WaitForSeconds(1f);  //10秒待つ
+    yield return new WaitForSeconds(5);
     Debug.Log("イベント終了");
     //text.SetActive(false);
     textDialogManegerScript.HiddentextDialogBox();

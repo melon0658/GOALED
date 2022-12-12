@@ -53,10 +53,10 @@ public class MovementBaseScript : MonoBehaviour
                                         new Vector3(93.10f, 0f, 129.00f), new Vector3(71.30f, 0f, 130.44f), new Vector3(68.89f, 0f, 153.54f), new Vector3(68.90f, 0f, 178.50f), new Vector3(65.04f, 0f, 203.32f),
                                         new Vector3(43.40f, 0f, 204.50f), new Vector3(20.22f, 0f, 202.46f), new Vector3(18.41f, 0f, 178.87f), new Vector3(18.42f, 0f, 154.58f), 
                                         new Vector3(-125.64f, 0f, 65.77f), new Vector3(-100.30f, 0f, 65.80f), new Vector3(-81.67f, 0f, 51.69f), new Vector3(-81.60f, 0f, 28.10f), new Vector3(-81.60f, 0f, 3.20f),
-                                        new Vector3(-81.60f, 0f, -21.60f), new Vector3(-85.59f, 0f, -44.52f), new Vector3(-107.51f, 0f, -45.93f), new Vector3(-132.10f, 0f, -45.90f),             new Vector3(-155.27f, 0f, -47.65f),
+                                        new Vector3(-81.60f, 0f, -21.60f), new Vector3(-85.59f, 0f, -44.52f), new Vector3(-107.51f, 0f, -45.93f), new Vector3(-132.10f, 0f, -45.90f),             new Vector3(-155.87f, 0f, -47.95f),
                                         new Vector3(-157.05f, 0f, -72.88f), new Vector3(-157.05f, 0f, -96.53f), new Vector3(-157.05f, 0f, -121.4f), new Vector3(-157.04f, 0f, -147.71f), new Vector3(-153.41f, 0f, -169.12f),
                                         new Vector3(-130.60f, 0f, -170.33f), new Vector3(-105.71f, 0f, -170.33f), new Vector3(-80.10f, 0f, -170.33f), new Vector3(-59.08f, 0f, -168.75f), new Vector3(-55.88f, 0f, -145.50f),
-                                        new Vector3(-55.88f, 0f, -122.68f), new Vector3(-156.80f, 0f, 28.20f), new Vector3(-156.80f, 0f, 3.80f), new Vector3(-156.80f, 0f, -21.90f)
+                                        new Vector3(-55.88f, 0f, -124.67f), new Vector3(-156.80f, 0f, 28.20f), new Vector3(-156.80f, 0f, 3.80f), new Vector3(-156.80f, 0f, -21.90f)
                                        };
 
   public bool GetArrival()
@@ -85,11 +85,19 @@ public class MovementBaseScript : MonoBehaviour
         if (pathCreator.ToString().IndexOf("StartRight") != -1)
         {
           nowPosIndex = 25;
+          //if (rCount > 4)
+          //{
+          //  rCount = 4;
+          //}
         }
         //pathCreatorがStartLeft
         else
         {
           nowPosIndex = 1;
+          //if (rCount > 9)
+          //{
+          //  rCount = 9;
+          //}
         }
       }
       else if (actionScript.GetCheckPointName() == "CheckPosition2")
@@ -118,13 +126,21 @@ public class MovementBaseScript : MonoBehaviour
           nowPosIndex = 62;
         }
       }
+
+
       actionScript.SetCheckPoint(false);
     }
-    //Debug.Log(pathCreator.ToString());
-else
+    else
     {
       nowPosIndex = nextPosIndexes1[playerScript.NowPosIndex];
     }
+
+
+    //Debug.Log(pathCreator.ToString());
+    //else
+    //{
+    //  nowPosIndex = nextPosIndexes1[playerScript.NowPosIndex];
+    //}
     //Debug.Log(pathCreator.ToString());
 
     //Debug.Log("rcount " + rCount);
@@ -141,7 +157,6 @@ else
     //}
     //if (!actionScript.GetCheckPoint())
     //{
-      
     //}
 
 
@@ -201,6 +216,21 @@ else
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
   }
 
+  //仕事決まった時用
+  public void jobEventAfterMove()
+  {
+    endPosIndex = 9;
+
+    //チェック用
+    //endPosIndex = 24;
+
+    endPos = coordinate[endPosIndex];
+
+    playerScript.NowPosIndex = endPosIndex;
+
+    moveStart();
+  }
+
   public void moveStart()
   {
     InvokeRepeating("repeat", 0.0f, 0.015f);
@@ -219,6 +249,11 @@ else
       arrival = false;
       rScript.SetisClicked();
 
+      //Debug.Log("movedistance " + moveDistance);
+
+      //moveDistance -= 1.6839f;
+      //一マス分戻るために減らすべきmoveDistance=0.84196125f
+
       //イベントの実行に移る
       eventSystemScript.EventExecutionManager();
 
@@ -232,10 +267,11 @@ else
   public void AutoMove()
   {
     moveDistance += speed * Time.deltaTime;
+
     transform.position = pathCreator.path.GetPointAtDistance(moveDistance, EndOfPathInstruction.Stop);
     transform.rotation = pathCreator.path.GetRotationAtDistance(moveDistance, EndOfPathInstruction.Stop);
 
-    if (this.transform.position.x >= endPos.x - 1.0f && this.transform.position.x <= endPos.x + 1.0 && this.transform.position.z >= endPos.z - 1.0f && this.transform.position.z <= endPos.z + 1.0f)
+    if (this.transform.position.x >= endPos.x - 1.5f && this.transform.position.x <= endPos.x + 1.5 && this.transform.position.z >= endPos.z - 1.5f && this.transform.position.z <= endPos.z + 1.5f)
     {
       arrival = true;
     }
