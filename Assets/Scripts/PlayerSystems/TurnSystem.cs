@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//ターン処理を管理するスクリプト
 public class TurnSystem : MonoBehaviour
 {
   //各プレイヤーの車

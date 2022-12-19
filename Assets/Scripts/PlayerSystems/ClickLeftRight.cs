@@ -4,6 +4,7 @@ using PathCreation;
 using UnityEngine.UI;
 using UnityEngine;
 
+//ルート選択を処理するスクリプト
 public class ClickLeftRight : MonoBehaviour
 {
     public GameObject stopButton;

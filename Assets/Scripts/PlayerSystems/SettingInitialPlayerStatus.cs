@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//各プレイヤーの初期値を設定するスクリプト
 public class SettingInitialPlayerStatus : MonoBehaviour
 {
   public Player player1;
