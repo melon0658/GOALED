@@ -17,10 +17,8 @@ public class Player : MonoBehaviour
   private bool restTurn; //ターン休みかどうか
     
 
-  public GameObject status;
-  public GameObject birdCamera;
-  private GameObject canvas;
-  private GameObject rouletteCamera;
+  private GameObject status; //ステータスUI格納用の変数
+  private GameObject birdCamera; //マップ表示カメラ格納用の変数
 
   public Player(string plyaerName, int money, int nowPosIndex, string color, string job, bool spouse, int child, int houseNumber, bool checkGoal)
   {
@@ -58,8 +56,9 @@ public class Player : MonoBehaviour
     this.PayDayCount = 0;
     this.RestTurn = false;
 
-    canvas = GameObject.Find("Canvas");
-    rouletteCamera = GameObject.Find(" RouletteCamera");
+    status = GameObject.Find("Canvas").transform.Find("Status").gameObject;
+
+    birdCamera = GameObject.Find("Bird's-eyeCamera");
   }
 
     // Update is called once per frame
@@ -76,25 +75,18 @@ public class Player : MonoBehaviour
             //ステータス画面を非表示
             status.SetActive(false);
         }
+
         //Mキーが入力された場合
         if (Input.GetKey(KeyCode.M))
         {
           //ステータス画面を表示
           birdCamera.SetActive(true);
-          canvas.SetActive(false);
-          rouletteCamera.SetActive(false);
         }
         else
         {
           //ステータス画面を非表示
           birdCamera.SetActive(false);
         }
-        if (Input.GetKeyUp(KeyCode.M))
-        {
-          canvas.SetActive(true);
-          rouletteCamera.SetActive(true);
-        }
-        
   }
 
   void OnTriggerExit(Collider other)
