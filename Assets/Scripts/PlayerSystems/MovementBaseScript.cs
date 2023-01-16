@@ -6,15 +6,15 @@ using UnityEngine;
 public class MovementBaseScript : MonoBehaviour
 {
   private PathCreator pathCreator;
-  public Roulette rScript;
-  public Action actionScript;
-  public Player playerScript;
-  public EventSystem eventSystemScript;
-  private TurnSystem turnSystemScript;
+  private Roulette rScript;
+  private Action actionScript;
+  private Player playerScript;
+  private EventSystem eventSystemScript;
+  //private TurnSystem turnSystemScript;
 
-  public GameObject upButton;
-  public GameObject rightButton;
-  public GameObject leftButton;
+  //private GameObject upButton;
+  //private GameObject rightButton;
+  //private GameObject leftButton;
 
   public GameObject car;
   public Material clearMaterial;
@@ -29,6 +29,7 @@ public class MovementBaseScript : MonoBehaviour
 
   private int endPosIndex = 0;
 
+
   //次のマスのIndexを指す配列
   public int[] nextPosIndexes1 = new int[] {0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 0, 
                                             26, 27, 9, 
@@ -37,6 +38,7 @@ public class MovementBaseScript : MonoBehaviour
                                             63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 0, 
                                             84, 85, 71
                                             };
+
 
   //各マスの座標(パブリック)を格納している配列
   public Vector3[] coordinate = new[] { new Vector3(0f, 0f, 0f), new Vector3(42.70f, 0f, -170.80f), new Vector3(21.51f, 0f, -168.24f), new Vector3(17.90f, 0f, -146.30f), new Vector3(21.92f, 0f, -121.91f),
@@ -59,11 +61,28 @@ public class MovementBaseScript : MonoBehaviour
                                         new Vector3(-55.88f, 0f, -124.67f), new Vector3(-156.80f, 0f, 28.20f), new Vector3(-156.80f, 0f, 3.80f), new Vector3(-156.80f, 0f, -21.90f)
                                        };
 
+
+  void Start()
+  {
+    //turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
+    rScript = GameObject.Find("Canvas").transform.Find("ButtonStop").GetComponent<Roulette>();
+
+    actionScript = this.gameObject.GetComponent<Action>();
+    playerScript = this.gameObject.GetComponent<Player>();
+    eventSystemScript = this.gameObject.GetComponent<EventSystem>();
+
+    //upButton = GameObject.Find("Canvas").transform.Find("Button Up").gameObject;
+    //rightButton = GameObject.Find("Canvas").transform.Find("Button Right").gameObject;
+    //leftButton = GameObject.Find("Canvas").transform.Find("Button Left").gameObject;
+  }
+
+
   public bool GetArrival()
   {
     //車が目的地についてるかの判定を返す
     return arrival;
   }
+
 
   public void SetPathCreator(PathCreator pc)
   {
@@ -71,6 +90,7 @@ public class MovementBaseScript : MonoBehaviour
     this.pathCreator = pc;
     moveDistance = 0.0f;
   }
+
 
   public void SetEndPoth()
   {
@@ -205,16 +225,12 @@ public class MovementBaseScript : MonoBehaviour
     Debug.Log(endPos);
   }
 
+
   public PathCreator GetNowPath()
   {
     return pathCreator;
   }
 
-  // Start is called before the first frame update
-  void Start()
-  {
-    turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
-  }
 
   //仕事決まった時用
   public void jobEventAfterMove()
@@ -262,6 +278,7 @@ public class MovementBaseScript : MonoBehaviour
 
     }
   }
+
 
   //目的地まで自動で移動
   public void AutoMove()
