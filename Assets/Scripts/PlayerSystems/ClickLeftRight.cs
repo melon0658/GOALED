@@ -16,12 +16,13 @@ public class ClickLeftRight : MonoBehaviour
     public GameObject car1;
     public Material carMaterial;
 
-    public PathCreator pathStartLeft;
-    public PathCreator pathStartRight;
-    public PathCreator pathSecondLeft;
-    public PathCreator pathSecondUp;
-    public PathCreator pathLastLeft;
-    public PathCreator pathLastUp;
+    //パスクリエイター用変数
+    private PathCreator pathStartLeft;
+    private PathCreator pathStartRight;
+    private PathCreator pathSecondLeft;
+    private PathCreator pathSecondUp;
+    private PathCreator pathLastLeft;
+    private PathCreator pathLastUp;
 
     public MovementBaseScript mbScript;
     public Roulette rScript;
@@ -30,8 +31,16 @@ public class ClickLeftRight : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stopButton.GetComponent<Button>().interactable = false;
-        //upButton.SetActive(false);
+      //パスクリエイターを取得して設定
+      pathStartLeft = GameObject.Find("StartLeft").GetComponent<PathCreator>();
+      pathStartRight = GameObject.Find("StartRight").GetComponent<PathCreator>();
+      pathSecondLeft = GameObject.Find("SecondLeft").GetComponent<PathCreator>();
+      pathSecondUp = GameObject.Find("SecondUp").GetComponent<PathCreator>();
+      pathLastLeft = GameObject.Find("LastLeft").GetComponent<PathCreator>();
+      pathLastUp = GameObject.Find("LastUp").GetComponent<PathCreator>();
+
+      stopButton.GetComponent<Button>().interactable = false;
+      //upButton.SetActive(false);
     }
 
     public void OnClickUp()
