@@ -5,27 +5,15 @@ using UnityEngine;
 //各プレイヤーの初期値を設定するスクリプト
 public class SettingInitialPlayerStatus : MonoBehaviour
 {
-  public Player player1;
-  public Player player2;
-  public Player player3;
-  public Player player4;
+  private Player player1;
+  private Player player2;
+  private Player player3;
+  private Player player4;
 
-  // Start is called before the first frame update
-  void Start()
+  public void SettingPlayer1()
   {
-    
-  }
+    player1 = GameObject.Find("Player1").GetComponent<Player>();
 
-  private void Awake()
-  {
-    SettingPlayer1();
-    SettingPlayer2();
-    SettingPlayer3();
-    SettingPlayer4();
-  }
-
-  private void SettingPlayer1()
-  {
     player1.PlyaerName = "A";
     player1.Money = 3000;
     player1.Color = "Green";
@@ -36,8 +24,10 @@ public class SettingInitialPlayerStatus : MonoBehaviour
     player1.CheckGoal = false;
 
   }
-  private void SettingPlayer2()
+  public void SettingPlayer2()
   {
+    player2 = GameObject.Find("Player2").GetComponent<Player>();
+
     player2.PlyaerName = "B";
     player2.Money = 3000;
     player2.Color = "Blue";
@@ -47,8 +37,10 @@ public class SettingInitialPlayerStatus : MonoBehaviour
     player2.HouseNumber = 100;
     player2.CheckGoal = false;
   }
-  private void SettingPlayer3()
+  public void SettingPlayer3()
   {
+    player3 = GameObject.Find("Player3").GetComponent<Player>();
+
     player3.PlyaerName = "C";
     player3.Money = 3000;
     player3.Color = "Red";
@@ -58,8 +50,10 @@ public class SettingInitialPlayerStatus : MonoBehaviour
     player3.HouseNumber = 100;
     player3.CheckGoal = false;
   }
-  private void SettingPlayer4()
+  public void SettingPlayer4()
   {
+    player4 = GameObject.Find("Player4").GetComponent<Player>();
+
     player4.PlyaerName = "D";
     player4.Money = 3000;
     player4.Color = "Yellow";
