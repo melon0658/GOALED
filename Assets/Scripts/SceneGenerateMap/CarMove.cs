@@ -29,17 +29,17 @@ public class CarMove : MonoBehaviour
 
   public async Task Move(List<Vector3> path, List<Vector3> rotations)
   {
-    foreach (var item in path.Zip(rotations, (a, b) => new { a, b }))
-    {
-      Debug.Log(item.a + " " + item.b);
-    }
+    // foreach (var item in path.Zip(rotations, (a, b) => new { a, b }))
+    // {
+    //   Debug.Log(item.a + " " + item.b);
+    // }
     isMoving = true;
     await transform.DOPath(path.ToArray(), InterpolationPeriod * path.Count, PathType.CatmullRom, PathMode.Full3D, 10, Color.red).SetEase(Ease.Linear).SetLookAt(0.01f, Vector3.forward).AsyncWaitForCompletion();
     isMoving = false;
     return;
   }
 
-  public (Tile, List<Vector3>, List<Vector3>) calcPath(Tile tile, int step, Direction? direction = null)
+  public (List<Tile>, List<Vector3>, List<Vector3>) calcPath(Tile tile, int step, Direction? direction = null)
   {
     if (tile == null)
     {
@@ -50,7 +50,8 @@ public class CarMove : MonoBehaviour
       return (null, null, null);
     }
     List<Vector3> path, rotate;
-    (tile, path, rotate) = MapManager.instance.WayToTile(tile, step, (Direction?)direction);
-    return (tile, path, rotate);
+    List<Tile> tiles;
+    (tiles, path, rotate) = MapManager.instance.WayToTile(tile, step, (Direction?)direction);
+    return (tiles, path, rotate);
   }
 }

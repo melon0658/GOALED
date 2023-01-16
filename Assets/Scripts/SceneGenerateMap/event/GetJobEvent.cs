@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
-public class GetMoneyEvent : TileEvent
+public class GetJobEvent : TileEvent
 {
   private string eventName;
   private string eventDescription;
+  private string job;
   private int money;
-  private string videoPath;
 
-  public GetMoneyEvent(string eventName, string eventDescription, int money, string videoPath)
+
+  public GetJobEvent(string eventName, string eventDescription, string job, int money)
   {
     this.eventName = eventName;
     this.eventDescription = eventDescription;
+    this.job = job;
     this.money = money;
-    this.videoPath = videoPath;
   }
 
   public override EventEffectType GetEventEffectType()
@@ -40,22 +41,12 @@ public class GetMoneyEvent : TileEvent
 
   public override void OnEventChangeStetus(Dictionary<string, PlayerStetus> playerStetus, string triggerPlayerId)
   {
-    playerStetus[triggerPlayerId].Money += money;
+    playerStetus[triggerPlayerId].Job = job;
   }
 
   public override async Task OnEventAnimation()
   {
-    var videoUI = GameObject.Find("VideoPlayer");
-    videoUI.transform.localScale = Vector3.one;
-    var videoPlayer = videoUI.GetComponent<VideoPlayer>();
-    videoPlayer.clip = Resources.Load<VideoClip>("Event_Resources/Videos/" + this.videoPath);
-    // awaitting video end
-    videoPlayer.Play();
-    // get video length
-    float videoLength = (float)videoPlayer.length;
-    // wait video length
-    await Task.Delay((int)(videoLength * 1000));
-    videoPlayer.Stop();
-    videoUI.transform.localScale = Vector3.zero;
+    Debug.Log("GetJobEvent");
+    await Task.Delay(1000);
   }
 }

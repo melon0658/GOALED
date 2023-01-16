@@ -37,8 +37,8 @@ public class RPCManager : MonoBehaviour
   }
 
   [CustomRPC]
-  public void EventStart(string tileID, string playerID)
+  public void EventStart(string tileIDs, string playerID)
   {
-    GameManager.instance.EventStart(tileID, playerID);
+    GameManager.instance.EventStart(tileIDs, playerID);
   }
 }

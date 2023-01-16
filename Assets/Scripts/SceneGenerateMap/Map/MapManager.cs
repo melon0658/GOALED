@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 
 public class MapManager : MonoSingleton<MapManager>
 {
@@ -24,98 +25,109 @@ public class MapManager : MonoSingleton<MapManager>
     tile2.SetNeighbor(direction.Opposite(), Passable.BLOCKED, tile1);
   }
 
+  [ContextMenu("Method")]
+  private void PreGen()
+  {
+    GenerateTiles();
+  }
+
 
   public void GenerateTiles()
   {
+    //remove all tiles
+    for (int i = this.transform.childCount; i > 0; --i)
+      DestroyImmediate(this.transform.GetChild(0).gameObject);
+    tiles.Clear();
+
     startTile = new Tile(0);
     startTile.Position = gameObject.transform.position;
     startTile.tileType = TileType.LARGE_JUNCTION;
-    Tile tile1 = new Tile(1); tile1.Event = new GetMoneyEvent();
-    Tile tile2 = new Tile(2); tile2.Event = new GetMoneyEvent();
-    Tile tile3 = new Tile(3); tile3.Event = new GetMoneyEvent();
-    Tile tile4 = new Tile(4); tile4.Event = new GetMoneyEvent();
-    Tile tile5 = new Tile(5); tile5.Event = new GetMoneyEvent();
-    Tile tile6 = new Tile(6); tile6.Event = new GetMoneyEvent();
-    Tile tile7 = new Tile(7); tile7.Event = new GetMoneyEvent();
-    Tile tile8 = new Tile(8); tile8.Event = new GetMoneyEvent();
-    Tile tile9 = new Tile(9); tile9.Event = new GetMoneyEvent();
-    Tile tile10 = new Tile(10); tile10.Event = new GetMoneyEvent();
-    Tile tile11 = new Tile(11); tile11.Event = new GetMoneyEvent();
-    Tile tile12 = new Tile(12); tile12.Event = new GetMoneyEvent();
-    Tile tile13 = new Tile(13); tile13.Event = new GetMoneyEvent();
-    Tile tile14 = new Tile(14); tile14.Event = new GetMoneyEvent();
-    Tile tile15 = new Tile(15); tile15.Event = new GetMoneyEvent();
-    Tile tile16 = new Tile(16); tile16.Event = new GetMoneyEvent();
-    Tile tile17 = new Tile(17); tile17.Event = new GetMoneyEvent();
-    Tile tile18 = new Tile(18); tile18.Event = new GetMoneyEvent();
-    Tile tile19 = new Tile(19); tile19.Event = new GetMoneyEvent();
-    Tile tile20 = new Tile(20); tile20.Event = new GetMoneyEvent();
-    Tile tile21 = new Tile(21); tile21.Event = new GetMoneyEvent();
-    Tile tile22 = new Tile(22); tile22.Event = new GetMoneyEvent();
-    Tile tile23 = new Tile(23); tile23.Event = new GetMoneyEvent();
+    Tile tile1 = new Tile(1); tile1.Event = new GetJobEvent("建築家になる", "建築家になる", "建築家", 60000);
+    Tile tile2 = new Tile(2); tile2.Event = new GetJobEvent("弁護士になる", "弁護士になる", "弁護士", 65000);
+    Tile tile3 = new Tile(3); tile3.Event = new GetJobEvent("医者になる", "医者になる", "医者", 70000);
+    Tile tile4 = new Tile(4); tile4.Event = new GetJobEvent("プロゲーマーになる", "プロゲーマーになる", "プロゲーマー", 20000);
+    Tile tile5 = new Tile(5); tile5.Event = new GetJobEvent("エンジニアになる", "エンジニアになる", "エンジニア", 25000);
+    Tile tile6 = new Tile(6); tile6.Event = new GetJobEvent("作家になる", "作家になる", "作家", 30000);
+    Tile tile7 = new Tile(7); tile7.Event = new GetJobEvent("アスリートになる", "アスリートになる", "アスリート", 35000);
+    Tile tile8 = new Tile(8); tile8.Event = new GetJobEvent("パイロットになる", "パイロットになる", "パイロット", 40000);
+    Tile tile9 = new Tile(9); tile9.Event = new GetJobEvent("パティシエになる", "パティシエになる", "パティシエ", 45000);
+    Tile tile10 = new Tile(10); tile10.Event = new GetJobEvent("科学者になる", "科学者になる", "科学者", 50000);
+    Tile tile11 = new Tile(11); tile11.Event = new GetJobEvent("俳優になる", "俳優になる", "俳優", 55000);
+    Tile tile12 = new Tile(12); tile12.Event = new PayDayEvent();
+    Tile tile13 = new Tile(13); tile13.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile14 = new Tile(14); tile14.Event = new GetMoneyEvent("卒業旅行で散財", "卒業旅行で散財", -10000, "");
+    Tile tile15 = new Tile(15); tile15.Event = new MoveEvent("大学に進学する", "大学に進学する", 5);
+    Tile tile16 = new Tile(16); tile16.Event = new MoveEvent("大学に進学する", "大学に進学する", 5);
+    Tile tile17 = new Tile(17); tile17.Event = new MoveEvent("大学に進学する", "大学に進学する", 5);
+    Tile tile18 = new Tile(18); tile18.Event = new MoveEvent("大学に進学する", "大学に進学する", 5);
+    Tile tile19 = new Tile(19); tile19.Event = new MoveEvent("大学に進学する", "大学に進学する", 5);
+    Tile tile20 = new Tile(20); tile20.Event = new MoveEvent("大学に進学する", "大学に進学する", 5);
+    Tile tile21 = new Tile(21); tile21.Event = new MoveEvent("大学に進学する", "大学に進学する", 5);
+    Tile tile22 = new Tile(22); tile22.Event = new MoveEvent("大学に進学する", "大学に進学する", 5);
+    Tile tile23 = new Tile(23); tile23.Event = new MoveEvent("大学に進学する", "大学に進学する", 5);
     // Tile tile24 = new Tile(24);
-    Tile tile25 = new Tile(25); tile25.Event = new GetMoneyEvent();
-    Tile tile26 = new Tile(26); tile26.Event = new GetMoneyEvent();
-    Tile tile27 = new Tile(27); tile27.Event = new GetMoneyEvent();
-    Tile tile28 = new Tile(28); tile28.Event = new GetMoneyEvent();
-    Tile tile29 = new Tile(29); tile29.Event = new GetMoneyEvent();
-    Tile tile30 = new Tile(30); tile30.Event = new GetMoneyEvent();
-    Tile tile31 = new Tile(31); tile31.Event = new GetMoneyEvent();
-    Tile tile32 = new Tile(32); tile32.Event = new GetMoneyEvent();
-    Tile tile33 = new Tile(33); tile33.Event = new GetMoneyEvent();
-    Tile tile34 = new Tile(34); tile34.Event = new GetMoneyEvent();
-    Tile tile35 = new Tile(35); tile35.Event = new GetMoneyEvent();
-    Tile tile36 = new Tile(36); tile36.Event = new GetMoneyEvent();
-    Tile tile37 = new Tile(37); tile37.Event = new GetMoneyEvent();
-    Tile tile38 = new Tile(38); tile38.Event = new GetMoneyEvent();
-    Tile tile39 = new Tile(39); tile39.Event = new GetMoneyEvent();
-    Tile tile40 = new Tile(40); tile40.Event = new GetMoneyEvent();
-    Tile tile41 = new Tile(41); tile41.Event = new GetMoneyEvent();
-    Tile tile42 = new Tile(42); tile42.Event = new GetMoneyEvent();
-    Tile tile43 = new Tile(43); tile43.Event = new GetMoneyEvent();
-    Tile tile44 = new Tile(44); tile44.Event = new GetMoneyEvent();
-    Tile tile45 = new Tile(45); tile45.Event = new GetMoneyEvent();
-    Tile tile46 = new Tile(46); tile46.Event = new GetMoneyEvent();
-    Tile tile47 = new Tile(47); tile47.Event = new GetMoneyEvent();
-    Tile tile48 = new Tile(48); tile48.Event = new GetMoneyEvent();
-    Tile tile49 = new Tile(49); tile49.Event = new GetMoneyEvent();
-    Tile tile50 = new Tile(50); tile50.Event = new GetMoneyEvent();
-    Tile tile51 = new Tile(51); tile51.Event = new GetMoneyEvent();
-    Tile tile52 = new Tile(52); tile52.Event = new GetMoneyEvent();
-    Tile tile53 = new Tile(53); tile53.Event = new GetMoneyEvent();
-    Tile tile54 = new Tile(54); tile54.Event = new GetMoneyEvent();
-    Tile tile55 = new Tile(55); tile55.Event = new GetMoneyEvent();
-    Tile tile56 = new Tile(56); tile56.Event = new GetMoneyEvent();
-    Tile tile57 = new Tile(57); tile57.Event = new GetMoneyEvent();
-    Tile tile58 = new Tile(58); tile58.Event = new GetMoneyEvent();
-    Tile tile59 = new Tile(59); tile59.Event = new GetMoneyEvent();
-    Tile tile60 = new Tile(60); tile60.Event = new GetMoneyEvent();
-    Tile tile61 = new Tile(61); tile61.Event = new GetMoneyEvent();
-    Tile tile62 = new Tile(62); tile62.Event = new GetMoneyEvent();
-    Tile tile63 = new Tile(63); tile63.Event = new GetMoneyEvent();
-    Tile tile64 = new Tile(64); tile64.Event = new GetMoneyEvent();
-    Tile tile65 = new Tile(65); tile65.Event = new GetMoneyEvent();
-    Tile tile66 = new Tile(66); tile66.Event = new GetMoneyEvent();
-    Tile tile67 = new Tile(67); tile67.Event = new GetMoneyEvent();
-    Tile tile68 = new Tile(68); tile68.Event = new GetMoneyEvent();
-    Tile tile69 = new Tile(69); tile69.Event = new GetMoneyEvent();
-    Tile tile70 = new Tile(70); tile70.Event = new GetMoneyEvent();
-    Tile tile71 = new Tile(71); tile71.Event = new GetMoneyEvent();
-    Tile tile72 = new Tile(72); tile72.Event = new GetMoneyEvent();
-    Tile tile73 = new Tile(73); tile73.Event = new GetMoneyEvent();
-    Tile tile74 = new Tile(74); tile74.Event = new GetMoneyEvent();
-    Tile tile75 = new Tile(75); tile75.Event = new GetMoneyEvent();
-    Tile tile76 = new Tile(76); tile76.Event = new GetMoneyEvent();
-    Tile tile77 = new Tile(77); tile77.Event = new GetMoneyEvent();
-    Tile tile78 = new Tile(78); tile78.Event = new GetMoneyEvent();
-    Tile tile79 = new Tile(79); tile79.Event = new GetMoneyEvent();
-    Tile tile80 = new Tile(80); tile80.Event = new GetMoneyEvent();
-    Tile tile81 = new Tile(81); tile81.Event = new GetMoneyEvent();
-    Tile tile82 = new Tile(82); tile82.Event = new GetMoneyEvent();
-    Tile tile83 = new Tile(83); tile83.Event = new GetMoneyEvent();
-    Tile tile84 = new Tile(84); tile84.Event = new GetMoneyEvent();
-    Tile tile85 = new Tile(85); tile85.Event = new GetMoneyEvent();
-    Tile tile86 = new Tile(86); tile86.Event = new GetMoneyEvent();
+    Tile tile25 = new Tile(25); tile25.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile26 = new Tile(26); tile26.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile27 = new Tile(27); tile27.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile28 = new Tile(28); tile28.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile29 = new Tile(29); tile29.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile30 = new Tile(30); tile30.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile31 = new Tile(31); tile31.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile32 = new Tile(32); tile32.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile33 = new Tile(33); tile33.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile34 = new Tile(34); tile34.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile35 = new Tile(35); tile35.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile36 = new Tile(36); tile36.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile37 = new Tile(37); tile37.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile38 = new Tile(38); tile38.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile39 = new Tile(39); tile39.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile40 = new Tile(40); tile40.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile41 = new Tile(41); tile41.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile42 = new Tile(42); tile42.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile43 = new Tile(43); tile43.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile44 = new Tile(44); tile44.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile45 = new Tile(45); tile45.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile46 = new Tile(46); tile46.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile47 = new Tile(47); tile47.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile48 = new Tile(48); tile48.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile49 = new Tile(49); tile49.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile50 = new Tile(50); tile50.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile51 = new Tile(51); tile51.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile52 = new Tile(52); tile52.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile53 = new Tile(53); tile53.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile54 = new Tile(54); tile54.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile55 = new Tile(55); tile55.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile56 = new Tile(56); tile56.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile57 = new Tile(57); tile57.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile58 = new Tile(58); tile58.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile59 = new Tile(59); tile59.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile60 = new Tile(60); tile60.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile61 = new Tile(61); tile61.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile62 = new Tile(62); tile62.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile63 = new Tile(63); tile63.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile64 = new Tile(64); tile64.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile65 = new Tile(65); tile65.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile66 = new Tile(66); tile66.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile67 = new Tile(67); tile67.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile68 = new Tile(68); tile68.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile69 = new Tile(69); tile69.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile70 = new Tile(70); tile70.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile71 = new Tile(71); tile71.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile72 = new Tile(72); tile72.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile73 = new Tile(73); tile73.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile74 = new Tile(74); tile74.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile75 = new Tile(75); tile75.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile76 = new Tile(76); tile76.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile77 = new Tile(77); tile77.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile78 = new Tile(78); tile78.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile79 = new Tile(79); tile79.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile80 = new Tile(80); tile80.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile81 = new Tile(81); tile81.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile82 = new Tile(82); tile82.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile83 = new Tile(83); tile83.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile84 = new Tile(84); tile84.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile85 = new Tile(85); tile85.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
+    Tile tile86 = new Tile(86); tile86.Event = new GetMoneyEvent("就職祝い金をもらう", "就職祝い金をもらう", 10000, "");
     tile86.tileType = TileType.GOAL;
 
 
@@ -311,7 +323,10 @@ public class MapManager : MonoSingleton<MapManager>
         tileObject = Instantiate(goalTilePrefab, tile.Position, tile.GetRotate(), transform);
         break;
     }
-    Instantiate(textPrefab, tile.Position + new Vector3(0, 0.5f, 0), Quaternion.Euler(90, 0, 0), tileObject.transform);
+    GameObject textPanel = Instantiate(textPrefab, tile.Position + new Vector3(0, 0.5f, 0), Quaternion.Euler(90, 0, 0), tileObject.transform);
+    TextMeshProUGUI textMesh = textPanel.GetComponentInChildren<TextMeshProUGUI>();
+    textMesh.text = tile.Event.GetEventDescription();
+    textPanel.transform.rotation = tile.GetTextDirection().GetRotation();
     tileObject.name = tile.Name;
     tile.IsGenerated = true;
     tiles.Add(tile.id, tile);
@@ -322,12 +337,13 @@ public class MapManager : MonoSingleton<MapManager>
     return tiles[id];
   }
 
-  public (Tile, List<Vector3>, List<Vector3>) WayToTile(Tile start, int step, Direction? direction = null)
+  public (List<Tile>, List<Vector3>, List<Vector3>) WayToTile(Tile start, int step, Direction? direction = null)
   {
     if (start == null)
     {
       start = startTile;
     }
+    List<Tile> tiles = new List<Tile>();
     List<Vector3> path = new List<Vector3>();
     List<Vector3> rotate = new List<Vector3>();
 
@@ -355,14 +371,15 @@ public class MapManager : MonoSingleton<MapManager>
           //   rotate.Add(new Vector3(0, 0, 0));
           // }
           path.Add(tile.Position);
+          tiles.Add(tile);
           if (tile.GetTileType() == TileType.LARGE_JUNCTION || tile.CheckPoint)
           {
-            return (tile, path, rotate);
+            return (tiles, path, rotate);
           }
           break;
         }
       }
     }
-    return (tile, path, rotate);
+    return (tiles, path, rotate);
   }
 }

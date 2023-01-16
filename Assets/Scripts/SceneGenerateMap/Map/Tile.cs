@@ -47,6 +47,18 @@ public class Tile
     }
   }
 
+  public Direction GetTextDirection()
+  {
+    foreach (var passableTile in this.passableTiles)
+    {
+      if (passableTile.Value == Passable.PASSABLE)
+      {
+        return passableTile.Key;
+      }
+    }
+    return Direction.POSITIVE_X;
+  }
+
   public void SetNeighbor(Direction direction, Passable passable, Tile tile)
   {
     neighbors[direction] = tile;

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System;
 using UniRx;
+using DG.Tweening;
 using UnityEngine.UI;
 
 
@@ -16,6 +17,7 @@ public class GameManager : MonoSingleton<GameManager>
   [SerializeField] private RPCManager rpcManager;
   [SerializeField] private UIManager uiManager;
   private Dictionary<string, PlayerStetus> players = new Dictionary<string, PlayerStetus>();
+  private Dictionary<string, List<Tile>> playerPathHistory = new Dictionary<string, List<Tile>>();
   private List<string> playerIds = new List<string>();
   private Dictionary<string, GameObject> cars = new Dictionary<string, GameObject>();
 
@@ -66,6 +68,7 @@ public class GameManager : MonoSingleton<GameManager>
     foreach (var player in res.Room.Players)
     {
       players.Add(player.Id, new PlayerStetus(player.Name, 10000, 0, "red", "job", false, 0, 0, false));
+      playerPathHistory.Add(player.Id, new List<Tile>());
     }
     playerIds = new List<string>(players.Keys);
     return players;
@@ -129,22 +132,44 @@ public class GameManager : MonoSingleton<GameManager>
     }
     var car = cars[id];
     var carMove = car.GetComponent<CarMove>();
-    var (tile, path, rotate) = carMove.calcPath(MapManager.instance.GetTile(players[id].NowPosIndex.ToString()), int.Parse(step), direction);
+    var (tiles, path, rotate) = carMove.calcPath(MapManager.instance.GetTile(players[id].NowPosIndex.ToString()), int.Parse(step), direction);
+    playerPathHistory[id].AddRange(tiles);
     await carMove.Move(path, rotate);
-    rpcManager.GetComponent<SendObject>().setRPC("EventStart", new Dictionary<string, string>() { { "tileID", tile.id }, { "playerID", id } });
+    var events = tiles.Where(x => x.Event != null && x.Event.GetEventType() == EventType.EVENT_PASS).ToList();
+    if (tiles.Last().Event != null && tiles.Last().Event.GetEventType() == EventType.EVENT_STOP)
+    {
+      events.Add(tiles.Last());
+    }
+    String tileIDs = events.Select(x => x.id).Aggregate((x, y) => x + "," + y);
+
+    rpcManager.GetComponent<SendObject>().setRPC("EventStart", new Dictionary<string, string>() { { "tileIDs", tileIDs }, { "playerID", id } });
   }
 
-  public async void EventStart(string tileID, string playerID)
+  public async void EventStart(string tileIDs, string playerID)
   {
-    Tile tile = MapManager.instance.GetTile(tileID);
-    TileEvent tileEvent = tile.Event;
-    if (playerInfo.isRoomOwner)
+    var tileIDList = tileIDs.Split(',');
+    foreach (var tileID in tileIDList)
     {
-      tileEvent.OnEventChangeStetus(players, playerID);
-      players[playerID].NowPosIndex = int.Parse(tileID);
-      EncodePlayerStetus();
+      Tile tile = MapManager.instance.GetTile(tileID);
+      TileEvent tileEvent = tile.Event;
+      if (playerInfo.isRoomOwner)
+      {
+        tileEvent.OnEventChangeStetus(players, playerID);
+        players[playerID].NowPosIndex = int.Parse(tileID);
+        if (tileEvent.GetEventEffectType() == EventEffectType.EventEffectType_Move)
+        {
+          var car = cars[playerID];
+          // cast to MoveEvent
+          var moveEvent = tileEvent as MoveEvent;
+          var step = moveEvent.getStep();
+          var moveTile = playerPathHistory[playerID][playerPathHistory[playerID].Count - step];
+          players[playerID].NowPosIndex = int.Parse(moveTile.id);
+          car.transform.DOMove(moveTile.Position, 0.5f);
+        }
+        EncodePlayerStetus();
+      }
+      await tileEvent.OnEventAnimation();
     }
-    await tileEvent.OnEventAnimation();
     if (playerInfo.isRoomOwner)
     {
       rpcManager.GetComponent<SendObject>().setRPC("ActiveTurn", new Dictionary<string, string>() { { "id", GetNextPlayerId(playerID) } });

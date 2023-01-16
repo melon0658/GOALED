@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public enum Direction
 {
   POSITIVE_X,
@@ -44,5 +46,22 @@ public static class DirectionExtensions
       return Direction.NEGATIVE_X;
     }
     return Direction.POSITIVE_X;
+  }
+
+  public static Quaternion GetRotation(this Direction direction)
+  {
+    switch (direction)
+    {
+      case Direction.POSITIVE_X:
+        return Quaternion.Euler(90, 90, 0);
+      case Direction.NEGATIVE_Z:
+        return Quaternion.Euler(90, 180, 0);
+      case Direction.NEGATIVE_X:
+        return Quaternion.Euler(90, 270, 0);
+      case Direction.POSITIVE_Z:
+        return Quaternion.Euler(90, 0, 0);
+      default:
+        throw new System.Exception("Invalid direction");
+    }
   }
 }
