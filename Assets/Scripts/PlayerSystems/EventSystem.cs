@@ -9,19 +9,6 @@ public class EventSystem : MonoBehaviour
   public GameObject eventScriptsMaster;
   private TurnSystem turnSystemScript;
 
-  //各イベントのスクリプト
-  #region
-  public Event01 event1Script;
-  public Event02 event2Script;
-
-  public Event85 event85Script;
-  #endregion
-
-  void Start()
-  {
-
-  }
-
   public void EventExecutionManager()
   {
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
