@@ -7,10 +7,10 @@ using TMPro;
 
 public class EventEndGame : MonoBehaviour
 {
-  public Player player1;
-  public Player player2;
-  public Player player3;
-  public Player player4;
+  private Player player1;
+  private Player player2;
+  private Player player3;
+  private Player player4;
 
   private Player winner;
   private GameObject winnerPlayerParentObj;
@@ -44,6 +44,12 @@ public class EventEndGame : MonoBehaviour
   public void EndGame()
   {
     Debug.Log("The End");
+
+    //ここ人数に合わせて分岐作らないといけない
+    player1 = GameObject.Find("Player1").GetComponent<Player>();
+    player2 = GameObject.Find("Player2").GetComponent<Player>();
+    player3 = GameObject.Find("Player3").GetComponent<Player>();
+    player4 = GameObject.Find("Player4").GetComponent<Player>();
     //金額計算して１位を決める
 
     //デバッグ用
