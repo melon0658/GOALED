@@ -11,12 +11,6 @@ public class MoneyUpdate : MonoBehaviour
   //private AudioSource payDayEffect;
 
 
-  //各プレイヤーのスクリプト
-  public Player player1;
-  public Player player2;
-  public Player player3;
-  public Player player4;
-
   // Start is called before the first frame update
   void Awake()
   {
@@ -31,16 +25,16 @@ public class MoneyUpdate : MonoBehaviour
     switch (turnSystemScript.GetnowTurnPlayerNum())
     {
       case 1:
-        moneyText.text = "$ " + player1.Money.ToString("N0");
+        moneyText.text = "$ " + GameObject.Find("Player1").GetComponent<Player>().Money.ToString("N0");
         break;
       case 2:
-        moneyText.text = "$ " + player2.Money.ToString("N0");
+        moneyText.text = "$ " + GameObject.Find("Player2").GetComponent<Player>().Money.ToString("N0");
         break;
       case 3:
-        moneyText.text = "$ " + player3.Money.ToString("N0");
+        moneyText.text = "$ " + GameObject.Find("Player3").GetComponent<Player>().Money.ToString("N0");
         break;
       case 4:
-        moneyText.text = "$ " + player4.Money.ToString("N0");
+        moneyText.text = "$ " + GameObject.Find("Player4").GetComponent<Player>().Money.ToString("N0");
         break;
       default:
         break;
