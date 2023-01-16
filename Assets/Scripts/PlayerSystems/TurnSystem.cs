@@ -19,11 +19,15 @@ public class TurnSystem : MonoBehaviour
   public Material player3BaseMaterial;
   public Material player4BaseMaterial;
 
+  private Material[] BaseMaterials;
+
   //各プレイヤーの透過マテリアル
   public Material player1ClearMaterial;
   public Material player2ClearMaterial;
   public Material player3ClearMaterial;
   public Material player4ClearMaterial;
+
+  private Material[] ClearMaterials;
 
   //各プレイヤーのカメラ
   private GameObject playerCamera1;
@@ -31,10 +35,14 @@ public class TurnSystem : MonoBehaviour
   private GameObject playerCamera3;
   private GameObject playerCamera4;
 
+  private GameObject[] PlayerCameras;
+
   private GameObject upButton;
   private GameObject rightButton;
   private GameObject leftButton;
 
+
+  private MakePlayerPrefab makePlayerPrefabScript;
   private EventEndGame eventEndGameScript;
   private MoneyUpdate moneyUpdateScript;
   private EventPayDay eventPayDayScript;
@@ -84,44 +92,81 @@ public class TurnSystem : MonoBehaviour
     //GameObject.Find("StageObjects").transform.Find("Directional Light").gameObject.SetActive(false);
     //RenderSettings.ambientIntensity = 0.5f;
 
-    //プレイヤー配列(気が向いたらfor文でコード短縮化実装)
-    Players = new GameObject[] { player1, player2, player3, player4};
-
-    nowTurnPlayerNum = 1;
-    playerCamera1 = GameObject.Find("PlayerCamera1");
-    playerCamera1.SetActive(false);
-    playerCamera2 = GameObject.Find("PlayerCamera2");
-    playerCamera2.SetActive(false);
-    playerCamera3 = GameObject.Find("PlayerCamera3");
-    playerCamera3.SetActive(false);
-    playerCamera4 = GameObject.Find("PlayerCamera4");
-    playerCamera4.SetActive(false);
-
+    //真っ直ぐ進むボタン(ルート分岐)を取得して非表示
     upButton = GameObject.Find("Button Up");
     upButton.SetActive(false);
+
+    //右に進むボタン(ルート分岐)を取得して非表示
     rightButton = GameObject.Find("Button Right");
     rightButton.SetActive(false);
+
+    //左に進むボタン(ルート分岐)を取得して非表示
     leftButton = GameObject.Find("Button Left");
     leftButton.SetActive(false);
 
-    player1.GetComponent<Renderer>().material = player1ClearMaterial;
-    player2.GetComponent<Renderer>().material = player2ClearMaterial;
-    player3.GetComponent<Renderer>().material = player3ClearMaterial;
-    player4.GetComponent<Renderer>().material = player4ClearMaterial;
+    //プレイヤー生成スクリプトを取得
+    makePlayerPrefabScript = GameObject.Find("GameScripts").GetComponent<MakePlayerPrefab>();
 
-    player1.GetComponent<BoxCollider>().enabled = false;
-    player2.GetComponent<BoxCollider>().enabled = false;
-    player3.GetComponent<BoxCollider>().enabled = false;
-    player4.GetComponent<BoxCollider>().enabled = false;
-
+    //ルート分岐ボタン表示スクリプトを取得
     gameScripts = GameObject.Find("GameScripts").GetComponent<ClickLeftRight>();
+
+    //ルーレット処理スクリプトを取得
     rScript = GameObject.Find("ButtonStop").GetComponent<Roulette>();
+
+    //イベント発生管理スクリプトを取得
     eventSystemScript = GameObject.Find("EventScripts").GetComponent<EventSystem>();
 
+    //ゴール後イベントスクリプトを取得
     eventEndGameScript = GameObject.Find("EventScripts").GetComponent<EventEndGame>();
+
+    //所持金UIの切り替えスクリプトを取得
     moneyUpdateScript = GameObject.Find("MoneyUIBox").GetComponent<MoneyUpdate>();
+
+    //給料日イベントスクリプトを取得
     eventPayDayScript = GameObject.Find("EventScripts").GetComponent<EventPayDay>();
+
+    //給料日イベント用効果音を取得
     payDayEffect = GameObject.Find("PaydayObjects").GetComponent<AudioSource>();
+
+    //プレイヤー配列(気が向いたらfor文でコード短縮化実装)
+    Players = new GameObject[] { player1, player2, player3, player4 };
+    PlayerCameras = new GameObject[] { playerCamera1, playerCamera2, playerCamera3, playerCamera4 };
+    BaseMaterials = new Material[] { player1BaseMaterial, player2BaseMaterial, player3BaseMaterial, player4BaseMaterial };
+    ClearMaterials = new Material[] { player1ClearMaterial, player2ClearMaterial, player3ClearMaterial, player4ClearMaterial };
+
+
+    for (int i=0;i < makePlayerPrefabScript.GetPlayerNum(); i++)
+    {
+      Players[i] = GameObject.Find("Player" + (i+1));
+
+      PlayerCameras[i] = Players[i].transform.Find("PlayerCamera").gameObject;
+      PlayerCameras[i].SetActive(false);
+
+      Players[i].GetComponent<Renderer>().material = ClearMaterials[i];
+      Players[i].GetComponent<BoxCollider>().enabled = false;
+    }
+
+    
+    //playerCamera1 = GameObject.Find("PlayerCamera");
+    //playerCamera1.SetActive(false);
+    //playerCamera2 = GameObject.Find("PlayerCamera");
+    //playerCamera2.SetActive(false);
+    //playerCamera3 = GameObject.Find("PlayerCamera");
+    //playerCamera3.SetActive(false);
+    //playerCamera4 = GameObject.Find("PlayerCamera");
+    //playerCamera4.SetActive(false);
+
+    //player1.GetComponent<Renderer>().material = player1ClearMaterial;
+    //player2.GetComponent<Renderer>().material = player2ClearMaterial;
+    //player3.GetComponent<Renderer>().material = player3ClearMaterial;
+    //player4.GetComponent<Renderer>().material = player4ClearMaterial;
+
+    //player1.GetComponent<BoxCollider>().enabled = false;
+    //player2.GetComponent<BoxCollider>().enabled = false;
+    //player3.GetComponent<BoxCollider>().enabled = false;
+    //player4.GetComponent<BoxCollider>().enabled = false;
+
+    nowTurnPlayerNum = 1;
 
     TurnStartSystemMaster();
   }
