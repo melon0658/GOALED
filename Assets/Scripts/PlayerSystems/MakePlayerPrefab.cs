@@ -7,12 +7,16 @@ public class MakePlayerPrefab : MonoBehaviour
 {
   //呼び出したプレイヤープレハブを格納するための配列
   private GameObject player_prefab;
+
   //プレイヤーを格納するための配列
   private GameObject[] players;
+
   //プレイヤーを最初に配置する座標の配列
   private Vector3[][] firstPlayerPos = new Vector3[4][];
+
   //プレイヤーキャラを格納するオブジェクト配列
   private GameObject[] playerCharas;
+
   //マテリアル関係の変数
   #region
   private Material black;//プレイヤーキャラに使う
@@ -22,8 +26,17 @@ public class MakePlayerPrefab : MonoBehaviour
   private Material[] carMaterials;
   private Material[] carClearMaterials;
   #endregion
+
+  //初期値設定をするスクリプト
+  private SettingInitialPlayerStatus firstSet;
+
   //仮でプレイヤー数を指定
-  private int playerNum = 1;
+  private int playerNum = 4;
+
+  public int GetPlayerNum()
+  {
+    return playerNum;
+  }
 
   void Awake()
   {
@@ -61,7 +74,7 @@ public class MakePlayerPrefab : MonoBehaviour
                                          (Material)Resources.Load("Player_Resources/car3Clear"),
                                          (Material)Resources.Load("Player_Resources/car4Clear") };
 
-    }
+  }
 
   //プレイヤーの生成をする関数
   void MakePlayer()
@@ -72,36 +85,62 @@ public class MakePlayerPrefab : MonoBehaviour
     {
       //プレハブからインスタンスを生成してプレイヤー配列に格納
       players[i] = Instantiate(player_prefab, firstPlayerPos[playerNum-1][i], Quaternion.identity);
+
+
       //オブジェクトの名前変更
       players[i].name = "Player" + (i+1);
 
+
       //マテリアルの付替え(配列ごと置き換える)
-      
       //車の色付け替え
       Material[] carMat = new Material[1];
       carMat[0] = carMaterials[i];
       players[i].GetComponent<Renderer>().materials = carMat;
-      
-
-      for(i = 0; i < 4; i++)
-      {
-
-      }
-      //K1の色
+      //K1の色付け替え
       Material[] k1Mat = new Material[3];
       k1Mat[0] = carMaterials[i];
       k1Mat[1] = white;
       k1Mat[2] = black;
-      players[i].GetComponent<Renderer>().materials = k1Mat;
-      //K2の色
+      players[i].transform.Find("K1").gameObject.GetComponent<Renderer>().materials = k1Mat;
+      //K2の色付け替え
       Material[] k2Mat = new Material[3];
-      k1Mat[0] = carMaterials[i];
-      k1Mat[1] = white;
-      k1Mat[2] = black;
-      players[i].GetComponent<Renderer>().materials = k1Mat;
-      //Main_Charaの色
-      //Sub_Charaの色
-      
+      k2Mat[0] = carMaterials[i];
+      k2Mat[1] = white;
+      k2Mat[2] = black;
+      players[i].transform.Find("K2").gameObject.GetComponent<Renderer>().materials = k2Mat;
+      //Main_Charaの色付け替え
+      Material[] mainMat = new Material[3];
+      mainMat[0] = carMaterials[i];
+      mainMat[1] = white;
+      mainMat[2] = black;
+      players[i].transform.Find("Main_Chara").gameObject.GetComponent<Renderer>().materials = mainMat;
+      //Sub_Charaの色付け替え
+      Material[] subMat = new Material[3];
+      subMat[0] = carMaterials[i];
+      subMat[1] = white;
+      subMat[2] = black;
+      players[i].transform.Find("Sub_Chara").gameObject.GetComponent<Renderer>().materials = subMat;
+
+
+      //プレイヤーの初期値設定&所持金更新用
+      firstSet = GameObject.Find("GameScripts").GetComponent<SettingInitialPlayerStatus>();
+      switch (i)
+      {
+        case 0:
+          firstSet.SettingPlayer1();
+          break;
+        case 1:
+          firstSet.SettingPlayer2();
+          break;
+        case 2:
+          firstSet.SettingPlayer3();
+          break;
+        case 3:
+          firstSet.SettingPlayer4();
+          break;
+        default:
+          break;
+      }
     }
   }
 }
