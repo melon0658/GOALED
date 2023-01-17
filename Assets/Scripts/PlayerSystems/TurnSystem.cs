@@ -137,6 +137,7 @@ public class TurnSystem : MonoBehaviour
 
     for (int i=0;i < makePlayerPrefabScript.GetPlayerNum(); i++)
     {
+      //プレイヤースクリプトをプレイヤー配列に格納
       Players[i] = GameObject.Find("Player" + (i+1));
 
       PlayerCameras[i] = Players[i].transform.Find("PlayerCamera").gameObject;
@@ -166,80 +167,96 @@ public class TurnSystem : MonoBehaviour
     //player3.GetComponent<BoxCollider>().enabled = false;
     //player4.GetComponent<BoxCollider>().enabled = false;
 
-    nowTurnPlayerNum = 1;
+    nowTurnPlayerNum = 0;
 
     TurnStartSystemMaster();
   }
 
   void OnPlayerCamera()
   {
-    switch (nowTurnPlayerNum)
-    {
-      case 1:
-        playerCamera1.SetActive(true);
-        break;
-      case 2:
-        playerCamera2.SetActive(true);
-        break;
-      case 3:
-        playerCamera3.SetActive(true);
-        break;
-      case 4:
-        playerCamera4.SetActive(true);
-        break;
-      default:
-        break;
-    }
+    //switch (nowTurnPlayerNum)
+    //{
+    //  case 1:
+    //    playerCamera1.SetActive(true);
+    //    break;
+    //  case 2:
+    //    playerCamera2.SetActive(true);
+    //    break;
+    //  case 3:
+    //    playerCamera3.SetActive(true);
+    //    break;
+    //  case 4:
+    //    playerCamera4.SetActive(true);
+    //    break;
+    //  default:
+    //    break;
+    //}
+    
+    PlayerCameras[nowTurnPlayerNum].SetActive(true);
   }
 
   void OffPlayerCamera()
   {
-    switch (nowTurnPlayerNum)
-    {
-      case 1:
-        playerCamera1.SetActive(false);
-        break;
-      case 2:
-        playerCamera2.SetActive(false);
-        break;
-      case 3:
-        playerCamera3.SetActive(false);
-        break;
-      case 4:
-        playerCamera4.SetActive(false);
-        break;
-      default:
-        break;
-    }
+    //switch (nowTurnPlayerNum)
+    //{
+    //  case 1:
+    //    playerCamera1.SetActive(false);
+    //    break;
+    //  case 2:
+    //    playerCamera2.SetActive(false);
+    //    break;
+    //  case 3:
+    //    playerCamera3.SetActive(false);
+    //    break;
+    //  case 4:
+    //    playerCamera4.SetActive(false);
+    //    break;
+    //  default:
+    //    break;
+    //}
+
+    PlayerCameras[nowTurnPlayerNum].SetActive(false);
   }
 
   //ターンの切り替え
   void ChangeNowPlayer()
   {
-    switch (nowTurnPlayerNum)
+    //switch (nowTurnPlayerNum)
+    //{
+    //  case 1:
+    //    player1.GetComponent<Renderer>().material = player1ClearMaterial;
+    //    player1.GetComponent<BoxCollider>().enabled = false;
+    //    SetnowTurnPlayerNum(2);
+    //    break;
+    //  case 2:
+    //    player2.GetComponent<Renderer>().material = player2ClearMaterial;
+    //    player2.GetComponent<BoxCollider>().enabled = false;
+    //    SetnowTurnPlayerNum(3);
+    //    break;
+    //  case 3:
+    //    player3.GetComponent<Renderer>().material = player3ClearMaterial;
+    //    player3.GetComponent<BoxCollider>().enabled = false;
+    //    SetnowTurnPlayerNum(4);
+    //    break;
+    //  case 4:
+    //    player4.GetComponent<Renderer>().material = player4ClearMaterial;
+    //    player4.GetComponent<BoxCollider>().enabled = false;
+    //    SetnowTurnPlayerNum(1);
+    //    break;
+    //  default:
+    //    break;
+    //}
+
+
+    Players[nowTurnPlayerNum].GetComponent<Renderer>().material = ClearMaterials[nowTurnPlayerNum];
+    Players[nowTurnPlayerNum].GetComponent<BoxCollider>().enabled = false;
+    if (nowTurnPlayerNum == makePlayerPrefabScript.GetPlayerNum() - 1)
     {
-      case 1:
-        player1.GetComponent<Renderer>().material = player1ClearMaterial;
-        player1.GetComponent<BoxCollider>().enabled = false;
-        SetnowTurnPlayerNum(2);
-        break;
-      case 2:
-        player2.GetComponent<Renderer>().material = player2ClearMaterial;
-        player2.GetComponent<BoxCollider>().enabled = false;
-        SetnowTurnPlayerNum(3);
-        break;
-      case 3:
-        player3.GetComponent<Renderer>().material = player3ClearMaterial;
-        player3.GetComponent<BoxCollider>().enabled = false;
-        SetnowTurnPlayerNum(4);
-        break;
-      case 4:
-        player4.GetComponent<Renderer>().material = player4ClearMaterial;
-        player4.GetComponent<BoxCollider>().enabled = false;
-        SetnowTurnPlayerNum(1);
-        break;
-      default:
-        break;
+      SetnowTurnPlayerNum(0);
+    }
+    else
+    {
+      SetnowTurnPlayerNum(nowTurnPlayerNum + 1);
     }
   }
 
@@ -261,52 +278,61 @@ public class TurnSystem : MonoBehaviour
       }
       else if (actionScript.GetCheckPointName() == "GoalPosition")
       {
-        switch (nowTurnPlayerNum)
+        //switch (nowTurnPlayerNum)
+        //{
+        //  case 1:
+        //    if (player1.GetComponent<Player>().CheckGoal)
+        //    {
+        //      rScript.PowerBarStart();
+        //    }
+        //    else
+        //    {
+        //      player1.GetComponent<Player>().CheckGoal = true;
+        //      rScript.PowerBarStart();
+        //    }
+        //    break;
+        //  case 2:
+        //    if (player2.GetComponent<Player>().CheckGoal)
+        //    {
+        //      rScript.PowerBarStart();
+        //    }
+        //    else
+        //    {
+        //      player2.GetComponent<Player>().CheckGoal = true;
+        //      rScript.PowerBarStart();
+        //    }
+        //    break;
+        //  case 3:
+        //    if (player3.GetComponent<Player>().CheckGoal)
+        //    {
+        //      rScript.PowerBarStart();
+        //    }
+        //    else
+        //    {
+        //      player3.GetComponent<Player>().CheckGoal = true;
+        //      rScript.PowerBarStart();
+        //    }
+        //    break;
+        //  case 4:
+        //    if (player4.GetComponent<Player>().CheckGoal)
+        //    {
+        //      rScript.PowerBarStart();
+        //    }
+        //    else
+        //    {
+        //      player4.GetComponent<Player>().CheckGoal = true;
+        //      rScript.PowerBarStart();
+        //    }
+        //    break;
+        //}
+        if (Players[nowTurnPlayerNum].GetComponent<Player>().CheckGoal)
         {
-          case 1:
-            if (player1.GetComponent<Player>().CheckGoal)
-            {
-              rScript.PowerBarStart();
-            }
-            else
-            {
-              player1.GetComponent<Player>().CheckGoal = true;
-              rScript.PowerBarStart();
-            }
-            break;
-          case 2:
-            if (player2.GetComponent<Player>().CheckGoal)
-            {
-              rScript.PowerBarStart();
-            }
-            else
-            {
-              player2.GetComponent<Player>().CheckGoal = true;
-              rScript.PowerBarStart();
-            }
-            break;
-          case 3:
-            if (player3.GetComponent<Player>().CheckGoal)
-            {
-              rScript.PowerBarStart();
-            }
-            else
-            {
-              player3.GetComponent<Player>().CheckGoal = true;
-              rScript.PowerBarStart();
-            }
-            break;
-          case 4:
-            if (player4.GetComponent<Player>().CheckGoal)
-            {
-              rScript.PowerBarStart();
-            }
-            else
-            {
-              player4.GetComponent<Player>().CheckGoal = true;
-              rScript.PowerBarStart();
-            }
-            break;
+          rScript.PowerBarStart();
+        }
+        else
+        {
+          Players[nowTurnPlayerNum].GetComponent<Player>().CheckGoal = true;
+          rScript.PowerBarStart();
         }
         Debug.Log("Goal");
       }
@@ -321,160 +347,192 @@ public class TurnSystem : MonoBehaviour
   //各プレーヤーのスクリプト・車に切り替え
   void SetObjects()
   {
-    switch (nowTurnPlayerNum)
-    {
-      case 1:
-        gameScripts.car1 = player1;
-        gameScripts.mbScript = player1.GetComponent<MovementBaseScript>();
-        gameScripts.actionScript = player1.GetComponent<Action>();
-        rScript.car1 = player1;
-        rScript.mbScript = player1.GetComponent<MovementBaseScript>();
-        rScript.actionScript = player1.GetComponent<Action>();
+    //switch (nowTurnPlayerNum)
+    //{
+    //  case 1:
+    //    gameScripts.car1 = player1;
+    //    gameScripts.mbScript = player1.GetComponent<MovementBaseScript>();
+    //    gameScripts.actionScript = player1.GetComponent<Action>();
+    //    rScript.car1 = player1;
+    //    rScript.mbScript = player1.GetComponent<MovementBaseScript>();
+    //    rScript.actionScript = player1.GetComponent<Action>();
 
-        actionScript = player1.GetComponent<Action>();
+    //    actionScript = player1.GetComponent<Action>();
 
-        eventSystemScript.playerScript = player1.GetComponent<Player>();
+    //    eventSystemScript.playerScript = player1.GetComponent<Player>();
 
-        player1.GetComponent<Renderer>().material = player1BaseMaterial;
-        player1.GetComponent<BoxCollider>().enabled = true;
+    //    player1.GetComponent<Renderer>().material = player1BaseMaterial;
+    //    player1.GetComponent<BoxCollider>().enabled = true;
 
-        originalMoney = player1.GetComponent<Player>().Money;
-        break;
-      case 2:
-        gameScripts.car1 = player2;
-        gameScripts.mbScript = player2.GetComponent<MovementBaseScript>();
-        gameScripts.actionScript = player2.GetComponent<Action>();
-        rScript.car1 = player2;
-        rScript.mbScript = player2.GetComponent<MovementBaseScript>();
-        rScript.actionScript = player2.GetComponent<Action>();
+    //    originalMoney = player1.GetComponent<Player>().Money;
+    //    break;
+    //  case 2:
+    //    gameScripts.car1 = player2;
+    //    gameScripts.mbScript = player2.GetComponent<MovementBaseScript>();
+    //    gameScripts.actionScript = player2.GetComponent<Action>();
+    //    rScript.car1 = player2;
+    //    rScript.mbScript = player2.GetComponent<MovementBaseScript>();
+    //    rScript.actionScript = player2.GetComponent<Action>();
 
-        actionScript = player2.GetComponent<Action>();
+    //    actionScript = player2.GetComponent<Action>();
 
-        eventSystemScript.playerScript = player2.GetComponent<Player>();
+    //    eventSystemScript.playerScript = player2.GetComponent<Player>();
 
-        player2.GetComponent<Renderer>().material = player2BaseMaterial;
-        player2.GetComponent<BoxCollider>().enabled = true;
+    //    player2.GetComponent<Renderer>().material = player2BaseMaterial;
+    //    player2.GetComponent<BoxCollider>().enabled = true;
 
-        originalMoney = player2.GetComponent<Player>().Money;
-        break;
-      case 3:
-        gameScripts.car1 = player3;
-        gameScripts.mbScript = player3.GetComponent<MovementBaseScript>();
-        gameScripts.actionScript = player3.GetComponent<Action>();
-        rScript.car1 = player3;
-        rScript.mbScript = player3.GetComponent<MovementBaseScript>();
-        rScript.actionScript = player3.GetComponent<Action>();
+    //    originalMoney = player2.GetComponent<Player>().Money;
+    //    break;
+    //  case 3:
+    //    gameScripts.car1 = player3;
+    //    gameScripts.mbScript = player3.GetComponent<MovementBaseScript>();
+    //    gameScripts.actionScript = player3.GetComponent<Action>();
+    //    rScript.car1 = player3;
+    //    rScript.mbScript = player3.GetComponent<MovementBaseScript>();
+    //    rScript.actionScript = player3.GetComponent<Action>();
 
-        actionScript = player3.GetComponent<Action>();
+    //    actionScript = player3.GetComponent<Action>();
 
-        eventSystemScript.playerScript = player3.GetComponent<Player>();
+    //    eventSystemScript.playerScript = player3.GetComponent<Player>();
 
-        player3.GetComponent<Renderer>().material = player3BaseMaterial;
-        player3.GetComponent<BoxCollider>().enabled = true;
+    //    player3.GetComponent<Renderer>().material = player3BaseMaterial;
+    //    player3.GetComponent<BoxCollider>().enabled = true;
 
-        originalMoney = player3.GetComponent<Player>().Money;
-        break;
-      case 4:
-        gameScripts.car1 = player4;
-        gameScripts.mbScript = player4.GetComponent<MovementBaseScript>();
-        gameScripts.actionScript = player4.GetComponent<Action>();
-        rScript.car1 = player4;
-        rScript.mbScript = player4.GetComponent<MovementBaseScript>();
-        rScript.actionScript = player4.GetComponent<Action>();
+    //    originalMoney = player3.GetComponent<Player>().Money;
+    //    break;
+    //  case 4:
+    //    gameScripts.car1 = player4;
+    //    gameScripts.mbScript = player4.GetComponent<MovementBaseScript>();
+    //    gameScripts.actionScript = player4.GetComponent<Action>();
+    //    rScript.car1 = player4;
+    //    rScript.mbScript = player4.GetComponent<MovementBaseScript>();
+    //    rScript.actionScript = player4.GetComponent<Action>();
 
-        actionScript = player4.GetComponent<Action>();
+    //    actionScript = player4.GetComponent<Action>();
 
-        eventSystemScript.playerScript = player4.GetComponent<Player>();
+    //    eventSystemScript.playerScript = player4.GetComponent<Player>();
 
-        player4.GetComponent<Renderer>().material = player4BaseMaterial;
-        player4.GetComponent<BoxCollider>().enabled = true;
+    //    player4.GetComponent<Renderer>().material = player4BaseMaterial;
+    //    player4.GetComponent<BoxCollider>().enabled = true;
 
-        originalMoney = player4.GetComponent<Player>().Money;
-        break;
-      default:
-        break;
-    }
+    //    originalMoney = player4.GetComponent<Player>().Money;
+    //    break;
+    //  default:
+    //    break;
+    //}
+
+
+    gameScripts.car1 = Players[nowTurnPlayerNum];
+    gameScripts.mbScript = Players[nowTurnPlayerNum].GetComponent<MovementBaseScript>();
+    gameScripts.actionScript = Players[nowTurnPlayerNum].GetComponent<Action>();
+
+    rScript.car1 = Players[nowTurnPlayerNum];
+    rScript.mbScript = Players[nowTurnPlayerNum].GetComponent<MovementBaseScript>();
+    rScript.actionScript = Players[nowTurnPlayerNum].GetComponent<Action>();
+
+    actionScript = Players[nowTurnPlayerNum].GetComponent<Action>();
+
+    eventSystemScript.playerScript = Players[nowTurnPlayerNum].GetComponent<Player>();
+
+    Players[nowTurnPlayerNum].GetComponent<Renderer>().material = BaseMaterials[nowTurnPlayerNum];
+    Players[nowTurnPlayerNum].GetComponent<BoxCollider>().enabled = true;
+
+    originalMoney = Players[nowTurnPlayerNum].GetComponent<Player>().Money;
   }
 
   private void JudgeOnSound()
   {
-    switch (nowTurnPlayerNum)
+    //switch (nowTurnPlayerNum)
+    //{
+    //  case 1:
+    //    if (player1.GetComponent<Player>().Money != originalMoney)
+    //    {
+    //      payDayEffect.PlayOneShot(payDayEffect.clip);
+    //    }
+    //    break;
+    //  case 2:
+    //    if (player2.GetComponent<Player>().Money != originalMoney)
+    //    {
+    //      payDayEffect.PlayOneShot(payDayEffect.clip);
+    //    }
+    //    break;
+    //  case 3:
+    //    if (player3.GetComponent<Player>().Money != originalMoney)
+    //    {
+    //      payDayEffect.PlayOneShot(payDayEffect.clip);
+    //    }
+    //    break;
+    //  case 4:
+    //    if (player4.GetComponent<Player>().Money != originalMoney)
+    //    {
+    //      payDayEffect.PlayOneShot(payDayEffect.clip);
+    //    }
+    //    break;
+    //  default:
+    //    break;
+    //}
+
+    if (Players[nowTurnPlayerNum].GetComponent<Player>().Money != originalMoney)
     {
-      case 1:
-        if (player1.GetComponent<Player>().Money != originalMoney)
-        {
-          payDayEffect.PlayOneShot(payDayEffect.clip);
-        }
-        break;
-      case 2:
-        if (player2.GetComponent<Player>().Money != originalMoney)
-        {
-          payDayEffect.PlayOneShot(payDayEffect.clip);
-        }
-        break;
-      case 3:
-        if (player3.GetComponent<Player>().Money != originalMoney)
-        {
-          payDayEffect.PlayOneShot(payDayEffect.clip);
-        }
-        break;
-      case 4:
-        if (player4.GetComponent<Player>().Money != originalMoney)
-        {
-          payDayEffect.PlayOneShot(payDayEffect.clip);
-        }
-        break;
-      default:
-        break;
+      payDayEffect.PlayOneShot(payDayEffect.clip);
     }
-    
+
   }
   public void CheckPayDay()
   {
-    switch (nowTurnPlayerNum)
+    //switch (nowTurnPlayerNum)
+    //{
+    //  case 1:
+    //    if(player1.GetComponent<Player>().PayDayCount != 0)
+    //    {
+    //      eventPayDayScript.execution();
+    //    }
+    //    else
+    //    {
+    //      LastProcessing();
+    //    }
+    //    break;
+    //  case 2:
+    //    if (player2.GetComponent<Player>().PayDayCount != 0)
+    //    {
+    //      eventPayDayScript.execution();
+    //    }
+    //    else
+    //    {
+    //      LastProcessing();
+    //    }
+    //    break;
+    //  case 3:
+    //    if (player3.GetComponent<Player>().PayDayCount != 0)
+    //    {
+    //      eventPayDayScript.execution();
+    //    }
+    //    else
+    //    {
+    //      LastProcessing();
+    //    }
+    //    break;
+    //  case 4:
+    //    if (player4.GetComponent<Player>().PayDayCount != 0)
+    //    {
+    //      eventPayDayScript.execution();
+    //    }
+    //    else
+    //    {
+    //      LastProcessing();
+    //    }
+    //    break;
+    //  default:
+    //    break;
+    //}
+
+    if (Players[nowTurnPlayerNum].GetComponent<Player>().PayDayCount != 0)
     {
-      case 1:
-        if(player1.GetComponent<Player>().PayDayCount != 0)
-        {
-          eventPayDayScript.execution();
-        }
-        else
-        {
-          LastProcessing();
-        }
-        break;
-      case 2:
-        if (player2.GetComponent<Player>().PayDayCount != 0)
-        {
-          eventPayDayScript.execution();
-        }
-        else
-        {
-          LastProcessing();
-        }
-        break;
-      case 3:
-        if (player3.GetComponent<Player>().PayDayCount != 0)
-        {
-          eventPayDayScript.execution();
-        }
-        else
-        {
-          LastProcessing();
-        }
-        break;
-      case 4:
-        if (player4.GetComponent<Player>().PayDayCount != 0)
-        {
-          eventPayDayScript.execution();
-        }
-        else
-        {
-          LastProcessing();
-        }
-        break;
-      default:
-        break;
+      eventPayDayScript.execution();
+    }
+    else
+    {
+      LastProcessing();
     }
   }
 
@@ -510,15 +568,18 @@ public class TurnSystem : MonoBehaviour
   public void TurnStartSystemMaster()
   {
     Debug.Log("Start");
+
+    //現在のターンのプレイヤーカメラをつける
     OnPlayerCamera();
 
-    //Debug.Log("OK OnPlayerCamera");
+    //スクリプトの切り替え
     SetObjects();
-    //Debug.Log("OK SetObjects");
+
+    //所持金UIの金額を切り替え
     moneyUpdateScript.UpdateMoneyText();
 
+    //ルート選択ボタンの表示・非表示処理をする
     SwitchRouteSelectButton();
-    //Debug.Log("OK SwitchRouteSelectButton");
   }
 
   public void TurnEndSystemMaster()
@@ -546,7 +607,7 @@ public class TurnSystem : MonoBehaviour
   {
     //イベント固有
 
-    yield return new WaitForSeconds(1f);  //10秒待つ
+    yield return new WaitForSeconds(1f);  //1秒待つ
 
     CheckPayDay();
   }
