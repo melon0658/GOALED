@@ -69,7 +69,7 @@ public class MovementBaseScript : MonoBehaviour
 
     actionScript = this.gameObject.GetComponent<Action>();
     playerScript = this.gameObject.GetComponent<Player>();
-    eventSystemScript = this.gameObject.GetComponent<EventSystem>();
+    eventSystemScript = GameObject.Find("EventScripts").GetComponent<EventSystem>();
 
     //upButton = GameObject.Find("Canvas").transform.Find("Button Up").gameObject;
     //rightButton = GameObject.Find("Canvas").transform.Find("Button Right").gameObject;
