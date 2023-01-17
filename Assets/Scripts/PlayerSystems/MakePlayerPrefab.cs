@@ -31,7 +31,7 @@ public class MakePlayerPrefab : MonoBehaviour
   private SettingInitialPlayerStatus firstSet;
 
   //仮でプレイヤー数を指定
-  private int playerNum = 4;
+  public int playerNum = 2;
 
   public int GetPlayerNum()
   {
@@ -43,7 +43,7 @@ public class MakePlayerPrefab : MonoBehaviour
     //プレイヤーを最初に配置する座標を代入
     firstPlayerPos[0] = new Vector3[] { new Vector3(81.00f, 409.00f, -170.00f) };//プレイヤー数1人用
     firstPlayerPos[1] = new Vector3[] { new Vector3(71.00f, 409.00f, -170.00f), new Vector3(88.50f, 409.00f, -170.00f) };//プレイヤー数2人用
-    firstPlayerPos[2] = new Vector3[] { new Vector3(69.50f, 409.00f, -170.00f), new Vector3(81.00f, 409.00f, -170.00f), new Vector3(91.00f, 409.00f, -170.00f) };//プレイヤー数3人用
+    firstPlayerPos[2] = new Vector3[] { new Vector3(69.50f, 409.00f, -170.00f), new Vector3(81.00f, 409.00f, -170.00f), new Vector3(92.50f, 409.00f, -170.00f) };//プレイヤー数3人用
     firstPlayerPos[3] = new Vector3[] { new Vector3(66.00f, 409.00f, -170.00f), new Vector3(76.00f, 409.00f, -170.00f), new Vector3(86.00f, 409.00f, -170.00f), new Vector3(96.00f, 409.00f, -170.00f) };//プレイヤー数4人用
 
     //マテリアルを設定
