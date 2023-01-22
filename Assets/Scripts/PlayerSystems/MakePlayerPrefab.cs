@@ -14,9 +14,6 @@ public class MakePlayerPrefab : MonoBehaviour
   //プレイヤーを最初に配置する座標の配列
   private Vector3[][] firstPlayerPos = new Vector3[4][];
 
-  //プレイヤーキャラを格納するオブジェクト配列
-  private GameObject[] playerCharas;
-
   //マテリアル関係の変数
   #region
   private Material black;//プレイヤーキャラに使う
@@ -33,9 +30,16 @@ public class MakePlayerPrefab : MonoBehaviour
   //仮でプレイヤー数を指定
   public int playerNum = 2;
 
+  //プレイヤー数を外部から取得可能にする
   public int GetPlayerNum()
   {
     return playerNum;
+  }
+
+  //プレイヤー配列を外部から取得可能にする
+  public GameObject[] GetPlayers()
+  {
+    return players;
   }
 
   void Awake()
@@ -92,34 +96,41 @@ public class MakePlayerPrefab : MonoBehaviour
 
 
       //マテリアルの付替え(配列ごと置き換える)
+      
       //車の色付け替え
       Material[] carMat = new Material[1];
       carMat[0] = carMaterials[i];
       players[i].GetComponent<Renderer>().materials = carMat;
+      
       //K1の色付け替え
       Material[] k1Mat = new Material[3];
       k1Mat[0] = carMaterials[i];
       k1Mat[1] = white;
       k1Mat[2] = black;
       players[i].transform.Find("K1").gameObject.GetComponent<Renderer>().materials = k1Mat;
+      
       //K2の色付け替え
       Material[] k2Mat = new Material[3];
       k2Mat[0] = carMaterials[i];
       k2Mat[1] = white;
       k2Mat[2] = black;
       players[i].transform.Find("K2").gameObject.GetComponent<Renderer>().materials = k2Mat;
+      
       //Main_Charaの色付け替え
       Material[] mainMat = new Material[3];
       mainMat[0] = carMaterials[i];
       mainMat[1] = white;
       mainMat[2] = black;
       players[i].transform.Find("Main_Chara").gameObject.GetComponent<Renderer>().materials = mainMat;
+      
       //Sub_Charaの色付け替え
       Material[] subMat = new Material[3];
       subMat[0] = carMaterials[i];
       subMat[1] = white;
       subMat[2] = black;
       players[i].transform.Find("Sub_Chara").gameObject.GetComponent<Renderer>().materials = subMat;
+      
+      //マテリアルの付替え(配列ごと置き換える)ここまで
 
 
       //プレイヤーの初期値設定&所持金更新用
