@@ -6,6 +6,8 @@ using TMPro;
 public class Event82 : MonoBehaviour
 {
   private TurnSystem turnSystemScript;
+  private MakePlayerPrefab makePlayerPrefabScript;
+
   private Player playerScript;
   private TextMeshProUGUI countText;
   private GameObject canvas;
@@ -25,27 +27,19 @@ public class Event82 : MonoBehaviour
   {
     //どのイベントにも必要なやつ
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
+    makePlayerPrefabScript = GameObject.Find("GameScripts").GetComponent<MakePlayerPrefab>();
 
-    //Debug.Log(turnSystemScript.GetnowTurnPlayerNum());
-    //現在のターンが誰かを取得して、それに応じてプレイヤースクリプトを取得
-    switch (turnSystemScript.GetnowTurnPlayerNum())
-    {
-      case 1:
-        playerScript = GameObject.Find("defaultCar1").GetComponent<Player>();
-        break;
-      case 2:
-        playerScript = GameObject.Find("defaultCar2").GetComponent<Player>();
-        break;
-      case 3:
-        playerScript = GameObject.Find("defaultCar3").GetComponent<Player>();
-        break;
-      case 4:
-        playerScript = GameObject.Find("defaultCar4").GetComponent<Player>();
-        break;
-      default:
-        break;
-    }
-    //Debug.Log(playerScript);
+    //現在のターンが誰かを取得
+    int nowTrunPlayerNum = turnSystemScript.GetnowTurnPlayerNum();
+
+    //それに応じてプレイヤーを取得
+    GameObject Player = makePlayerPrefabScript.GetPlayers()[nowTrunPlayerNum];
+
+    //プレイヤースクリプトを取得
+    playerScript = Player.GetComponent<Player>();
+
+    //どのイベントにも必要なやつここまで
+
     //イベント固有
 
     if (playerScript.CheckGoal)

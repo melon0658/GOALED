@@ -6,13 +6,16 @@ public class Event24 : MonoBehaviour
 {
   //どのイベントにも必要なやつ
   private TurnSystem turnSystemScript;
+  private MakePlayerPrefab makePlayerPrefabScript;
+
+  //プレイヤーを格納するための配列
+  private GameObject[] players;
+
   private Player playerScript;
-  private Player otherplayer1;
-  private Player otherplayer2;
-  private Player otherplayer3;
+  private Player otherplayer;
+
   private GameObject canvas;
   private TextDialogManager textDialogManegerScript;
-
 
   //イベント固有
   private GameObject text; 
@@ -23,78 +26,47 @@ public class Event24 : MonoBehaviour
     //どのイベントにも必要なやつ
     canvas = GameObject.Find("Canvas");
 
-
-    //イベント固有
-
-  }
-
-    // Update is called once per frame
-  void Update()
-  {
-        
   }
 
   public void execution()
   {
-
-    int marry_mony = 3000;
     //どのイベントにも必要なやつ
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
-    //現在のターンが誰かを取得して、それに応じてプレイヤースクリプトを取得
-    switch (turnSystemScript.GetnowTurnPlayerNum())
+    makePlayerPrefabScript = GameObject.Find("GameScripts").GetComponent<MakePlayerPrefab>();
+
+    //プレイヤー配列を取得
+    players = makePlayerPrefabScript.GetPlayers();
+
+    //現在のターンが誰かを取得
+    int nowTrunPlayerNum = turnSystemScript.GetnowTurnPlayerNum();
+
+    //結婚お祝い金
+    int marry_mony = 3000;
+
+    //結婚お祝い金の処理
+    for (int i = 0; i < makePlayerPrefabScript.GetPlayerNum(); i++)
     {
-      case 1:
-        playerScript = GameObject.Find("defaultCar1").GetComponent<Player>();
-        otherplayer1 = GameObject.Find("defaultCar2").GetComponent<Player>();
-        otherplayer2 = GameObject.Find("defaultCar3").GetComponent<Player>();
-        otherplayer3 = GameObject.Find("defaultCar4").GetComponent<Player>();
+      //現在のターンのプレイヤーだったら（お金を貰う側）
+      if (i == nowTrunPlayerNum)
+      {
+        //プレイヤースクリプトを取得
+        playerScript = players[i].GetComponent<Player>();
 
-        playerScript.Money = playerScript.Money + (marry_mony*3);
-        otherplayer1.Money = otherplayer1.Money - marry_mony;
-        otherplayer2.Money = otherplayer2.Money - marry_mony;
-        otherplayer3.Money = otherplayer3.Money - marry_mony;
-        break;
-      case 2:
-        playerScript = GameObject.Find("defaultCar2").GetComponent<Player>();
-        otherplayer1 = GameObject.Find("defaultCar1").GetComponent<Player>();
-        otherplayer2 = GameObject.Find("defaultCar3").GetComponent<Player>();
-        otherplayer3 = GameObject.Find("defaultCar4").GetComponent<Player>();
+        playerScript.Money = playerScript.Money + (marry_mony * makePlayerPrefabScript.GetPlayerNum());
+      }
+      //それ以外のプレイヤーだったら（お金を払う側）
+      else
+      {
+        otherplayer = players[i].GetComponent<Player>();
 
-        playerScript.Money = playerScript.Money + (marry_mony*3);
-        otherplayer1.Money = otherplayer1.Money - marry_mony;
-        otherplayer2.Money = otherplayer2.Money - marry_mony;
-        otherplayer3.Money = otherplayer3.Money - marry_mony;
-        break;
-      case 3:
-        playerScript = GameObject.Find("defaultCar3").GetComponent<Player>();
-        otherplayer1 = GameObject.Find("defaultCar2").GetComponent<Player>();
-        otherplayer2 = GameObject.Find("defaultCar1").GetComponent<Player>();
-        otherplayer3 = GameObject.Find("defaultCar4").GetComponent<Player>();
-
-        playerScript.Money = playerScript.Money + (marry_mony*3);
-        otherplayer1.Money = otherplayer1.Money - marry_mony;
-        otherplayer2.Money = otherplayer2.Money - marry_mony;
-        otherplayer3.Money = otherplayer3.Money - marry_mony;
-        break;
-      case 4:
-        playerScript = GameObject.Find("defaultCar4").GetComponent<Player>();
-        otherplayer1 = GameObject.Find("defaultCar2").GetComponent<Player>();
-        otherplayer2 = GameObject.Find("defaultCar3").GetComponent<Player>();
-        otherplayer3 = GameObject.Find("defaultCar1").GetComponent<Player>();
-
-        playerScript.Money = playerScript.Money + (marry_mony*3);
-        otherplayer1.Money = otherplayer1.Money - marry_mony;
-        otherplayer2.Money = otherplayer2.Money - marry_mony;
-        otherplayer3.Money = otherplayer3.Money - marry_mony;
-        break;
-      default:
-        break;
+        otherplayer.Money = otherplayer.Money - marry_mony;
+      }
     }
 
     //イベント固有
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    textDialogManegerScript.SetdialogText("結婚する\n全員からお祝い金(3000$x3)をもらう");
+    textDialogManegerScript.SetdialogText("結婚する\n全員からお祝い金(3000$x" + makePlayerPrefabScript.GetPlayerNum() + ")をもらう");
     playerScript.Spouse = true;
     StartCoroutine("sleep");
 
@@ -104,9 +76,9 @@ public class Event24 : MonoBehaviour
   {
     //イベント固有
     Debug.Log("イベント開始");
-    yield return new WaitForSeconds(1f);  //10秒待つ
+    yield return new WaitForSeconds(1f);  //1秒待つ
     Debug.Log("イベント終了");
-    //text.SetActive(false);
+
     textDialogManegerScript.HiddentextDialogBox();
 
     //どのイベントにも必要なやつ
