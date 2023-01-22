@@ -46,13 +46,9 @@ public class Player : MonoBehaviour
   public int PayDayCount { get => payDayCount; set => payDayCount = value; }
   public bool RestTurn { get => restTurn; set => restTurn = value; }
 
-  // Start is called before the first frame update
+  
   void Start()
   {
-    //new Player("aa", 30000, 0, "red", "", false, 0, 0, false);
-    //status = GameObject.Find("Status");
-    //status.SetActive(false);
-    //Debug.Log(status);
     this.PayDayCount = 0;
     this.RestTurn = false;
 
@@ -91,8 +87,6 @@ public class Player : MonoBehaviour
 
   void OnTriggerExit(Collider other)
   {
-    //Debug.Log(other.name);
-    // 衝突した相手オブジェクトのタグが"CheckPoint"
     if (other.tag == "PayDay")
     {
       // 分岐判定をtrueにする
