@@ -7,12 +7,10 @@ using TMPro;
 public class PlayerStatusUI : MonoBehaviour
 {
   private GameObject status;
-  private TurnSystem turnSystemScript;
 
-  public Player player1;
-  public Player player2;
-  public Player player3;
-  public Player player4;
+  private GameObject[] players;
+
+  private MakePlayerPrefab makePlayerPrefabScript;
 
   //player1の情報を格納するテキストUI
   #region
@@ -62,15 +60,14 @@ public class PlayerStatusUI : MonoBehaviour
   private List<TextMeshProUGUI> player4Texts;
   #endregion
 
-  private List<Player> players;
-
   private List<List<TextMeshProUGUI>> playersTexts;
 
   // Start is called before the first frame update
   void Start()
   {
-    turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
     status = GameObject.Find("Status");
+
+    makePlayerPrefabScript = GameObject.Find("GameScripts").GetComponent<MakePlayerPrefab>();
 
     player1Texts = new List<TextMeshProUGUI>() { player1Name, player1Money, player1Job, player1Spouse, player1ChildrenNum, player1HasHouse };
     player2Texts = new List<TextMeshProUGUI>() { player2Name, player2Money, player2Job, player2Spouse, player2ChildrenNum, player2HasHouse };
@@ -78,22 +75,31 @@ public class PlayerStatusUI : MonoBehaviour
     player4Texts = new List<TextMeshProUGUI>() { player4Name, player4Money, player4Job, player4Spouse, player4ChildrenNum, player4HasHouse };
     playersTexts = new List<List<TextMeshProUGUI>>() { player1Texts, player2Texts, player3Texts, player4Texts };
 
-    players = new List<Player>() { player1, player2, player3, player4 };
     UpdatePlayersStatus();
+
     status.SetActive(false);
   }
 
   public void UpdatePlayersStatus()
   {
-    for (int i = 0;i < 4; i++){
+    //プレイヤー配列を取得
+    players = makePlayerPrefabScript.GetPlayers();
+
+    for (int i = 0;i < makePlayerPrefabScript.GetPlayerNum(); i++){
+      //プレイヤースクリプトを取得
+      Player player = players[i].GetComponent<Player>();
+
       //プレイヤー名
-      playersTexts[i][0].text = players[i].PlyaerName;
+      playersTexts[i][0].text = player.PlyaerName;
+
       //所持金
-      playersTexts[i][1].text = players[i].Money.ToString("N0");
+      playersTexts[i][1].text = player.Money.ToString("N0");
+
       //仕事
-      playersTexts[i][2].text = players[i].Job;
+      playersTexts[i][2].text = player.Job;
+
       //配偶者の有・無
-      if (players[i].Spouse)
+      if (player.Spouse)
       {
         playersTexts[i][3].text = "有り";
       }
@@ -101,10 +107,12 @@ public class PlayerStatusUI : MonoBehaviour
       {
         playersTexts[i][3].text = "無し";
       }
+
       //子供の数
-      playersTexts[i][4].text = players[i].Child.ToString() + " 人";
+      playersTexts[i][4].text = player.Child.ToString() + " 人";
+
       //持ち家の有・無
-      if (players[i].HouseNumber != 100)
+      if (player.HouseNumber != 100)
       {
         playersTexts[i][5].text = "有り";
       }

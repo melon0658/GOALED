@@ -5,17 +5,20 @@ using System;
 
 public class EventSystem : MonoBehaviour
 {
-  public Player playerScript;
   public GameObject eventScriptsMaster;
+
+  private Player playerScript;
   private TurnSystem turnSystemScript;
+
+  public void SetpPlayerScript(Player playerScript)
+  {
+    this.playerScript = playerScript;
+  }
 
   public void EventExecutionManager()
   {
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
     int nowPosIndex = playerScript.NowPosIndex;
-
-    //switch構文で書くしかない　ゴミ
-    //eventScriptsMaster.GetComponent<EventEndGame>().EndGame();
 
     //車があるマスのイベントを実行
     switch (nowPosIndex)

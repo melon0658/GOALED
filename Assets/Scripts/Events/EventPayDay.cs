@@ -5,6 +5,8 @@ using UnityEngine;
 public class EventPayDay : MonoBehaviour
 {
   private TurnSystem turnSystemScript;
+  private MakePlayerPrefab makePlayerPrefabScript;
+
   private Player playerScript;
   private GameObject canvas;
   private TextDialogManager textDialogManegerScript;
@@ -31,24 +33,18 @@ public class EventPayDay : MonoBehaviour
   {
     //どのイベントにも必要なやつ
     turnSystemScript = GameObject.Find("GameScripts").GetComponent<TurnSystem>();
-    //現在のターンが誰かを取得して、それに応じてプレイヤースクリプトを取得
-    switch (turnSystemScript.GetnowTurnPlayerNum())
-    {
-      case 1:
-        playerScript = GameObject.Find("defaultCar1").GetComponent<Player>();
-        break;
-      case 2:
-        playerScript = GameObject.Find("defaultCar2").GetComponent<Player>();
-        break;
-      case 3:
-        playerScript = GameObject.Find("defaultCar3").GetComponent<Player>();
-        break;
-      case 4:
-        playerScript = GameObject.Find("defaultCar4").GetComponent<Player>();
-        break;
-      default:
-        break;
-    }
+    makePlayerPrefabScript = GameObject.Find("GameScripts").GetComponent<MakePlayerPrefab>();
+
+    //現在のターンが誰かを取得
+    int nowTrunPlayerNum = turnSystemScript.GetnowTurnPlayerNum();
+
+    //それに応じてプレイヤーを取得
+    GameObject Player = makePlayerPrefabScript.GetPlayers()[nowTrunPlayerNum];
+
+    //プレイヤースクリプトを取得
+    playerScript = Player.GetComponent<Player>();
+
+    //どのイベントにも必要なやつここまで
 
     //イベント固有
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();

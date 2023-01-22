@@ -6,11 +6,10 @@ using UnityEngine;
 public class TurnSystem : MonoBehaviour
 {
   //各プレイヤーの車
-  public GameObject player1;
-  public GameObject player2;
-  public GameObject player3;
-  public GameObject player4;
-
+  private GameObject player1;
+  private GameObject player2;
+  private GameObject player3;
+  private GameObject player4;
   private GameObject[] Players;
 
   //各プレイヤーの基本マテリアル
@@ -18,7 +17,6 @@ public class TurnSystem : MonoBehaviour
   public Material player2BaseMaterial;
   public Material player3BaseMaterial;
   public Material player4BaseMaterial;
-
   private Material[] BaseMaterials;
 
   //各プレイヤーの透過マテリアル
@@ -26,7 +24,6 @@ public class TurnSystem : MonoBehaviour
   public Material player2ClearMaterial;
   public Material player3ClearMaterial;
   public Material player4ClearMaterial;
-
   private Material[] ClearMaterials;
 
   //各プレイヤーのカメラ
@@ -34,28 +31,28 @@ public class TurnSystem : MonoBehaviour
   private GameObject playerCamera2;
   private GameObject playerCamera3;
   private GameObject playerCamera4;
-
   private GameObject[] PlayerCameras;
 
+  //ルート分岐ボタン
   private GameObject upButton;
   private GameObject rightButton;
   private GameObject leftButton;
 
-
+  //各スクリプト
   private MakePlayerPrefab makePlayerPrefabScript;
   private EventEndGame eventEndGameScript;
   private MoneyUpdate moneyUpdateScript;
   private EventPayDay eventPayDayScript;
-  private AudioSource payDayEffect;
   public PlayerStatusUI playerStatusUIScript;
-  
 
-  //切り替えるオブジェクト
-  private ClickLeftRight gameScripts;
+  //給料日の効果音
+  private AudioSource payDayEffect;
+
+  //切り替えるスクリプト
+  private ClickLeftRight routeBranchScript;
   private Roulette rScript;
   private Action actionScript;
   private EventSystem eventSystemScript;
-
 
   //現在の操作プレイヤーが誰かを保存
   private int nowTurnPlayerNum = 0;
@@ -63,35 +60,37 @@ public class TurnSystem : MonoBehaviour
   //ゴールした人数を保存
   private int goalPlayerNum = 0;
 
+  //ターンスタート時の所持金を保持
   private int originalMoney = 0;
 
+  //外部参照系
+  #region
   public int GetnowTurnPlayerNum()
   {
     return nowTurnPlayerNum;
   }
+
 
   public void SetnowTurnPlayerNum(int nowTurnPlayerNum)
   {
     this.nowTurnPlayerNum = nowTurnPlayerNum;
   }
 
+
   public int GetgoalPlayerNum()
   {
     return goalPlayerNum;
   }
 
+
   public void SetgoalPlayerNum(int goalPlayerNum)
   {
     this.goalPlayerNum = goalPlayerNum;
   }
+  #endregion
 
-  // Start is called before the first frame update
   void Start()
   {
-    //ライトを消す(デバッグ用)
-    //GameObject.Find("StageObjects").transform.Find("Directional Light").gameObject.SetActive(false);
-    //RenderSettings.ambientIntensity = 0.5f;
-
     //真っ直ぐ進むボタン(ルート分岐)を取得して非表示
     upButton = GameObject.Find("Button Up");
     upButton.SetActive(false);
@@ -108,7 +107,7 @@ public class TurnSystem : MonoBehaviour
     makePlayerPrefabScript = GameObject.Find("GameScripts").GetComponent<MakePlayerPrefab>();
 
     //ルート分岐ボタン表示スクリプトを取得
-    gameScripts = GameObject.Find("GameScripts").GetComponent<ClickLeftRight>();
+    routeBranchScript = GameObject.Find("GameScripts").GetComponent<ClickLeftRight>();
 
     //ルーレット処理スクリプトを取得
     rScript = GameObject.Find("ButtonStop").GetComponent<Roulette>();
@@ -128,128 +127,62 @@ public class TurnSystem : MonoBehaviour
     //給料日イベント用効果音を取得
     payDayEffect = GameObject.Find("PaydayObjects").GetComponent<AudioSource>();
 
-    //プレイヤー配列(気が向いたらfor文でコード短縮化実装)
+    //プレイヤー配列
     Players = new GameObject[] { player1, player2, player3, player4 };
+
+    //プレイヤーカメラ配列
     PlayerCameras = new GameObject[] { playerCamera1, playerCamera2, playerCamera3, playerCamera4 };
+
+    //プレイヤーの基本マテリアル配列
     BaseMaterials = new Material[] { player1BaseMaterial, player2BaseMaterial, player3BaseMaterial, player4BaseMaterial };
+
+    //プレイヤーの透明化マテリアル配列
     ClearMaterials = new Material[] { player1ClearMaterial, player2ClearMaterial, player3ClearMaterial, player4ClearMaterial };
 
-
-    for (int i=0;i < makePlayerPrefabScript.GetPlayerNum(); i++)
+    //プレイヤーの設定
+    for (int i = 0; i < makePlayerPrefabScript.GetPlayerNum(); i++)
     {
       //プレイヤースクリプトをプレイヤー配列に格納
-      Players[i] = GameObject.Find("Player" + (i+1));
+      Players[i] = GameObject.Find("Player" + (i + 1));
 
+      //最初は全員のカメラを非アクティブにする
       PlayerCameras[i] = Players[i].transform.Find("PlayerCamera").gameObject;
       PlayerCameras[i].SetActive(false);
 
+      //最初は全員の車を透明化する
       Players[i].GetComponent<Renderer>().material = ClearMaterials[i];
       Players[i].GetComponent<BoxCollider>().enabled = false;
     }
 
-    
-    //playerCamera1 = GameObject.Find("PlayerCamera");
-    //playerCamera1.SetActive(false);
-    //playerCamera2 = GameObject.Find("PlayerCamera");
-    //playerCamera2.SetActive(false);
-    //playerCamera3 = GameObject.Find("PlayerCamera");
-    //playerCamera3.SetActive(false);
-    //playerCamera4 = GameObject.Find("PlayerCamera");
-    //playerCamera4.SetActive(false);
-
-    //player1.GetComponent<Renderer>().material = player1ClearMaterial;
-    //player2.GetComponent<Renderer>().material = player2ClearMaterial;
-    //player3.GetComponent<Renderer>().material = player3ClearMaterial;
-    //player4.GetComponent<Renderer>().material = player4ClearMaterial;
-
-    //player1.GetComponent<BoxCollider>().enabled = false;
-    //player2.GetComponent<BoxCollider>().enabled = false;
-    //player3.GetComponent<BoxCollider>().enabled = false;
-    //player4.GetComponent<BoxCollider>().enabled = false;
-
+    //現在のターンのプレイヤーを設定
     nowTurnPlayerNum = 0;
 
+    //ターンの開始
     TurnStartSystemMaster();
   }
 
+
+  //現在のターンのプレイヤーのカメラをアクティブにする
   void OnPlayerCamera()
   {
-    //switch (nowTurnPlayerNum)
-    //{
-    //  case 1:
-    //    playerCamera1.SetActive(true);
-    //    break;
-    //  case 2:
-    //    playerCamera2.SetActive(true);
-    //    break;
-    //  case 3:
-    //    playerCamera3.SetActive(true);
-    //    break;
-    //  case 4:
-    //    playerCamera4.SetActive(true);
-    //    break;
-    //  default:
-    //    break;
-    //}
-    
     PlayerCameras[nowTurnPlayerNum].SetActive(true);
   }
 
+
+  //現在のターンのプレイヤーのカメラを非アクティブにする
   void OffPlayerCamera()
   {
-    //switch (nowTurnPlayerNum)
-    //{
-    //  case 1:
-    //    playerCamera1.SetActive(false);
-    //    break;
-    //  case 2:
-    //    playerCamera2.SetActive(false);
-    //    break;
-    //  case 3:
-    //    playerCamera3.SetActive(false);
-    //    break;
-    //  case 4:
-    //    playerCamera4.SetActive(false);
-    //    break;
-    //  default:
-    //    break;
-    //}
-
     PlayerCameras[nowTurnPlayerNum].SetActive(false);
   }
+
 
   //ターンの切り替え
   void ChangeNowPlayer()
   {
-    //switch (nowTurnPlayerNum)
-    //{
-    //  case 1:
-    //    player1.GetComponent<Renderer>().material = player1ClearMaterial;
-    //    player1.GetComponent<BoxCollider>().enabled = false;
-    //    SetnowTurnPlayerNum(2);
-    //    break;
-    //  case 2:
-    //    player2.GetComponent<Renderer>().material = player2ClearMaterial;
-    //    player2.GetComponent<BoxCollider>().enabled = false;
-    //    SetnowTurnPlayerNum(3);
-    //    break;
-    //  case 3:
-    //    player3.GetComponent<Renderer>().material = player3ClearMaterial;
-    //    player3.GetComponent<BoxCollider>().enabled = false;
-    //    SetnowTurnPlayerNum(4);
-    //    break;
-    //  case 4:
-    //    player4.GetComponent<Renderer>().material = player4ClearMaterial;
-    //    player4.GetComponent<BoxCollider>().enabled = false;
-    //    SetnowTurnPlayerNum(1);
-    //    break;
-    //  default:
-    //    break;
-    //}
-
-
     Players[nowTurnPlayerNum].GetComponent<Renderer>().material = ClearMaterials[nowTurnPlayerNum];
     Players[nowTurnPlayerNum].GetComponent<BoxCollider>().enabled = false;
+
+    //次のターンのプレイヤーの番号を指定
     if (nowTurnPlayerNum == makePlayerPrefabScript.GetPlayerNum() - 1)
     {
       SetnowTurnPlayerNum(0);
@@ -260,71 +193,29 @@ public class TurnSystem : MonoBehaviour
     }
   }
 
+
+  //ルート分岐ボタンの表示・非表示設定の変更
   void SwitchRouteSelectButton()
   {
     if (actionScript.GetCheckPoint())
     {
+      //スタートにいる
       if (actionScript.GetCheckPointName() == "CheckPosition")
       {
-        Debug.Log("CheckPosition");
+        //Debug.Log("CheckPosition");
         rightButton.SetActive(true);
         leftButton.SetActive(true);
       }
+      //結婚マスもしくは最後のルート分岐マスにいる
       else if (actionScript.GetCheckPointName() == "CheckPosition2" || actionScript.GetCheckPointName() == "CheckPosition3")
       {
-        Debug.Log("CheckPosition2orCheckPosition3");
+        //Debug.Log("CheckPosition2orCheckPosition3");
         leftButton.SetActive(true);
         upButton.SetActive(true);
       }
+      //ゴールにいる
       else if (actionScript.GetCheckPointName() == "GoalPosition")
       {
-        //switch (nowTurnPlayerNum)
-        //{
-        //  case 1:
-        //    if (player1.GetComponent<Player>().CheckGoal)
-        //    {
-        //      rScript.PowerBarStart();
-        //    }
-        //    else
-        //    {
-        //      player1.GetComponent<Player>().CheckGoal = true;
-        //      rScript.PowerBarStart();
-        //    }
-        //    break;
-        //  case 2:
-        //    if (player2.GetComponent<Player>().CheckGoal)
-        //    {
-        //      rScript.PowerBarStart();
-        //    }
-        //    else
-        //    {
-        //      player2.GetComponent<Player>().CheckGoal = true;
-        //      rScript.PowerBarStart();
-        //    }
-        //    break;
-        //  case 3:
-        //    if (player3.GetComponent<Player>().CheckGoal)
-        //    {
-        //      rScript.PowerBarStart();
-        //    }
-        //    else
-        //    {
-        //      player3.GetComponent<Player>().CheckGoal = true;
-        //      rScript.PowerBarStart();
-        //    }
-        //    break;
-        //  case 4:
-        //    if (player4.GetComponent<Player>().CheckGoal)
-        //    {
-        //      rScript.PowerBarStart();
-        //    }
-        //    else
-        //    {
-        //      player4.GetComponent<Player>().CheckGoal = true;
-        //      rScript.PowerBarStart();
-        //    }
-        //    break;
-        //}
         if (Players[nowTurnPlayerNum].GetComponent<Player>().CheckGoal)
         {
           rScript.PowerBarStart();
@@ -334,198 +225,67 @@ public class TurnSystem : MonoBehaviour
           Players[nowTurnPlayerNum].GetComponent<Player>().CheckGoal = true;
           rScript.PowerBarStart();
         }
-        Debug.Log("Goal");
+        //Debug.Log("Goal");
       }
     }
+    //それ以外のマスにいる
     else
     {
-      Debug.Log("No");
+      //Debug.Log("No");
       rScript.PowerBarStart();
     }
   }
 
-  //各プレーヤーのスクリプト・車に切り替え
+
+  //現在のターンのプレイヤーに付いているスクリプトに切り替え・車の切り替え
   void SetObjects()
   {
-    //switch (nowTurnPlayerNum)
-    //{
-    //  case 1:
-    //    gameScripts.car1 = player1;
-    //    gameScripts.mbScript = player1.GetComponent<MovementBaseScript>();
-    //    gameScripts.actionScript = player1.GetComponent<Action>();
-    //    rScript.car1 = player1;
-    //    rScript.mbScript = player1.GetComponent<MovementBaseScript>();
-    //    rScript.actionScript = player1.GetComponent<Action>();
+    //ClickLeftRightスクリプトで使われるMovementBaseScriptスクリプトを変更
+    routeBranchScript.SetmbScript(Players[nowTurnPlayerNum].GetComponent<MovementBaseScript>());
 
-    //    actionScript = player1.GetComponent<Action>();
-
-    //    eventSystemScript.playerScript = player1.GetComponent<Player>();
-
-    //    player1.GetComponent<Renderer>().material = player1BaseMaterial;
-    //    player1.GetComponent<BoxCollider>().enabled = true;
-
-    //    originalMoney = player1.GetComponent<Player>().Money;
-    //    break;
-    //  case 2:
-    //    gameScripts.car1 = player2;
-    //    gameScripts.mbScript = player2.GetComponent<MovementBaseScript>();
-    //    gameScripts.actionScript = player2.GetComponent<Action>();
-    //    rScript.car1 = player2;
-    //    rScript.mbScript = player2.GetComponent<MovementBaseScript>();
-    //    rScript.actionScript = player2.GetComponent<Action>();
-
-    //    actionScript = player2.GetComponent<Action>();
-
-    //    eventSystemScript.playerScript = player2.GetComponent<Player>();
-
-    //    player2.GetComponent<Renderer>().material = player2BaseMaterial;
-    //    player2.GetComponent<BoxCollider>().enabled = true;
-
-    //    originalMoney = player2.GetComponent<Player>().Money;
-    //    break;
-    //  case 3:
-    //    gameScripts.car1 = player3;
-    //    gameScripts.mbScript = player3.GetComponent<MovementBaseScript>();
-    //    gameScripts.actionScript = player3.GetComponent<Action>();
-    //    rScript.car1 = player3;
-    //    rScript.mbScript = player3.GetComponent<MovementBaseScript>();
-    //    rScript.actionScript = player3.GetComponent<Action>();
-
-    //    actionScript = player3.GetComponent<Action>();
-
-    //    eventSystemScript.playerScript = player3.GetComponent<Player>();
-
-    //    player3.GetComponent<Renderer>().material = player3BaseMaterial;
-    //    player3.GetComponent<BoxCollider>().enabled = true;
-
-    //    originalMoney = player3.GetComponent<Player>().Money;
-    //    break;
-    //  case 4:
-    //    gameScripts.car1 = player4;
-    //    gameScripts.mbScript = player4.GetComponent<MovementBaseScript>();
-    //    gameScripts.actionScript = player4.GetComponent<Action>();
-    //    rScript.car1 = player4;
-    //    rScript.mbScript = player4.GetComponent<MovementBaseScript>();
-    //    rScript.actionScript = player4.GetComponent<Action>();
-
-    //    actionScript = player4.GetComponent<Action>();
-
-    //    eventSystemScript.playerScript = player4.GetComponent<Player>();
-
-    //    player4.GetComponent<Renderer>().material = player4BaseMaterial;
-    //    player4.GetComponent<BoxCollider>().enabled = true;
-
-    //    originalMoney = player4.GetComponent<Player>().Money;
-    //    break;
-    //  default:
-    //    break;
-    //}
+    //ClickLeftRightスクリプトで使われるActionスクリプトを変更
+    routeBranchScript.SetActionScript(Players[nowTurnPlayerNum].GetComponent<Action>());
 
 
-    gameScripts.car1 = Players[nowTurnPlayerNum];
-    gameScripts.mbScript = Players[nowTurnPlayerNum].GetComponent<MovementBaseScript>();
-    gameScripts.actionScript = Players[nowTurnPlayerNum].GetComponent<Action>();
+    //Rouletteスクリプトで使われるcarオブジェクトを変更
+    rScript.SetCar(Players[nowTurnPlayerNum]);
 
-    rScript.car1 = Players[nowTurnPlayerNum];
-    rScript.mbScript = Players[nowTurnPlayerNum].GetComponent<MovementBaseScript>();
-    rScript.actionScript = Players[nowTurnPlayerNum].GetComponent<Action>();
+    //Rouletteスクリプトで使われるMovementBaseScriptスクリプトを変更
+    rScript.SetmbScript(Players[nowTurnPlayerNum].GetComponent<MovementBaseScript>());
+    //rScript.actionScript = Players[nowTurnPlayerNum].GetComponent<Action>();
 
+
+    //Actionスクリプトを現在のプレイヤーのものに変更
     actionScript = Players[nowTurnPlayerNum].GetComponent<Action>();
 
-    eventSystemScript.playerScript = Players[nowTurnPlayerNum].GetComponent<Player>();
 
+    //EventSystemスクリプトで使われるPlayerスクリプトを変更
+    eventSystemScript.SetpPlayerScript(Players[nowTurnPlayerNum].GetComponent<Player>());
+
+
+    //現在のターンのプレイヤーの車のマテリアルをもとに戻して透明化解除
     Players[nowTurnPlayerNum].GetComponent<Renderer>().material = BaseMaterials[nowTurnPlayerNum];
     Players[nowTurnPlayerNum].GetComponent<BoxCollider>().enabled = true;
 
+    //現在のターンのプレイヤーの所持金を設定（お金の効果音の発動判定に使う）
     originalMoney = Players[nowTurnPlayerNum].GetComponent<Player>().Money;
   }
 
+
+  //所持金表示UIの金額が変わっていたらお金の音を鳴らす
   private void JudgeOnSound()
   {
-    //switch (nowTurnPlayerNum)
-    //{
-    //  case 1:
-    //    if (player1.GetComponent<Player>().Money != originalMoney)
-    //    {
-    //      payDayEffect.PlayOneShot(payDayEffect.clip);
-    //    }
-    //    break;
-    //  case 2:
-    //    if (player2.GetComponent<Player>().Money != originalMoney)
-    //    {
-    //      payDayEffect.PlayOneShot(payDayEffect.clip);
-    //    }
-    //    break;
-    //  case 3:
-    //    if (player3.GetComponent<Player>().Money != originalMoney)
-    //    {
-    //      payDayEffect.PlayOneShot(payDayEffect.clip);
-    //    }
-    //    break;
-    //  case 4:
-    //    if (player4.GetComponent<Player>().Money != originalMoney)
-    //    {
-    //      payDayEffect.PlayOneShot(payDayEffect.clip);
-    //    }
-    //    break;
-    //  default:
-    //    break;
-    //}
-
     if (Players[nowTurnPlayerNum].GetComponent<Player>().Money != originalMoney)
     {
       payDayEffect.PlayOneShot(payDayEffect.clip);
     }
-
   }
+
+
+  //給料日判定
   public void CheckPayDay()
   {
-    //switch (nowTurnPlayerNum)
-    //{
-    //  case 1:
-    //    if(player1.GetComponent<Player>().PayDayCount != 0)
-    //    {
-    //      eventPayDayScript.execution();
-    //    }
-    //    else
-    //    {
-    //      LastProcessing();
-    //    }
-    //    break;
-    //  case 2:
-    //    if (player2.GetComponent<Player>().PayDayCount != 0)
-    //    {
-    //      eventPayDayScript.execution();
-    //    }
-    //    else
-    //    {
-    //      LastProcessing();
-    //    }
-    //    break;
-    //  case 3:
-    //    if (player3.GetComponent<Player>().PayDayCount != 0)
-    //    {
-    //      eventPayDayScript.execution();
-    //    }
-    //    else
-    //    {
-    //      LastProcessing();
-    //    }
-    //    break;
-    //  case 4:
-    //    if (player4.GetComponent<Player>().PayDayCount != 0)
-    //    {
-    //      eventPayDayScript.execution();
-    //    }
-    //    else
-    //    {
-    //      LastProcessing();
-    //    }
-    //    break;
-    //  default:
-    //    break;
-    //}
-
+    //給料日にいるもしくは通り過ぎていたら給料日イベントを実行
     if (Players[nowTurnPlayerNum].GetComponent<Player>().PayDayCount != 0)
     {
       eventPayDayScript.execution();
@@ -536,11 +296,13 @@ public class TurnSystem : MonoBehaviour
     }
   }
 
+
+  //4人全員ゴールしているか判定を行い次のターンを始めるか決める
   public void LastProcessing()
   {
     playerStatusUIScript.UpdatePlayersStatus();
-    //4人全員ゴールしているか判定
-    if (!CheckEndGame())
+
+    if (goalPlayerNum != makePlayerPrefabScript.GetPlayerNum())
     {
       OffPlayerCamera();
       ChangeNowPlayer();
@@ -553,18 +315,8 @@ public class TurnSystem : MonoBehaviour
     }
   }
 
-  bool CheckEndGame()
-  {
-    if(goalPlayerNum == 4)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }
 
+  //ターンを始める際の処理をまとめた関数
   public void TurnStartSystemMaster()
   {
     Debug.Log("Start");
@@ -582,6 +334,8 @@ public class TurnSystem : MonoBehaviour
     SwitchRouteSelectButton();
   }
 
+
+  //ターン終わる際の処理をまとめた関数
   public void TurnEndSystemMaster()
   {
     playerStatusUIScript.UpdatePlayersStatus();
@@ -590,18 +344,6 @@ public class TurnSystem : MonoBehaviour
     JudgeOnSound();
 
     StartCoroutine("sleep");
-
-    ////4人全員ゴールしているか判定
-    //if (!CheckEndGame())
-    //{
-
-    //}
-    //else
-    //{
-    //  playerStatusUIScript.UpdatePlayersStatus();
-    //  moneyUpdateScript.UpdateMoneyText();
-    //  CheckPayDay();
-    //}
   }
   private IEnumerator sleep()
   {
