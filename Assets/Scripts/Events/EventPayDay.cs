@@ -39,10 +39,10 @@ public class EventPayDay : MonoBehaviour
     int nowTrunPlayerNum = turnSystemScript.GetnowTurnPlayerNum();
 
     //それに応じてプレイヤーを取得
-    GameObject Player = makePlayerPrefabScript.GetPlayers()[nowTrunPlayerNum];
+    GameObject player = makePlayerPrefabScript.GetPlayers()[nowTrunPlayerNum];
 
     //プレイヤースクリプトを取得
-    playerScript = Player.GetComponent<Player>();
+    playerScript = player.GetComponent<Player>();
 
     //どのイベントにも必要なやつここまで
 
@@ -124,11 +124,11 @@ public class EventPayDay : MonoBehaviour
     }
     if(playerScript.PayDayCount == 1)
     {
-      textDialogManegerScript.SetdialogText("給料日がやってきた!!\n" + jobName + " : $" + salary.ToString("N0"));
+      textDialogManegerScript.SetdialogText("給料日がやってきた!!\n" + jobName + " : " + salary.ToString("N0") + "$");
     }
     else
     {
-      textDialogManegerScript.SetdialogText("給料日がやってきた!!\n" + jobName + " : $" + salary.ToString("N0") + " × " + playerScript.PayDayCount + "回");
+      textDialogManegerScript.SetdialogText("給料日がやってきた!!\n" + jobName + " : " + salary.ToString("N0") + "$" + " × " + playerScript.PayDayCount + "回");
     }
 
     playerScript.Money = playerScript.Money + salary * playerScript.PayDayCount;
