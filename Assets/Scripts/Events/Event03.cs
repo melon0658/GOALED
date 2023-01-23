@@ -45,13 +45,13 @@ public class Event03 : MonoBehaviour
     int nowTrunPlayerNum = turnSystemScript.GetnowTurnPlayerNum();
 
     //それに応じてプレイヤーを取得
-    GameObject Player = makePlayerPrefabScript.GetPlayers()[nowTrunPlayerNum];
+    GameObject player = makePlayerPrefabScript.GetPlayers()[nowTrunPlayerNum];
 
     //プレイヤースクリプトを取得
-    playerScript = Player.GetComponent<Player>();
+    playerScript = player.GetComponent<Player>();
 
     //移動用スクリプトを取得
-    moveScript = Player.GetComponent<MovementBaseScript>();
+    moveScript = player.GetComponent<MovementBaseScript>();
 
     //どのイベントにも必要なやつここまで
 

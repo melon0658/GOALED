@@ -52,7 +52,7 @@ public class Event24 : MonoBehaviour
         //プレイヤースクリプトを取得
         playerScript = players[i].GetComponent<Player>();
 
-        playerScript.Money = playerScript.Money + (marry_mony * makePlayerPrefabScript.GetPlayerNum());
+        playerScript.Money = playerScript.Money + (marry_mony * (makePlayerPrefabScript.GetPlayerNum() - 1));
       }
       //それ以外のプレイヤーだったら（お金を払う側）
       else
@@ -66,8 +66,14 @@ public class Event24 : MonoBehaviour
     //イベント固有
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
-    textDialogManegerScript.SetdialogText("結婚する\n全員からお祝い金(3000$x" + makePlayerPrefabScript.GetPlayerNum() + ")をもらう");
+    textDialogManegerScript.SetdialogText("結婚する\n全員からお祝い金(3000$x" + (makePlayerPrefabScript.GetPlayerNum() - 1) + ")をもらう");
+    
+    //配偶者を有りに変える
     playerScript.Spouse = true;
+
+    //配偶者を乗せる
+    players[nowTrunPlayerNum].transform.Find("Sub_Chara").gameObject.SetActive(true);
+
     StartCoroutine("sleep");
 
   }

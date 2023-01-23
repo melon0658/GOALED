@@ -43,10 +43,10 @@ public class Event46 : MonoBehaviour
     int nowTrunPlayerNum = turnSystemScript.GetnowTurnPlayerNum();
 
     //それに応じてプレイヤーを取得
-    GameObject Player = makePlayerPrefabScript.GetPlayers()[nowTrunPlayerNum];
+    GameObject player = makePlayerPrefabScript.GetPlayers()[nowTrunPlayerNum];
 
     //プレイヤースクリプトを取得
-    playerScript = Player.GetComponent<Player>();
+    playerScript = player.GetComponent<Player>();
 
     //どのイベントにも必要なやつここまで
 
@@ -54,7 +54,22 @@ public class Event46 : MonoBehaviour
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
     textDialogManegerScript.ShowtextDialogBox();
     textDialogManegerScript.SetdialogText("子供が生まれる");
+
+    //子供の数を増やす
     playerScript.Child = playerScript.Child + 1;
+
+    //子供1人目
+    if(playerScript.Child == 0)
+    {
+      //子供を乗せる
+      player.transform.Find("K1").gameObject.SetActive(true);
+    }
+    //子供2人目
+    else if (playerScript.Child == 1)
+    {
+      //子供を乗せる
+      player.transform.Find("K2").gameObject.SetActive(true);
+    }
 
     StartCoroutine("sleep");
 

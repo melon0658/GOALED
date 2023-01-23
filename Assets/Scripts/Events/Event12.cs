@@ -44,10 +44,10 @@ public class Event12 : MonoBehaviour
     int nowTrunPlayerNum = turnSystemScript.GetnowTurnPlayerNum();
 
     //それに応じてプレイヤーを取得
-    GameObject Player = makePlayerPrefabScript.GetPlayers()[nowTrunPlayerNum];
+    GameObject player = makePlayerPrefabScript.GetPlayers()[nowTrunPlayerNum];
 
     //プレイヤースクリプトを取得
-    playerScript = Player.GetComponent<Player>();
+    playerScript = player.GetComponent<Player>();
 
     //どのイベントにも必要なやつここまで
 

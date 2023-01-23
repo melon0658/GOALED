@@ -33,10 +33,10 @@ public class Event82 : MonoBehaviour
     int nowTrunPlayerNum = turnSystemScript.GetnowTurnPlayerNum();
 
     //それに応じてプレイヤーを取得
-    GameObject Player = makePlayerPrefabScript.GetPlayers()[nowTrunPlayerNum];
+    GameObject player = makePlayerPrefabScript.GetPlayers()[nowTrunPlayerNum];
 
     //プレイヤースクリプトを取得
-    playerScript = Player.GetComponent<Player>();
+    playerScript = player.GetComponent<Player>();
 
     //どのイベントにも必要なやつここまで
 
@@ -50,7 +50,7 @@ public class Event82 : MonoBehaviour
       playerScript.Money = playerScript.Money + (count * 1000);
       //テキスト表示
       //Debug.Log("A");
-      setText = "ゴールした特典として、\nルーレットの目×1000$もらえた!!\n+" + count*1000 + "$";
+      setText = "ゴールした特典として、\nルーレットの目×1000$もらえた!!\n" + count*1000 + "$";
     }
     else
     {
@@ -60,19 +60,19 @@ public class Event82 : MonoBehaviour
       {
         case 0:
           playerScript.Money = playerScript.Money + 100000;
-          setText = (turnSystemScript.GetgoalPlayerNum()+1) + "番目にゴール!!!\n+" + 100000 + "$";
+          setText = (turnSystemScript.GetgoalPlayerNum()+1) + "番目にゴール!!!\n" + 100000 + "$";
           break;
         case 1:
           playerScript.Money = playerScript.Money + 80000;
-          setText = (turnSystemScript.GetgoalPlayerNum() + 1) + "番目にゴール!!!\n+" + 80000 + "$";
+          setText = (turnSystemScript.GetgoalPlayerNum() + 1) + "番目にゴール!!!\n" + 80000 + "$";
           break;
         case 2:
           playerScript.Money = playerScript.Money + 50000;
-          setText = (turnSystemScript.GetgoalPlayerNum() + 1) + "番目にゴール!!!\n+" + 50000 + "$";
+          setText = (turnSystemScript.GetgoalPlayerNum() + 1) + "番目にゴール!!!\n" + 50000 + "$";
           break;
         case 3:
           playerScript.Money = playerScript.Money + 10000;
-          setText = (turnSystemScript.GetgoalPlayerNum() + 1) + "番目にゴール!!!\n+" + 10000 + "$";
+          setText = (turnSystemScript.GetgoalPlayerNum() + 1) + "番目にゴール!!!\n" + 10000 + "$";
           break;
         default:
           break;
