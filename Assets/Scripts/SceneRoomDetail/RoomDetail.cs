@@ -17,8 +17,6 @@ public class RoomDetail : MonoBehaviour
   // private AsyncServerStreamingCall<Multiplay.SyncRoomUsersResponse> call;
   void Start()
   {
-    // channel = new Channel(serverInfo.host, serverInfo.port, ChannelCredentials.Insecure);
-    // roomClient = new Multiplay.RoomService.RoomServiceClient(channel);
     SyncRoom();
     listenGameStart();
   }
@@ -34,41 +32,21 @@ public class RoomDetail : MonoBehaviour
 
   private async void SyncRoom()
   {
-    // call = roomClient.SyncRoomUsers(new Multiplay.SyncRoomUsersRequest { RoomId = playerInfo.player.RoomId, PlayerId = playerInfo.player.PlayerId });
-    // while (await call.ResponseStream.MoveNext())
-    // {
-    //   Debug.Log(call.ResponseStream.Current);
-    //   var player = call.ResponseStream.Current.Player;
-    //   if (call.ResponseStream.Current.IsLeft)
-    //   {
-    //     players.Remove(player.PlayerId);
-    //   }
-    //   else
-    //   {
-    //     players[player.PlayerId] = player;
-    //   }
-    //   UpdateUserList();
-    // }
     while (!isFinished)
     {
-      var response = await matchingServer.client.GetPublicRoomAsync(new MatchingService.GetPublicRoomRequest { });
-      foreach (MatchingService.Room room in response.Rooms)
+      var response = await matchingServer.client.GetRoomDetailAsync(new MatchingService.GetRoomDetailRequest { RoomId = playerInfo.player.RoomId, Password = playerInfo.password });
+      var room = response.Room;
+      if (room.Id == playerInfo.player.RoomId)
       {
-        if (room.Id == playerInfo.player.RoomId)
+        players = new Dictionary<string, MatchingService.Player>();
+        foreach (MatchingService.Player player in room.Players)
         {
-          players = new Dictionary<string, MatchingService.Player>();
-          foreach (MatchingService.Player player in room.Players)
-          {
-            players[player.Id] = player;
-          }
-          UpdateUserList();
-          Debug.Log(room + " " + playerInfo.player.Id);
-          if (room.Owner == playerInfo.player.Id)
-          {
-            Debug.Log("owner");
-            gameStartButton.SetActive(true);
-          }
-          break;
+          players[player.Id] = player;
+        }
+        UpdateUserList();
+        if (room.Owner == playerInfo.player.Id)
+        {
+          gameStartButton.SetActive(true);
         }
       }
       UpdateUserList();
@@ -108,7 +86,7 @@ public class RoomDetail : MonoBehaviour
       if (call.ResponseStream.Current.Success)
       {
         isFinished = true;
-        SceneManager.LoadScene("MainGameScene");
+        SceneManager.LoadScene("GenerateMapScene");
       }
     }
   }
@@ -122,6 +100,6 @@ public class RoomDetail : MonoBehaviour
   {
     isFinished = true;
     await matchingServer.client.LeaveRoomAsync(new MatchingService.LeaveRoomRequest { PlayerId = playerInfo.player.Id, RoomId = playerInfo.player.RoomId });
-    SceneManager.LoadScene("RoomMatchScene");
+    SceneManager.LoadScene("SelectRoomScene");
   }
 }

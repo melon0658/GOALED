@@ -1322,8 +1322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89094c933525b9a4fb216e8bf5e048a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverInfo: {fileID: 11400000, guid: 750ca021cb261254bb9de1f3aca9fce3, type: 2}
-  playerInfo: {fileID: 11400000, guid: a720ea19eed1a644e845d59e131bf8bb, type: 2}
+  matchingServer: {fileID: 11400000, guid: b5573040f8be2504eb1f03f22a55a484, type: 2}
+  playerInfo: {fileID: 11400000, guid: 962fc638adbb3c64d9273342ac0b5ed9, type: 2}
 --- !u!1 &1717486431
 GameObject:
   m_ObjectHideFlags: 0

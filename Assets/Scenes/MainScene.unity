@@ -6020,8 +6020,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Pushed TabKey
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3fab7eb4817f84480b9193f3222f44c6, type: 2}
-  m_sharedMaterial: {fileID: 3852947645353801178, guid: 3fab7eb4817f84480b9193f3222f44c6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -16145,29 +16145,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1211300634}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4618d53b015ddb49980cf9413f1ea8b, type: 3}
+  m_Script: {fileID: 11500000, guid: b92df40d86f6a4d49895b63a56ad0cb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameServer: {fileID: 11400000, guid: 4e135c7950ccbe24d95b8c691e2f56f1, type: 2}
   matchingServer: {fileID: 11400000, guid: b5573040f8be2504eb1f03f22a55a484, type: 2}
   playerInfo: {fileID: 11400000, guid: 962fc638adbb3c64d9273342ac0b5ed9, type: 2}
-  isDebugMode: 1
+  isDebugMode: 0
   isPrintLog: 0
   onChangePlayerData:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DisplayData, Assembly-CSharp
-        m_MethodName: SetText
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!4 &1211300636
 Transform:
   m_ObjectHideFlags: 0
@@ -19077,15 +19065,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3236995dae9972f498237ce6c1800de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefub: defaultCar
-  isSyncPosition: 1
-  syncPositionPeriod: 0.001
-  isSyncRotation: 1
-  syncRotationPeriod: 0.001
-  isSyncScale: 1
-  syncScalePeriod: 0.001
-  isSyncAnimation: 0
-  isRoomObject: 0
 --- !u!114 &1407028531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24139,15 +24118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3236995dae9972f498237ce6c1800de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefub: defaultCar
-  isSyncPosition: 1
-  syncPositionPeriod: 0.001
-  isSyncRotation: 1
-  syncRotationPeriod: 0.001
-  isSyncScale: 1
-  syncScalePeriod: 0.001
-  isSyncAnimation: 0
-  isRoomObject: 0
 --- !u!114 &1686641249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29144,15 +29114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3236995dae9972f498237ce6c1800de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefub: defaultCar
-  isSyncPosition: 1
-  syncPositionPeriod: 0.001
-  isSyncRotation: 1
-  syncRotationPeriod: 0.001
-  isSyncScale: 1
-  syncScalePeriod: 0.001
-  isSyncAnimation: 0
-  isRoomObject: 0
 --- !u!114 &2075591367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32004,15 +31965,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3236995dae9972f498237ce6c1800de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefub: defaultCar
-  isSyncPosition: 1
-  syncPositionPeriod: 0.001
-  isSyncRotation: 1
-  syncRotationPeriod: 0.001
-  isSyncScale: 1
-  syncScalePeriod: 0.001
-  isSyncAnimation: 0
-  isRoomObject: 0
 --- !u!114 &8164078560135513012
 MonoBehaviour:
   m_ObjectHideFlags: 0

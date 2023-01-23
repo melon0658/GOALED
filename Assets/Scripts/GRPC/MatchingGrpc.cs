@@ -50,9 +50,9 @@ namespace MatchingService {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::MatchingService.GetPlayerIdResponse> __Marshaller_MatchingService_GetPlayerIdResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::MatchingService.GetPlayerIdResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::MatchingService.GetPublicRoomRequest> __Marshaller_MatchingService_GetPublicRoomRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::MatchingService.GetPublicRoomRequest.Parser));
+    static readonly grpc::Marshaller<global::MatchingService.GetPublicRoomsRequest> __Marshaller_MatchingService_GetPublicRoomsRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::MatchingService.GetPublicRoomsRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::MatchingService.GetPublicRoomResponse> __Marshaller_MatchingService_GetPublicRoomResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::MatchingService.GetPublicRoomResponse.Parser));
+    static readonly grpc::Marshaller<global::MatchingService.GetPublicRoomsResponse> __Marshaller_MatchingService_GetPublicRoomsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::MatchingService.GetPublicRoomsResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::MatchingService.CreatePublicRoomRequest> __Marshaller_MatchingService_CreatePublicRoomRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::MatchingService.CreatePublicRoomRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -81,6 +81,10 @@ namespace MatchingService {
     static readonly grpc::Marshaller<global::MatchingService.GetStartGameStreamRequest> __Marshaller_MatchingService_GetStartGameStreamRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::MatchingService.GetStartGameStreamRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::MatchingService.GetStartGameStreamResponse> __Marshaller_MatchingService_GetStartGameStreamResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::MatchingService.GetStartGameStreamResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::MatchingService.GetRoomDetailRequest> __Marshaller_MatchingService_GetRoomDetailRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::MatchingService.GetRoomDetailRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::MatchingService.GetRoomDetailResponse> __Marshaller_MatchingService_GetRoomDetailResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::MatchingService.GetRoomDetailResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::MatchingService.GetPlayerIdRequest, global::MatchingService.GetPlayerIdResponse> __Method_GetPlayerId = new grpc::Method<global::MatchingService.GetPlayerIdRequest, global::MatchingService.GetPlayerIdResponse>(
@@ -91,12 +95,12 @@ namespace MatchingService {
         __Marshaller_MatchingService_GetPlayerIdResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::MatchingService.GetPublicRoomRequest, global::MatchingService.GetPublicRoomResponse> __Method_GetPublicRoom = new grpc::Method<global::MatchingService.GetPublicRoomRequest, global::MatchingService.GetPublicRoomResponse>(
+    static readonly grpc::Method<global::MatchingService.GetPublicRoomsRequest, global::MatchingService.GetPublicRoomsResponse> __Method_GetPublicRooms = new grpc::Method<global::MatchingService.GetPublicRoomsRequest, global::MatchingService.GetPublicRoomsResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "GetPublicRoom",
-        __Marshaller_MatchingService_GetPublicRoomRequest,
-        __Marshaller_MatchingService_GetPublicRoomResponse);
+        "GetPublicRooms",
+        __Marshaller_MatchingService_GetPublicRoomsRequest,
+        __Marshaller_MatchingService_GetPublicRoomsResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::MatchingService.CreatePublicRoomRequest, global::MatchingService.CreatePublicRoomResponse> __Method_CreatePublicRoom = new grpc::Method<global::MatchingService.CreatePublicRoomRequest, global::MatchingService.CreatePublicRoomResponse>(
@@ -154,6 +158,14 @@ namespace MatchingService {
         __Marshaller_MatchingService_GetStartGameStreamRequest,
         __Marshaller_MatchingService_GetStartGameStreamResponse);
 
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::MatchingService.GetRoomDetailRequest, global::MatchingService.GetRoomDetailResponse> __Method_GetRoomDetail = new grpc::Method<global::MatchingService.GetRoomDetailRequest, global::MatchingService.GetRoomDetailResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetRoomDetail",
+        __Marshaller_MatchingService_GetRoomDetailRequest,
+        __Marshaller_MatchingService_GetRoomDetailResponse);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -171,7 +183,7 @@ namespace MatchingService {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::MatchingService.GetPublicRoomResponse> GetPublicRoom(global::MatchingService.GetPublicRoomRequest request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::MatchingService.GetPublicRoomsResponse> GetPublicRooms(global::MatchingService.GetPublicRoomsRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -214,6 +226,12 @@ namespace MatchingService {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task GetStartGameStream(global::MatchingService.GetStartGameStreamRequest request, grpc::IServerStreamWriter<global::MatchingService.GetStartGameStreamResponse> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::MatchingService.GetRoomDetailResponse> GetRoomDetail(global::MatchingService.GetRoomDetailRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -268,24 +286,24 @@ namespace MatchingService {
         return CallInvoker.AsyncUnaryCall(__Method_GetPlayerId, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::MatchingService.GetPublicRoomResponse GetPublicRoom(global::MatchingService.GetPublicRoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::MatchingService.GetPublicRoomsResponse GetPublicRooms(global::MatchingService.GetPublicRoomsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return GetPublicRoom(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return GetPublicRooms(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::MatchingService.GetPublicRoomResponse GetPublicRoom(global::MatchingService.GetPublicRoomRequest request, grpc::CallOptions options)
+      public virtual global::MatchingService.GetPublicRoomsResponse GetPublicRooms(global::MatchingService.GetPublicRoomsRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_GetPublicRoom, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_GetPublicRooms, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::MatchingService.GetPublicRoomResponse> GetPublicRoomAsync(global::MatchingService.GetPublicRoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::MatchingService.GetPublicRoomsResponse> GetPublicRoomsAsync(global::MatchingService.GetPublicRoomsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return GetPublicRoomAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return GetPublicRoomsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::MatchingService.GetPublicRoomResponse> GetPublicRoomAsync(global::MatchingService.GetPublicRoomRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::MatchingService.GetPublicRoomsResponse> GetPublicRoomsAsync(global::MatchingService.GetPublicRoomsRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_GetPublicRoom, null, options, request);
+        return CallInvoker.AsyncUnaryCall(__Method_GetPublicRooms, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::MatchingService.CreatePublicRoomResponse CreatePublicRoom(global::MatchingService.CreatePublicRoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
@@ -417,6 +435,26 @@ namespace MatchingService {
       {
         return CallInvoker.AsyncServerStreamingCall(__Method_GetStartGameStream, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::MatchingService.GetRoomDetailResponse GetRoomDetail(global::MatchingService.GetRoomDetailRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetRoomDetail(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::MatchingService.GetRoomDetailResponse GetRoomDetail(global::MatchingService.GetRoomDetailRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetRoomDetail, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::MatchingService.GetRoomDetailResponse> GetRoomDetailAsync(global::MatchingService.GetRoomDetailRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetRoomDetailAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::MatchingService.GetRoomDetailResponse> GetRoomDetailAsync(global::MatchingService.GetRoomDetailRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetRoomDetail, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override MatchingServiceClient NewInstance(ClientBaseConfiguration configuration)
@@ -432,14 +470,15 @@ namespace MatchingService {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_GetPlayerId, serviceImpl.GetPlayerId)
-          .AddMethod(__Method_GetPublicRoom, serviceImpl.GetPublicRoom)
+          .AddMethod(__Method_GetPublicRooms, serviceImpl.GetPublicRooms)
           .AddMethod(__Method_CreatePublicRoom, serviceImpl.CreatePublicRoom)
           .AddMethod(__Method_CreatePrivateRoom, serviceImpl.CreatePrivateRoom)
           .AddMethod(__Method_JoinPublicRoom, serviceImpl.JoinPublicRoom)
           .AddMethod(__Method_JoinPrivateRoom, serviceImpl.JoinPrivateRoom)
           .AddMethod(__Method_LeaveRoom, serviceImpl.LeaveRoom)
           .AddMethod(__Method_StartGame, serviceImpl.StartGame)
-          .AddMethod(__Method_GetStartGameStream, serviceImpl.GetStartGameStream).Build();
+          .AddMethod(__Method_GetStartGameStream, serviceImpl.GetStartGameStream)
+          .AddMethod(__Method_GetRoomDetail, serviceImpl.GetRoomDetail).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -450,7 +489,7 @@ namespace MatchingService {
     public static void BindService(grpc::ServiceBinderBase serviceBinder, MatchingServiceBase serviceImpl)
     {
       serviceBinder.AddMethod(__Method_GetPlayerId, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::MatchingService.GetPlayerIdRequest, global::MatchingService.GetPlayerIdResponse>(serviceImpl.GetPlayerId));
-      serviceBinder.AddMethod(__Method_GetPublicRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::MatchingService.GetPublicRoomRequest, global::MatchingService.GetPublicRoomResponse>(serviceImpl.GetPublicRoom));
+      serviceBinder.AddMethod(__Method_GetPublicRooms, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::MatchingService.GetPublicRoomsRequest, global::MatchingService.GetPublicRoomsResponse>(serviceImpl.GetPublicRooms));
       serviceBinder.AddMethod(__Method_CreatePublicRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::MatchingService.CreatePublicRoomRequest, global::MatchingService.CreatePublicRoomResponse>(serviceImpl.CreatePublicRoom));
       serviceBinder.AddMethod(__Method_CreatePrivateRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::MatchingService.CreatePrivateRoomRequest, global::MatchingService.CreatePrivateRoomResponse>(serviceImpl.CreatePrivateRoom));
       serviceBinder.AddMethod(__Method_JoinPublicRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::MatchingService.JoinPublicRoomRequest, global::MatchingService.JoinPublicRoomResponse>(serviceImpl.JoinPublicRoom));
@@ -458,6 +497,7 @@ namespace MatchingService {
       serviceBinder.AddMethod(__Method_LeaveRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::MatchingService.LeaveRoomRequest, global::MatchingService.LeaveRoomResponse>(serviceImpl.LeaveRoom));
       serviceBinder.AddMethod(__Method_StartGame, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::MatchingService.StartGameRequest, global::MatchingService.StartGameResponse>(serviceImpl.StartGame));
       serviceBinder.AddMethod(__Method_GetStartGameStream, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::MatchingService.GetStartGameStreamRequest, global::MatchingService.GetStartGameStreamResponse>(serviceImpl.GetStartGameStream));
+      serviceBinder.AddMethod(__Method_GetRoomDetail, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::MatchingService.GetRoomDetailRequest, global::MatchingService.GetRoomDetailResponse>(serviceImpl.GetRoomDetail));
     }
 
   }

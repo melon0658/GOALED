@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
   private bool checkGoal; //ゴールしているか
   private int payDayCount; //給料日を過ぎた回数
   private bool restTurn; //ターン休みかどうか
-    
+
 
   private GameObject status; //ステータスUI格納用の変数
   private GameObject birdCamera; //マップ表示カメラ格納用の変数
@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
   public int PayDayCount { get => payDayCount; set => payDayCount = value; }
   public bool RestTurn { get => restTurn; set => restTurn = value; }
 
-  
+
   void Start()
   {
     this.PayDayCount = 0;
@@ -57,41 +57,45 @@ public class Player : MonoBehaviour
     birdCamera = GameObject.Find("Bird's-eyeCamera");
   }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //Tabキーが入力された場合
-        if (Input.GetKey(KeyCode.Tab))
-        {
-            //ステータス画面を表示
-            status.SetActive(true);
-        }
-        else
-        {
-            //ステータス画面を非表示
-            status.SetActive(false);
-        }
-
-        //Mキーが入力された場合
-        if (Input.GetKey(KeyCode.M))
-        {
-          //ステータス画面を表示
-          birdCamera.SetActive(true);
-        }
-        else
-        {
-          //ステータス画面を非表示
-          birdCamera.SetActive(false);
-        }
-  }
-
-  void OnTriggerExit(Collider other)
+  // Update is called once per frame
+  void Update()
   {
-    if (other.tag == "PayDay")
+    //Tabキーが入力された場合
+    if (Input.GetKey(KeyCode.Tab))
     {
-      // 分岐判定をtrueにする
-      Debug.Log("true");
-      PayDayCount++;
+      //Tabキーが入力された場合
+      if (Input.GetKey(KeyCode.Tab))
+      {
+        //ステータス画面を表示
+        status.SetActive(true);
+      }
+      else
+      {
+        //ステータス画面を非表示
+        status.SetActive(false);
+      }
+
+      //Mキーが入力された場合
+      if (Input.GetKey(KeyCode.M))
+      {
+        //ステータス画面を表示
+        birdCamera.SetActive(true);
+      }
+      else
+      {
+        //ステータス画面を非表示
+        birdCamera.SetActive(false);
+      }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+      if (other.tag == "PayDay")
+      {
+        // 分岐判定をtrueにする
+        Debug.Log("true");
+        PayDayCount++;
+      }
     }
   }
 }
