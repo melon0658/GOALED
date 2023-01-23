@@ -33,7 +33,7 @@ public class MoneyUpdate : MonoBehaviour
     playerScript = Player.GetComponent<Player>();
 
     //現在の操作プレイヤーの所持金に変更
-    moneyText.text = "$ " + playerScript.Money.ToString("N0");
+    moneyText.text = playerScript.Money.ToString("N0") + "$";
     
     StartCoroutine("sleep");
   }
