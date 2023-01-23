@@ -27,8 +27,14 @@ public class MakePlayerPrefab : MonoBehaviour
   //初期値設定をするスクリプト
   private SettingInitialPlayerStatus firstSet;
 
-  //仮でプレイヤー数を指定
-  public int playerNum = 2;
+  //プレイヤーデータを受け取るのに必要なスクリプト
+  private SendPlayerData setplayerDataScript;
+
+  //プレイヤー数を保存
+  public int playerNum;
+
+  //プレイヤー名を保存
+  private string[] playerNames;
 
   //プレイヤー数を外部から取得可能にする
   public int GetPlayerNum()
@@ -44,6 +50,9 @@ public class MakePlayerPrefab : MonoBehaviour
 
   void Awake()
   {
+    //BGM消す
+    GameObject.Find("BGM").SetActive(false);
+
     //プレイヤーを最初に配置する座標を代入
     firstPlayerPos[0] = new Vector3[] { new Vector3(81.00f, 409.00f, -170.00f) };//プレイヤー数1人用
     firstPlayerPos[1] = new Vector3[] { new Vector3(71.00f, 409.00f, -170.00f), new Vector3(88.50f, 409.00f, -170.00f) };//プレイヤー数2人用
@@ -53,8 +62,13 @@ public class MakePlayerPrefab : MonoBehaviour
     //マテリアルを設定
     setMaterials();
 
-    //プレイヤーの人数に応じてプレイヤーを格納する配列を宣言
+    //プレイヤーの人数に応じてプレイヤーを格納する配列を宣言(ここでプレイヤー人数を取得)
+    setplayerDataScript = GameObject.Find("SendPlayerData").GetComponent<SendPlayerData>();
+    playerNum = setplayerDataScript.GetPlayerNum();
     players = new GameObject[playerNum];
+
+    //プレイヤー名の配列を取得
+    playerNames = setplayerDataScript.GetPlayerNames();
 
     //プレイヤー生成
     MakePlayer();
@@ -138,16 +152,16 @@ public class MakePlayerPrefab : MonoBehaviour
       switch (i)
       {
         case 0:
-          firstSet.SettingPlayer1();
+          firstSet.SettingPlayer1(playerNames[0]);
           break;
         case 1:
-          firstSet.SettingPlayer2();
+          firstSet.SettingPlayer2(playerNames[1]);
           break;
         case 2:
-          firstSet.SettingPlayer3();
+          firstSet.SettingPlayer3(playerNames[2]);
           break;
         case 3:
-          firstSet.SettingPlayer4();
+          firstSet.SettingPlayer4(playerNames[3]);
           break;
         default:
           break;
