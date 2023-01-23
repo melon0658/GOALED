@@ -135,7 +135,7 @@ public class EventEndGame : MonoBehaviour
     //所持金表示 + You are a Millionaire !!! or GOALED !!!
     canvas_end.SetActive(true);
     rogo.SetActive(true);
-    moneyText.text = "$ " + winner.Money.ToString("N0");
+    moneyText.text = winner.Money.ToString("N0") + "$";
     for (float i = 0.01f; i <= 0.35f; i += 0.01f)
     {
       rogo.transform.localScale = new Vector3(i, i, 1f);
@@ -241,6 +241,8 @@ public class EventEndGame : MonoBehaviour
 
   public void ClickedEndButton()
   {
-    SceneManager.LoadScene("RoomDetailScene");
+    //SceneManager.LoadScene("RoomDetailScene");
+
+    SceneManager.LoadScene("OffLineTitleScene");
   }
 }
