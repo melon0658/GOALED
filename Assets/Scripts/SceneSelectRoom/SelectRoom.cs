@@ -7,6 +7,7 @@ public class SelectRoom : MonoBehaviour
   [SerializeField] private PlayerInfo playerInfo;
   public void onClickPrivateMatch()
   {
+    Debug.Log("onClickPrivateMatch");
     SceneManager.LoadScene("CreatePrivateRoomScene");
   }
 
@@ -17,6 +18,7 @@ public class SelectRoom : MonoBehaviour
 
   public void onClickBack()
   {
+    Debug.Log("back");
     SceneManager.LoadScene("CreateUserScene");
   }
 }
