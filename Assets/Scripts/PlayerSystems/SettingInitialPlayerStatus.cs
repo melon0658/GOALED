@@ -10,11 +10,12 @@ public class SettingInitialPlayerStatus : MonoBehaviour
   private Player player3;
   private Player player4;
 
-  public void SettingPlayer1()
+  
+  public void SettingPlayer1(string playerName)
   {
     player1 = GameObject.Find("Player1").GetComponent<Player>();
 
-    player1.PlyaerName = "A";
+    player1.PlyaerName = playerName;
     player1.Money = 3000;
     player1.Color = "Green";
     player1.Job = "無し";
@@ -24,11 +25,11 @@ public class SettingInitialPlayerStatus : MonoBehaviour
     player1.CheckGoal = false;
 
   }
-  public void SettingPlayer2()
+  public void SettingPlayer2(string playerName)
   {
     player2 = GameObject.Find("Player2").GetComponent<Player>();
 
-    player2.PlyaerName = "B";
+    player2.PlyaerName = playerName;
     player2.Money = 3000;
     player2.Color = "Blue";
     player2.Job = "無し";
@@ -37,11 +38,11 @@ public class SettingInitialPlayerStatus : MonoBehaviour
     player2.HouseNumber = 100;
     player2.CheckGoal = false;
   }
-  public void SettingPlayer3()
+  public void SettingPlayer3(string playerName)
   {
     player3 = GameObject.Find("Player3").GetComponent<Player>();
 
-    player3.PlyaerName = "C";
+    player3.PlyaerName = playerName;
     player3.Money = 3000;
     player3.Color = "Red";
     player3.Job = "無し";
@@ -50,11 +51,11 @@ public class SettingInitialPlayerStatus : MonoBehaviour
     player3.HouseNumber = 100;
     player3.CheckGoal = false;
   }
-  public void SettingPlayer4()
+  public void SettingPlayer4(string playerName)
   {
     player4 = GameObject.Find("Player4").GetComponent<Player>();
 
-    player4.PlyaerName = "D";
+    player4.PlyaerName = playerName;
     player4.Money = 3000;
     player4.Color = "Yellow";
     player4.Job = "無し";
