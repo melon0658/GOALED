@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 //プレイヤーを生成するスクリプト
 public class MakePlayerPrefab : MonoBehaviour
@@ -51,7 +52,9 @@ public class MakePlayerPrefab : MonoBehaviour
   void Awake()
   {
     //BGM消す
-    GameObject.Find("BGM").SetActive(false);
+    GameObject bgm = GameObject.Find("BGM");
+    bgm.SetActive(false);
+    SceneManager.MoveGameObjectToScene(bgm, SceneManager.GetActiveScene());
 
     //プレイヤーを最初に配置する座標を代入
     firstPlayerPos[0] = new Vector3[] { new Vector3(81.00f, 409.00f, -170.00f) };//プレイヤー数1人用

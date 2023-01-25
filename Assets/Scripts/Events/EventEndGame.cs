@@ -16,7 +16,7 @@ public class EventEndGame : MonoBehaviour
   private GameObject cylinder;
   private GameObject canvas_end;
   private TextMeshProUGUI moneyText;
-  private GameObject rogo;
+  private GameObject title;
   private GameObject endButton;
   private Transform moneyTransform;
   private Animator anim;
@@ -62,13 +62,13 @@ public class EventEndGame : MonoBehaviour
     cylinder.SetActive(false);
 
     canvas_end = GameObject.Find("Canvas_end");
-    rogo = GameObject.Find("Rogo");
+    title = GameObject.Find("Title");
     endButton = GameObject.Find("EndButton");
 
     moneyText = GameObject.Find("MoneyText_End").GetComponent<TextMeshProUGUI>();
     moneyTransform = GameObject.Find("MoneyTrigger").GetComponent<Transform>();
 
-    rogo.SetActive(false);
+    title.SetActive(false);
     endButton.SetActive(false);
     canvas_end.SetActive(false);
 
@@ -134,11 +134,11 @@ public class EventEndGame : MonoBehaviour
 
     //所持金表示 + You are a Millionaire !!! or GOALED !!!
     canvas_end.SetActive(true);
-    rogo.SetActive(true);
+    title.SetActive(true);
     moneyText.text = winner.Money.ToString("N0") + "$";
-    for (float i = 0.01f; i <= 0.35f; i += 0.01f)
+    for (float i = 0.01f; i <= 0.5f; i += 0.01f)
     {
-      rogo.transform.localScale = new Vector3(i, i, 1f);
+      title.transform.localScale = new Vector3(i, i, 1f);
       yield return new WaitForSeconds(0.05f);
     }
 
@@ -243,6 +243,10 @@ public class EventEndGame : MonoBehaviour
   {
     //SceneManager.LoadScene("RoomDetailScene");
 
+
+    SceneManager.MoveGameObjectToScene(GameObject.Find("SendPlayerData"), SceneManager.GetActiveScene());
+    //GameObject.Find("SendPlayerData").SetActive(false);
     SceneManager.LoadScene("OffLineTitleScene");
+
   }
 }
