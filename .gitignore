@@ -65,4 +65,6 @@ sysinfo.txt
 crashlytics-build.properties
 
 Assets/Plugins/Grpc.Core
-UserSettings/Layouts/default-2021.dwlt
+.DS_Store
+Assets/.DS_Store
+*.dwlt
