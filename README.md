@@ -1,4 +1,4 @@
-# GOALED! ~Game Of Actual Life 3D~
+# GOALED! \~Game Of Actual Life 3D\~
 
 ## 遊び方
 - ゲーム内容
