@@ -55,6 +55,7 @@ public class Event82 : MonoBehaviour
     else
     {
       playerScript.CheckGoal = true;
+
       //ついた順番に応じて所持金プラス
       switch (turnSystemScript.GetgoalPlayerNum())
       {
@@ -80,9 +81,9 @@ public class Event82 : MonoBehaviour
       //ゴールした人数を増やす
       int goalPlayerNum = turnSystemScript.GetgoalPlayerNum() + 1;
       turnSystemScript.SetgoalPlayerNum(goalPlayerNum);
-      //テキスト表示
-      //Debug.Log("B");
-      
+
+      //ゴールした順番を記録
+      playerScript.GoalNum = goalPlayerNum;
     }
 
     textDialogManegerScript = canvas.transform.Find("TextDialogBox").GetComponent<TextDialogManager>();
