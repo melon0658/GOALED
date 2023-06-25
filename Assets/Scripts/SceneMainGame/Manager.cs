@@ -1,5 +1,7 @@
 using UnityEngine;
-using UnityEditor;
+#if UNITY_EDITOR
+  using UnityEditor;
+#endif
 using UnityEngine.Events;
 using Grpc.Core;
 using System.Collections.Generic;
@@ -77,6 +79,7 @@ public class Manager : MonoBehaviour
     // 他のオブジェクトが破棄されるのを待つ
     while (Array.FindAll(sendObjects.Values.ToArray(), x => x != null).Length > 0)
     {
+#if UNITY_EDITOR
       if (EditorApplication.isPlaying)
       {
         await Task.Delay(100);
@@ -90,6 +93,7 @@ public class Manager : MonoBehaviour
         }
         break;
       }
+#endif
     }
     Close();
   }
