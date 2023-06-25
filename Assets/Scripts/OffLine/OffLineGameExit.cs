@@ -6,6 +6,10 @@ public class OffLineGameExit : MonoBehaviour
 {
   public void ButtonExit()
   {
-    UnityEditor.EditorApplication.isPlaying = false;
+    //buil前
+    //UnityEditor.EditorApplication.isPlaying = false;
+
+    //build後
+    Application.Quit();
   }
 }
