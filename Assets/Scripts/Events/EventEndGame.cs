@@ -5,34 +5,45 @@ using TMPro;
 
 public class EventEndGame : MonoBehaviour
 {
-
+  //ゴール後演出に使うオブジェクト全てをまとめたオブジェクト
   private GameObject endGameObjects;
 
+  //スクリプト
   private MakePlayerPrefab makePlayerPrefabScript;
 
+  //勝者関係
   private Player winner;
   private GameObject winnerPlayerParentObj;
   private Material[] winnerPlayerObj;
-  private GameObject cylinder;
-  private GameObject canvas_end;
-  private TextMeshProUGUI moneyText;
-  private GameObject title;
-  private GameObject endButton;
-  private Transform moneyTransform;
-  private Animator anim;
 
+  //アニメーション関係
+  private Animator anim;
+  private Vector3 winnersPodiumPos;
+  private Vector3 velocity = Vector3.zero;
+  private float time = 0.8F;
+  private bool isAnimationStarted = false;
+
+  //UI関係
+  private GameObject canvas_end;
+  private GameObject title;
+
+  //金額表示
+  private TextMeshProUGUI moneyText;
+  private Transform moneyTransform;
+
+  //勝者の後ろに置く車
   private GameObject car1;
   private GameObject car2;
   private GameObject car3;
   private GameObject car4;
   private GameObject[] cars;
 
+  //勝者の後ろに置くプレイヤー
   private GameObject char1;
   private GameObject char2;
   private GameObject char3;
   private GameObject char4;
   private GameObject[] chars;
-
 
   //スポットライトの効果音
   private AudioSource spotLightEffect;
@@ -42,6 +53,13 @@ public class EventEndGame : MonoBehaviour
 
   //通常のBGM
   private AudioSource baseBGM;
+
+  //終了ボタン
+  private GameObject endButton;
+
+  //お金降らす用の変数
+  private bool onMoneyFall = false;
+  private float timer = 0f;
 
 
   void Start()
@@ -58,30 +76,60 @@ public class EventEndGame : MonoBehaviour
     char4 = GameObject.Find("char4");
     chars = new GameObject[] { char1, char2, char3, char4 };
 
-    cylinder = GameObject.Find("Cylinder");
-    cylinder.SetActive(false);
+    //外部スクリプト設定
+    makePlayerPrefabScript = GameObject.Find("GameScripts").GetComponent<MakePlayerPrefab>();
 
-    canvas_end = GameObject.Find("Canvas_end");
-    title = GameObject.Find("Title");
-    endButton = GameObject.Find("EndButton");
-
+    //ゴール時金額のUI関連の設定
     moneyText = GameObject.Find("MoneyText_End").GetComponent<TextMeshProUGUI>();
     moneyTransform = GameObject.Find("MoneyTrigger").GetComponent<Transform>();
 
+    //ゴール時のUI関連の設定
+    title = GameObject.Find("Title");
+    canvas_end = GameObject.Find("Canvas_end");
+    endButton = GameObject.Find("EndButton");
     title.SetActive(false);
-    endButton.SetActive(false);
     canvas_end.SetActive(false);
+    endButton.SetActive(false);
 
-    makePlayerPrefabScript = GameObject.Find("GameScripts").GetComponent<MakePlayerPrefab>();
-
+    //BGM・効果音関連の設定
     baseBGM = GameObject.Find("Audio Source").GetComponent<AudioSource>();
-
     spotLightEffect = GameObject.Find("SpotLightEffect").GetComponent<AudioSource>();
-
     winnerBGM = GameObject.Find("WinnerBGM").GetComponent<AudioSource>();
 
+    //アニメーション関連の設定
+    winnersPodiumPos = GameObject.Find("Cylinder").GetComponent<Transform>().position;
+    winnersPodiumPos.y += 9.0f;
+
+    //ゴールイベント関係のオブジェクトを全て非アクティブ化
     endGameObjects = GameObject.Find("EndGameObjects");
     endGameObjects.SetActive(false);
+  }
+
+
+  void Update()
+  {
+    //お金をふらす処理を定期的に実行
+    if (onMoneyFall)
+    {
+      timer += Time.deltaTime;
+
+      if (timer >= 3f)
+      {
+        Money_Event.instance.lostMoney(moneyTransform, 2000000);
+        timer = 0f; // タイマーリセット
+      }
+    }
+
+    //落下アニメーション処理
+    if (isAnimationStarted)
+    {
+      winnerPlayerParentObj.GetComponent<Transform>().position = Vector3.SmoothDamp(winnerPlayerParentObj.GetComponent<Transform>().position, winnersPodiumPos, ref velocity, time);
+      if (winnerPlayerParentObj.GetComponent<Transform>().position.y - 39.0f < 0.01f)
+      {
+        isAnimationStarted = false;
+      }
+      Debug.Log("aa");
+    }
   }
 
 
@@ -110,48 +158,37 @@ public class EventEndGame : MonoBehaviour
     //必要なオブジェクト表示(Prefabとか)
     OnObjects();
 
-
     //1秒まつ
     yield return new WaitForSeconds(1f);
 
-    //スポットライト当てる
+    //スポットライト照射
+    GameObject.Find("EndGameObjects").transform.Find("SpotLight1").gameObject.SetActive(true);
+    spotLightEffect.PlayOneShot(spotLightEffect.clip);
+    yield return new WaitForSeconds(1f);
     GameObject.Find("EndGameObjects").transform.Find("SpotLight2").gameObject.SetActive(true);
     spotLightEffect.PlayOneShot(spotLightEffect.clip);
 
-    //1秒まつ
+    //エモート&落下
+    anim.SetBool("onWinAnimation", true);
+    yield return new WaitForSeconds(1f);
+    isAnimationStarted = true;
     yield return new WaitForSeconds(1f);
 
-    //スポットライト当てる
-    GameObject.Find("EndGameObjects").transform.Find("SpotLight3").gameObject.SetActive(true);
-    spotLightEffect.PlayOneShot(spotLightEffect.clip);
-
-    //1秒まつ
-    yield return new WaitForSeconds(1f);
-
-    //スポットライト当てる
-    GameObject.Find("EndGameObjects").transform.Find("SpotLight1").gameObject.SetActive(true);
-    spotLightEffect.PlayOneShot(spotLightEffect.clip);
+    //お金が降ってくる演出ON
+    Money_Event.instance.lostMoney(moneyTransform, 2000000);
+    onMoneyFall = true;
 
     //所持金表示 + You are a Millionaire !!! or GOALED !!!
     canvas_end.SetActive(true);
     title.SetActive(true);
     moneyText.text = winner.Money.ToString("N0") + "$";
-    for (float i = 0.01f; i <= 0.5f; i += 0.01f)
+    for (float i = 0.01f; i <= 0.5f; i += 0.02f)
     {
       title.transform.localScale = new Vector3(i, i, 1f);
       yield return new WaitForSeconds(0.05f);
     }
 
-    //エモート
-    anim.SetBool("onWinAnimation", true);
-    yield return new WaitForSeconds(0.6f);
-    cylinder.SetActive(true);
-
-    //お金が降ってくる演出
-    Money_Event.instance.lostMoney(moneyTransform, 2000000000);
-
     //BGMスタート
-    //winnerBGM.PlayOneShot(winnerBGM.clip);
     winnerBGM.Play();
 
     //終了ボタンを表示
@@ -173,9 +210,10 @@ public class EventEndGame : MonoBehaviour
     GameObject.Find("Canvas").SetActive(false);
 
     //車とキャラクターの数がプレイヤー数と一致するようにする
-    for(int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++)
     {
-      if(i >= makePlayerPrefabScript.GetPlayerNum()){
+      if (i >= makePlayerPrefabScript.GetPlayerNum())
+      {
         cars[i].SetActive(false);
         chars[i].SetActive(false);
       }
@@ -224,16 +262,24 @@ public class EventEndGame : MonoBehaviour
   void Calc()
   {
     GameObject[] players = makePlayerPrefabScript.GetPlayers();
-    
     winner = players[0].GetComponent<Player>();
-    //配列の回数分回す
+
+    //配列の回数分回して、所持金が一番多いプレイヤーを勝者とする
     for (int i = 1; i < players.Length; i++)
     {
       Player playerScript = players[i].GetComponent<Player>();
-      //配列の回数分回す
+      //
       if (winner.Money < playerScript.Money)
       {
         winner = playerScript;
+      }
+      else if(winner.Money == playerScript.Money)
+      {
+        //同金額者がいた場合は、先にゴールした人を勝者とする
+        if (winner.GoalNum > playerScript.GoalNum)
+        {
+          winner = playerScript;
+        }
       }
     }
   }
@@ -243,10 +289,10 @@ public class EventEndGame : MonoBehaviour
   {
     //SceneManager.LoadScene("RoomDetailScene");
 
+    //SceneManager.MoveGameObjectToScene(GameObject.Find("SendPlayerData"), SceneManager.GetActiveScene());
 
-    SceneManager.MoveGameObjectToScene(GameObject.Find("SendPlayerData"), SceneManager.GetActiveScene());
     //GameObject.Find("SendPlayerData").SetActive(false);
-    SceneManager.LoadScene("OffLineTitleScene");
 
+    SceneManager.LoadScene("OffLineTitleScene");
   }
 }

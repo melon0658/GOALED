@@ -13,10 +13,10 @@ public class Player : MonoBehaviour
   private int child; //子供
   private int houseNumber; //持ち家の番号
   private bool checkGoal; //ゴールしているか
+  private int goalNum; //ゴールの順番
   private int payDayCount; //給料日を過ぎた回数
   private bool restTurn; //ターン休みかどうか
     
-
   private GameObject status; //ステータスUI格納用の変数
   private GameObject birdCamera; //マップ表示カメラ格納用の変数
 
@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     this.Child = child;
     this.HouseNumber = houseNumber;
     this.CheckGoal = checkGoal;
+    this.GoalNum = 10000;
   }
 
   //各ステータスのgetとset
@@ -43,6 +44,7 @@ public class Player : MonoBehaviour
   public int Child { get => child; set => child = value; }
   public int HouseNumber { get => houseNumber; set => houseNumber = value; }
   public bool CheckGoal { get => checkGoal; set => checkGoal = value; }
+  public int GoalNum { get => goalNum; set => goalNum = value; }
   public int PayDayCount { get => payDayCount; set => payDayCount = value; }
   public bool RestTurn { get => restTurn; set => restTurn = value; }
 
