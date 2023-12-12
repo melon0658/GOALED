@@ -38,3 +38,6 @@
 - shima004 ( https://github.com/shima004 )
 - nakazi0635 ( https://github.com/nakazi0635 )
 - Kotta64( https://github.com/Kotta64 )
+
+## プレイ動画
+- https://drive.google.com/file/d/1fh0Ew1-CPdAQ8H3_X86UVyzQdqMwkEFY/view?usp=sharing
